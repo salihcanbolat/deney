@@ -18,6 +18,7 @@ public struct VoteCandlePair: View {
     private let zoneHeight: CGFloat
     private let candleWidth: CGFloat
     private let direction: Direction
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// - Parameters:
     ///   - party: Parti oyu (%). `nil` ise mum çizilmez.
@@ -41,7 +42,7 @@ public struct VoteCandlePair: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: zoneHeight, alignment: direction == .up ? .bottom : .top)
-        .animation(Motion.candle, value: [partyHeight, leaderHeight, zoneHeight, candleWidth])
+        .animation(reduceMotion ? .easeInOut(duration: 0.15) : Motion.candle, value: [partyHeight, leaderHeight, zoneHeight, candleWidth])
         .accessibilityHidden(true)
     }
 

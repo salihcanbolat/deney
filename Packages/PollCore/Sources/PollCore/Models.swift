@@ -11,14 +11,17 @@ public struct Party: Identifiable, Hashable, Codable, Sendable {
     public let color: String
     /// Gerçek logo geldiğinde asset adı. Yoksa parti renginde daire + harf çizilir.
     public let logoAsset: String?
+    /// Lider fotoğrafı için asset adı. Yoksa baş harfler gösterilir.
+    public let leaderPhotoAsset: String?
 
-    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil) {
+    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAsset: String? = nil) {
         self.id = id
         self.code = code
         self.name = name
         self.leaderName = leaderName
         self.color = color
         self.logoAsset = logoAsset
+        self.leaderPhotoAsset = leaderPhotoAsset
     }
 
     /// Logo yer tutucusundaki harf: kodun ilk harfi ("ÇEP" → "Ç").
