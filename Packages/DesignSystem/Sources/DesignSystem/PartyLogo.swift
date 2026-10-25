@@ -46,10 +46,22 @@ public struct PartyLogo: View {
     @ViewBuilder
     private var mark: some View {
         if let asset = party.logoAsset, let image = UIImage(named: asset) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFill()
-                .overlay { rim }
+            // Gerçek logo: beyaz bir rozetin içinde, her logo aynı boşlukla oturur.
+            Circle()
+                .fill(Color.white)
+                .overlay {
+                    Image(uiImage: image)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .padding(size * 0.13)
+                }
+                .overlay {
+                    Circle().strokeBorder(
+                        LinearGradient(colors: [.black.opacity(0.04), .black.opacity(0.16)], startPoint: .top, endPoint: .bottom),
+                        lineWidth: max(0.5, size * 0.025)
+                    )
+                }
         } else {
             coin
         }

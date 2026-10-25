@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 import PollCore
 
-/// Lider fotoğrafı yuvası (pusulada 42 × 50 pt). `party.leaderPhotoAsset` doluysa ve asset
+/// Lider fotoğrafı yuvası (pusulada 42 × 50 pt). `party.leaderPhotoAssets` doluysa ve asset
 /// kataloğunda varsa fotoğraf gösterilir; yoksa kâğıt tonunda bir kartta baş harfler.
 public struct LeaderPortrait: View {
     private let party: Party
@@ -25,7 +25,7 @@ public struct LeaderPortrait: View {
 
     @ViewBuilder
     private var content: some View {
-        if let asset = party.leaderPhotoAsset, let image = UIImage(named: asset) {
+        if let asset = party.leaderPhotoAssets?.first, let image = UIImage(named: asset) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFill()

@@ -57,7 +57,7 @@ struct StripView: View {
                         removal: .opacity
                     ))
             } else {
-                RestHeader(title: data.title)
+                RestHeader(title: data.title, isSymbolic: data.isSymbolic)
                     .transition(.opacity)
             }
         }
@@ -201,13 +201,18 @@ struct StripColumn: View {
 /// Dinlenme hâlindeki başlık: anket adı ve "Canlı".
 struct RestHeader: View {
     let title: String
+    var isSymbolic = false
 
     var body: some View {
         HStack {
             Text(title)
                 .lineLimit(1)
             Spacer(minLength: 8)
-            LiveBadge()
+            if isSymbolic {
+                SymbolicBadge()
+            } else {
+                LiveBadge()
+            }
         }
         .font(LockFont.stripTitle)
         .foregroundStyle(Color.white.opacity(0.86))
@@ -222,13 +227,16 @@ struct HeldHeader: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
+            LeaderAvatar(column.party, size: 34)
+                .transition(.opacity)
+                .id(column.id)
             VStack(alignment: .leading, spacing: 2) {
                 Text(column.party.name)
                     .font(LockFont.partyName)
                     .foregroundStyle(.white)
                     .lineLimit(1)
                     .contentTransition(.opacity)
-                Text("\(column.party.leaderName) · \(column.place). sıra")
+                Text(column.isSymbolic ? column.party.leaderName : "\(column.party.leaderName) · \(column.place). sıra")
                     .font(LockFont.leaderLine)
                     .monospacedDigit()
                     .foregroundStyle(Color.white.opacity(0.72))
@@ -238,7 +246,7 @@ struct HeldHeader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             // İsimler hızlı kaydırmada üst üste binmesin diye kısa ve net bir geçiş.
             .animation(.easeOut(duration: 0.12), value: column.id)
-            RatioTable(row: column.row)
+            RatioTable(row: column.row, isSymbolic: column.isSymbolic)
         }
         .padding(.horizontal, 6)
         .accessibilityHidden(true)
@@ -248,6 +256,7 @@ struct HeldHeader: View {
 /// ▲ / ▼ oran tablosu. Parmak başka partiye geçtiğinde rakamlar iOS sayaç animasyonuyla döner.
 struct RatioTable: View {
     let row: PollResultRow
+    var isSymbolic = false
 
     var body: some View {
         Grid(horizontalSpacing: 6, verticalSpacing: 2) {
@@ -285,10 +294,22 @@ struct RatioTable: View {
     }
 
     private func value(_ number: Double?) -> some View {
-        Text(number.map(TurkishFormat.percent) ?? "–")
+        Text(isSymbolic ? "–" : number.map(TurkishFormat.percent) ?? "–")
             .foregroundStyle(Palette.voteCandle)
             .frame(width: 38, alignment: .trailing)
             .contentTransition(.numericText(value: number ?? 0))
+    }
+}
+
+/// Sonuçlar sembolikken "Canlı" yerine gösterilen etiket.
+struct SymbolicBadge: View {
+    var body: some View {
+        Text("Sembolik")
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(Color.white.opacity(0.86))
+            .padding(.horizontal, 7)
+            .frame(height: 16)
+            .background(Color.white.opacity(0.12), in: Capsule())
     }
 }
 

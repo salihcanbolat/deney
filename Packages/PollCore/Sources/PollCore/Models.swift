@@ -11,17 +11,17 @@ public struct Party: Identifiable, Hashable, Codable, Sendable {
     public let color: String
     /// Gerçek logo geldiğinde asset adı. Yoksa parti renginde daire + harf çizilir.
     public let logoAsset: String?
-    /// Lider fotoğrafı için asset adı. Yoksa baş harfler gösterilir.
-    public let leaderPhotoAsset: String?
+    /// Lider fotoğrafları için asset adları (eş genel başkanlı partilerde iki tane). Yoksa baş harfler gösterilir.
+    public let leaderPhotoAssets: [String]?
 
-    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAsset: String? = nil) {
+    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAssets: [String]? = nil) {
         self.id = id
         self.code = code
         self.name = name
         self.leaderName = leaderName
         self.color = color
         self.logoAsset = logoAsset
-        self.leaderPhotoAsset = leaderPhotoAsset
+        self.leaderPhotoAssets = leaderPhotoAssets
     }
 
     /// Logo yer tutucusundaki harf: kodun ilk harfi ("ÇEP" → "Ç").
@@ -112,12 +112,16 @@ public struct PollResultRow: Hashable, Codable, Sendable {
 public struct PollResult: Hashable, Codable, Sendable {
     public let pollId: Poll.ID
     public let updatedAt: Date
-    /// Sıralama değerine göre azalan sırada.
+    /// Sıralama değerine göre azalan sırada; eşit değerlerde verideki sıra korunur.
     public let rows: [PollResultRow]
+    /// Değerler gerçek oy değil, yalnızca görünümü göstermek için konmuş eşit, sembolik değerler.
+    /// Arayüz bu durumda oran yazmaz ve "Sembolik" etiketi gösterir.
+    public let isSymbolic: Bool
 
-    public init(pollId: Poll.ID, updatedAt: Date, rows: [PollResultRow]) {
+    public init(pollId: Poll.ID, updatedAt: Date, rows: [PollResultRow], isSymbolic: Bool = false) {
         self.pollId = pollId
         self.updatedAt = updatedAt
+        self.isSymbolic = isSymbolic
         self.rows = rows.enumerated()
             .sorted { lhs, rhs in
                 lhs.element.rankingValue != rhs.element.rankingValue
@@ -132,7 +136,8 @@ public struct PollResult: Hashable, Codable, Sendable {
         self.init(
             pollId: try container.decode(Poll.ID.self, forKey: .pollId),
             updatedAt: try container.decode(Date.self, forKey: .updatedAt),
-            rows: try container.decode([PollResultRow].self, forKey: .rows)
+            rows: try container.decode([PollResultRow].self, forKey: .rows),
+            isSymbolic: try container.decodeIfPresent(Bool.self, forKey: .isSymbolic) ?? false
         )
     }
 
