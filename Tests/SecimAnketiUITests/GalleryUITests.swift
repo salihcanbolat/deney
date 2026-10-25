@@ -9,22 +9,22 @@ final class GalleryUITests: XCTestCase {
 
     func testGalleryOnSimulator() throws {
         let app = XCUIApplication()
-        app.launchArguments += ["-AppleLanguages", "(tr)", "-AppleLocale", "tr_TR"]
+        app.launchArguments += ["-AppleLanguages", "(tr)", "-AppleLocale", "tr_TR", "-gallery", "YES"]
         app.launch()
 
         XCTAssertTrue(app.staticTexts["Bileşenler"].waitForExistence(timeout: 20))
-        try save("10-simulator-acilis")
+        try save("30-galeri-ust")
 
         // Canlı önizleme: 1,4 sn dinlenme, sonra basılı tutma.
         Thread.sleep(forTimeInterval: 2.2)
-        try save("11-simulator-basili")
+        try save("31-galeri-basili")
 
         // Bir tur daha videoya girsin.
-        Thread.sleep(forTimeInterval: 9)
+        Thread.sleep(forTimeInterval: 2)
 
         app.swipeUp()
         Thread.sleep(forTimeInterval: 1)
-        try save("12-simulator-asagi")
+        try save("32-galeri-asagi")
     }
 
     private func save(_ name: String) throws {

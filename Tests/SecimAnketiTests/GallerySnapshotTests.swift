@@ -7,9 +7,9 @@ import XCTest
 @MainActor
 final class GallerySnapshotTests: XCTestCase {
     func testRenderGallery() throws {
-        let sample = StripSample(.standard)
+        let sample = StripData(.standard)
         try render(GalleryContent(animated: false).padding(.vertical, 16), name: "01-galeri-tam", scale: 2)
-        try render(section("MUM ÇİFTİ") { CandleStatesCard(sample: sample) }, name: "02-mum-cifti")
+        try render(section("MUM ÇİFTİ") { CandleStatesCard(data: sample) }, name: "02-mum-cifti")
         try render(section("PARTİ LOGOSU") { LogoShowcase(parties: sample.columns.map(\.party)) }, name: "03-parti-logosu")
         try render(section("RENKLER") { TokenList() }, name: "04-renkler")
         try render(section("KOYU MOD ÖNERİSİ") { DarkModeProposal() }, name: "05-koyu-mod-onerisi")
