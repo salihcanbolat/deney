@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "tools/party_assets.json"
 CATALOG = ROOT / "App/Resources/Assets.xcassets/Parties"
-USER_AGENT = "SecimAnketi/0.1 (https://github.com/salihcanbolat/deney; iOS uygulaması görsel indirme)"
+USER_AGENT = "SecimAnketi/0.1 (https://github.com/salihcanbolat/deney; asset fetcher)"  # HTTP başlığı yalnızca ASCII
 
 
 def download(file_name, width, wiki):
