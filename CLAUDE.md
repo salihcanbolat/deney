@@ -307,3 +307,31 @@ Her aşamanın sonunda: SwiftUI Preview ekran görüntüsü, kısa bir değişik
 - `design-reference/**/*.dc.html` dosyaları claude.ai tasarım tuvaline ait HTML prototiplerdir. Kendi çalışma ortamları (`support.js`) olmadan tarayıcıda düzgün açılmayabilirler.
 - Bu dosyaları **spesifikasyon olarak oku.** Tüm ölçüler, renkler, boşluklar ve yazı boyutları satır içi `style` niteliklerinde, veriler ve hesaplamalar ise dosyanın sonundaki `<script>` bloğunda (`renderVals`) bulunur.
 - **En önemli dosya `LockRest.dc.html`.** Jest mantığı (`colFrom`, `down`, `move`, `up`) ve mum ölçeklemesi oradadır.
+
+---
+
+## 15. Aşama 0 kararları (kullanıcı onayladı, 25 Ekim 2026)
+
+Bölüm 13'teki sorular ve keşifte çıkan ek konular şöyle karara bağlandı. Değiştirmeden önce kullanıcıya sor.
+
+1. **iOS kısıtı:** A (hibrit). Tasarımın birebir aynısı uygulamadaki "Kilit Ekranı" sekmesinde; gerçek kilit ekranında sade `accessoryRectangular` widget (en fazla yarım genişlik, ≈160 × 72 pt, tek ton); seçim gecesi Live Activity.
+2. **Platform:** Yalnızca iPhone, en az iOS 17. Dikey yön.
+3. **Backend:** Aşama 6'da kesinleşecek; eğilim Supabase. Aşama 1–5 `PollRepository` protokolünün arkasındaki örnek veriyle çalışır.
+4. **Kimlik:** Oy vermek için Sign in with Apple + App Attest; gezinmek için giriş yok. Sunucu yalnızca "bu kişi bu ankette oy kullandı" bilgisini, Apple kimliğinden tek yönlü türetilmiş bir kodla tutar. Tercih kimliğe bağlanmadan toplam sayılara eklenir; pusula yalnızca cihazda kalır.
+5. **v1 özellikleri:** Şimdilik yok; v2 bitince yeniden bakılacak.
+6. **Kilit ekranındaki partiler:** Sıralamada en çok oy alan 8 parti; kullanıcı seçmez (seçerse tercihini ele verebilir).
+7. **Mum rengi:** `#F3EBDD` her yerde.
+8. **Karanlık mod:** Token'lar açık/koyu çift olarak tanımlı (`Palette`). Koyu palet onaylanana kadar uygulama ekranları açık modda sabit.
+9. **Yayın yasağı:** Hukukçuya danışılacak (siyasi görüş KVKK'da özel nitelikli veri; anonimlik tasarımı da gösterilecek). Teknik hazırlık: sunucudan açılıp kapanan bir "yayın durduruldu" anahtarı.
+10. **Sekme ve gezinme çubukları:** Sistem çubukları kullanılır (iOS 26'da Liquid Glass görünümü).
+11. **Bundle ID:** `com.salihcanbolat.secimanketi`. Ücretli geliştirici hesabı Aşama 4'ten önce gerekli (App Group, widget, Sign in with Apple, Live Activity).
+12. **Ekran görüntüleri:** GitHub Actions'ın macOS makinesinde üretilir (bulut oturumunda Xcode yok).
+13. **Hareket:** Kullanıcının isteği: animasyonlar çok güzel ve iOS tarzında olmalı. Tüm geçişler iOS yay eğrileriyle yapılır ve yarıda kesilebilir.
+
+## 16. Geliştirme notları
+
+- Xcode projesi `project.yml`'den üretilir (`brew install xcodegen && xcodegen generate`); `.xcodeproj` depoya girmez.
+- `Packages/PollCore`: arayüzsüz çekirdek (modeller, örnek veri, `CandleScale`, `StripGeometry`); `swift test` ile test edilir.
+- `Packages/DesignSystem`: token'lar, `PartyLogo`, `VoteCandlePair`.
+- Örnek veri `tools/generate_mock_data.py` ile üretilir; JSON'u elle düzenleme.
+- CI (`.github/workflows/ios.yml`) her push'ta derler ve test eder. Commit mesajında `[ekran]` varsa ekran görüntülerini ve videoyu aynı dalda `docs/screenshots/latest/` altına yazar; sonraki push'tan önce `git pull --rebase` gerekir.
