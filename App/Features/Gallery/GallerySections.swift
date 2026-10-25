@@ -288,6 +288,7 @@ private struct SampleScreen: View {
             Text(subtitle)
                 .font(AppFont.footnote)
                 .monospacedDigit()
+                .lineLimit(1)
                 .foregroundStyle(Palette.secondaryText)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

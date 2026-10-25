@@ -95,7 +95,7 @@ jobs:
         if: always()
         run: |
           if [ -f "$SHOTS/demo.mov" ]; then
-            if avconvert --preset PresetMediumQuality --source "$SHOTS/demo.mov" --output "$SHOTS/demo.mp4" --replace; then
+            if avconvert --preset PresetHighestQuality --source "$SHOTS/demo.mov" --output "$SHOTS/demo.mp4" --replace; then
               rm "$SHOTS/demo.mov"
             fi
           fi
