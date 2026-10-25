@@ -42,8 +42,8 @@ struct LockScreenView: View {
     }
 }
 
-/// Duvar kâğıdı: mürekkep tonlarında derin bir degrade, tasarımdaki büyük daire (kenarı ışık
-/// yakalar), saatin arkasında hafif bir ışık ve ince bir film greni.
+/// Duvar kâğıdı: mürekkep tonlarında derin bir degrade, tasarımdaki büyük daire (yumuşak bir
+/// ufuk ışığı olarak), saatin arkasında hafif bir ışık ve ince bir film greni.
 struct LockWallpaper: View {
     var body: some View {
         GeometryReader { proxy in
@@ -54,13 +54,9 @@ struct LockWallpaper: View {
                         colors: [Color(hex: "#1E2740"), Color(hex: "#161D2E")],
                         center: .top, startRadius: 0, endRadius: 560
                     ))
-                    .overlay {
-                        Circle().strokeBorder(
-                            LinearGradient(colors: [Color.white.opacity(0.09), .clear], startPoint: .top, endPoint: .center),
-                            lineWidth: 1
-                        )
-                    }
                     .frame(width: 790, height: 790)
+                    // Sert kenar camın içinden dikiş gibi görünmesin: yumuşak bir ufuk ışığı.
+                    .blur(radius: 28)
                     .position(x: proxy.size.width / 2, y: 300 + 395)
                 RadialGradient(
                     colors: [Color(hex: "#5A4FC4").opacity(0.22), .clear],
