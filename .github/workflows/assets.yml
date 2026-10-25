@@ -28,7 +28,9 @@ jobs:
           fetch-depth: 0
 
       - name: İndir
-        run: python3 tools/fetch_assets.py
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 tools/fetch_assets.py
 
       - name: Dala yaz
         if: always()

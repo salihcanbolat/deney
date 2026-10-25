@@ -42,6 +42,37 @@ def extension(content_type, data):
     raise ValueError(f"beklenmeyen içerik türü: {content_type}")
 
 
+def process(data, ext, crop, is_photo):
+    """Fotoğrafı yüze göre kare kırpar (360 px JPEG), logoyu en çok 512 px'e küçültür."""
+    from io import BytesIO
+    from PIL import Image
+
+    image = Image.open(BytesIO(data))
+    if is_photo:
+        image = image.convert("RGB")
+        w, h = image.size
+        if crop == "auto":
+            side = 0.8 * min(w, h)
+            cx, cy = w / 2, side / 2 + 0.04 * h
+        elif crop:
+            cx, cy, side = crop[0] * w, crop[1] * h, crop[2] * w
+        else:
+            side = min(w, h)
+            cx, cy = w / 2, side / 2
+        side = min(side, w, h)
+        left = min(max(cx - side / 2, 0), w - side)
+        top = min(max(cy - side / 2, 0), h - side)
+        image = image.crop((round(left), round(top), round(left + side), round(top + side)))
+        image = image.resize((360, 360), Image.LANCZOS)
+        out = BytesIO()
+        image.save(out, "JPEG", quality=88, optimize=True)
+        return out.getvalue(), "jpg"
+    image.thumbnail((512, 512), Image.LANCZOS)
+    out = BytesIO()
+    image.save(out, "PNG", optimize=True)
+    return out.getvalue(), "png"
+
+
 def write_imageset(name, data, ext):
     folder = CATALOG / f"{name}.imageset"
     folder.mkdir(parents=True, exist_ok=True)
@@ -65,19 +96,24 @@ def main():
     assets = json.loads(SOURCES.read_text(encoding="utf-8"))["assets"]
     failures = []
     for item in assets:
-        name, commons, width = item["name"], item["file"], item.get("width", 512)
-        try:
-            data, content_type = download(commons, width, item.get("wiki"))
-            ext = extension(content_type, data)
-            write_imageset(name, data, ext)
-            print(f"tamam  {name:28} {len(data) // 1024:5} KB  {commons}")
-        except Exception as error:  # her görsel bağımsız; biri başarısız olursa diğerleri yine iner
-            failures.append((name, commons, error))
-            print(f"HATA   {name:28} {commons}: {error}", file=sys.stderr)
-        time.sleep(0.5)
+        name, width = item["name"], item.get("width", 512)
+        for candidate in item["candidates"]:
+            try:
+                data, content_type = download(candidate["file"], width, candidate.get("wiki"))
+                ext = extension(content_type, data)
+                data, ext = process(data, ext, candidate.get("crop"), name.startswith("leader-"))
+                write_imageset(name, data, ext)
+                print(f"tamam  {name:22} {len(data) // 1024:4} KB  {candidate['file']}")
+                break
+            except Exception as error:  # sıradaki adayı dene
+                print(f"  yok  {name:22} {candidate['file']}: {error}")
+            finally:
+                time.sleep(0.4)
+        else:
+            failures.append(name)
 
     if failures:
-        print(f"\n{len(failures)} görsel indirilemedi.", file=sys.stderr)
+        print(f"\nİndirilemeyenler: {', '.join(failures)}", file=sys.stderr)
         sys.exit(1)
 
 

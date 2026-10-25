@@ -33,6 +33,7 @@
       "color": "#6C2C91",
       "seats": 56,
       "logoAsset": "logo-dem",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-hatimogullari"
       ]
@@ -45,6 +46,7 @@
       "color": "#E30A17",
       "seats": 46,
       "logoAsset": "logo-mhp",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-bahceli"
       ]
@@ -57,6 +59,7 @@
       "color": "#ED1C24",
       "seats": 44,
       "logoAsset": "logo-chp",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-kilicdaroglu"
       ]
@@ -69,6 +72,7 @@
       "color": "#00A0E3",
       "seats": 27,
       "logoAsset": "logo-iyi",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-dervisoglu"
       ]
@@ -100,6 +104,7 @@
       "color": "#D71920",
       "seats": 3,
       "logoAsset": "logo-yrp",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-erbakan"
       ]
@@ -112,6 +117,7 @@
       "color": "#C8102E",
       "seats": 3,
       "logoAsset": "logo-tip",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-bas"
       ]
@@ -124,6 +130,7 @@
       "color": "#2E7D32",
       "seats": 2,
       "logoAsset": "logo-dbp",
+      "logoFills": true,
       "leaderPhotoAssets": [
         "leader-ucar"
       ]
@@ -144,7 +151,8 @@
       "leaderName": "Mahmut Arıkan",
       "color": "#D32F2F",
       "seats": 1,
-      "logoAsset": "logo-saadet"
+      "logoAsset": "logo-saadet",
+      "logoFills": true
     },
     {
       "id": "dsp",

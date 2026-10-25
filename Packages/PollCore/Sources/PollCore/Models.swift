@@ -11,18 +11,21 @@ public struct Party: Identifiable, Hashable, Codable, Sendable {
     public let color: String
     /// Gerçek logo geldiğinde asset adı. Yoksa parti renginde daire + harf çizilir.
     public let logoAsset: String?
+    /// Logonun kendi zemini var (kare ya da tam daire): rozeti doldurur. Yoksa beyaz rozetin içine oturur.
+    public let logoFills: Bool?
     /// Lider fotoğrafları için asset adları (eş genel başkanlı partilerde iki tane). Yoksa baş harfler gösterilir.
     public let leaderPhotoAssets: [String]?
     /// TBMM'deki sandalye sayısı (sıralama için; oy oranı değildir).
     public let seats: Int?
 
-    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAssets: [String]? = nil, seats: Int? = nil) {
+    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, logoFills: Bool? = nil, leaderPhotoAssets: [String]? = nil, seats: Int? = nil) {
         self.id = id
         self.code = code
         self.name = name
         self.leaderName = leaderName
         self.color = color
         self.logoAsset = logoAsset
+        self.logoFills = logoFills
         self.leaderPhotoAssets = leaderPhotoAssets
         self.seats = seats
     }

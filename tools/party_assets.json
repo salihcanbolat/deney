@@ -1,33 +1,376 @@
 {
-  "note": "Kaynak: Wikimedia Commons (ve AK Parti, DSP, DBP için Türkçe Vikipedi). Lisanslar dosya sayfalarında; fotoğraflar çoğunlukla CC BY-SA, atıf gerekir. Kullanım kararı ve sorumluluğu proje sahibine aittir.",
-  "assets": [
-    { "name": "logo-akp", "wiki": "tr", "file": "Adalet ve Kalkınma Partisi logo.png" },
-    { "name": "logo-yeni", "file": "Yeni Parti (Türkiye, 2026) logo compress transparan.png" },
-    { "name": "logo-dem", "file": "DEM PARTİ LOGOSU.png" },
-    { "name": "logo-mhp", "file": "Milliyetçi Hareket Partisi Logo.svg" },
-    { "name": "logo-chp", "file": "CHP logo (2024, vertical red).svg" },
-    { "name": "logo-iyi", "file": "İYİ Party square logo.svg" },
-    { "name": "logo-yrp", "file": "Yeniden Refah Partisi logo.svg" },
-    { "name": "logo-tip", "file": "Türkiye İşçi Partisi.svg" },
-    { "name": "logo-dbp", "wiki": "tr", "file": "Dbp logo.png" },
-    { "name": "logo-emep", "file": "Emek Partisi Logo.svg" },
-    { "name": "logo-saadet", "file": "Saadet Partisi logo.svg" },
-    { "name": "logo-dsp", "wiki": "tr", "file": "DSP-logo.png" },
-    { "name": "logo-zafer", "file": "Zafer Partisi Logo.jpg" },
-    { "name": "logo-anahtar", "file": "Anahtar Parti logo.jpg" },
-
-    { "name": "leader-erdogan", "file": "Turkish President Recep Tayyip Erdoğan in January 2024 (cropped).jpg", "width": 400 },
-    { "name": "leader-ozel", "file": "Özgür Özel.jpg", "width": 400 },
-    { "name": "leader-hatimogullari", "file": "Tülay Hatimoğulları Oruç 2023 (cropped).jpg", "width": 400 },
-    { "name": "leader-bahceli", "file": "Devlet Bahçeli MHP.jpg", "width": 400 },
-    { "name": "leader-kilicdaroglu", "file": "Kemal Kılıçdaroğlu in 2024 (cropped).jpg", "width": 400 },
-    { "name": "leader-dervisoglu", "file": "Müsavat Dervişoğlu (20230328).jpg", "width": 400 },
-    { "name": "leader-yapicioglu", "file": "Zekeriya Yapıcıoğlu 2023.jpg", "width": 400 },
-    { "name": "leader-erbakan", "file": "Fatiherbakan.jpg", "width": 400 },
-    { "name": "leader-bas", "file": "Erkan Baş 2023.jpg", "width": 400 },
-    { "name": "leader-ucar", "file": "Çiğdem Kılıçgün Uçar.png", "width": 400 },
-    { "name": "leader-uysal", "file": "Turkish politician Gültekin Uysal.png", "width": 400 },
-    { "name": "leader-ozdag", "file": "Ümit Özdağ - 24.2.24.jpg", "width": 400 },
-    { "name": "leader-agiralioglu", "file": "Yavuz Ağıralioğlu.jpg", "width": 400 }
-  ]
+ "note": "Kaynak: Wikimedia Commons (ve AK Parti, DSP, DBP için Türkçe Vikipedi). Lisanslar dosya sayfalarında; fotoğraflar çoğunlukla CC BY-SA, atıf gerekir. Kullanım kararı ve sorumluluğu proje sahibine aittir. Fotoğraflar yüze göre kare kırpılır: crop = [merkez x, merkez y, kenar] (görüntü genişliği/yüksekliği oranında); \"auto\" = üstten yüz kırpması. İlk bulunan aday kullanılır.",
+ "assets": [
+  {
+   "name": "logo-akp",
+   "candidates": [
+    {
+     "file": "Adalet ve Kalkınma Partisi logo.png",
+     "wiki": "tr"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-yeni",
+   "candidates": [
+    {
+     "file": "Yeni Parti (Türkiye, 2026) logo compress transparan.png"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-dem",
+   "candidates": [
+    {
+     "file": "DEM PARTİ LOGOSU.png"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-mhp",
+   "candidates": [
+    {
+     "file": "Milliyetçi Hareket Partisi Logo.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-chp",
+   "candidates": [
+    {
+     "file": "CHP logo (2024, vertical red).svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-iyi",
+   "candidates": [
+    {
+     "file": "İYİ Party square logo.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-yrp",
+   "candidates": [
+    {
+     "file": "Yeniden Refah Partisi logo.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-tip",
+   "candidates": [
+    {
+     "file": "Türkiye İşçi Partisi.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-dbp",
+   "candidates": [
+    {
+     "file": "Dbp logo.png",
+     "wiki": "tr"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-emep",
+   "candidates": [
+    {
+     "file": "Emek Partisi Logo.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-saadet",
+   "candidates": [
+    {
+     "file": "Saadet Partisi logo.svg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-dsp",
+   "candidates": [
+    {
+     "file": "DSP-logo.png",
+     "wiki": "tr"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-zafer",
+   "candidates": [
+    {
+     "file": "Zafer Partisi Logo.jpg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "logo-anahtar",
+   "candidates": [
+    {
+     "file": "Anahtar Parti logo.jpg"
+    }
+   ],
+   "width": 512
+  },
+  {
+   "name": "leader-erdogan",
+   "candidates": [
+    {
+     "file": "Turkish President Recep Tayyip Erdoğan in January 2024 (cropped).jpg",
+     "crop": [
+      0.5,
+      0.3,
+      0.64
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-ozel",
+   "candidates": [
+    {
+     "file": "Özgür Özel (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel 2024 (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel 2023 (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel in 2024 (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel 2024.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel 2023.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Özgür Özel.jpg",
+     "crop": [
+      0.31,
+      0.5,
+      0.14
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-hatimogullari",
+   "candidates": [
+    {
+     "file": "Tülay Hatimoğulları Oruç 2023 (cropped).jpg",
+     "crop": [
+      0.5,
+      0.33,
+      0.66
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-bahceli",
+   "candidates": [
+    {
+     "file": "Devlet Bahçeli (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Devlet Bahçeli 2023 (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Devlet Bahçeli 2023.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Devlet Bahçeli.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Devlet Bahçeli MHP.jpg",
+     "crop": [
+      0.43,
+      0.09,
+      0.4
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-kilicdaroglu",
+   "candidates": [
+    {
+     "file": "Kemal Kılıçdaroğlu in 2024 (cropped).jpg",
+     "crop": [
+      0.5,
+      0.37,
+      0.67
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-dervisoglu",
+   "candidates": [
+    {
+     "file": "Müsavat Dervişoğlu (20230328).jpg",
+     "crop": [
+      0.3,
+      0.4,
+      0.5
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-yapicioglu",
+   "candidates": [
+    {
+     "file": "Zekeriya Yapıcıoğlu 2023.jpg",
+     "crop": [
+      0.5,
+      0.45,
+      0.74
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-erbakan",
+   "candidates": [
+    {
+     "file": "Fatiherbakan.jpg",
+     "crop": [
+      0.45,
+      0.25,
+      0.46
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-bas",
+   "candidates": [
+    {
+     "file": "Erkan Baş 2023.jpg",
+     "crop": [
+      0.48,
+      0.25,
+      0.6
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-ucar",
+   "candidates": [
+    {
+     "file": "Çiğdem Kılıçgün Uçar.png",
+     "crop": [
+      0.55,
+      0.3,
+      0.6
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-uysal",
+   "candidates": [
+    {
+     "file": "Gültekin Uysal (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Gültekin Uysal.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Turkish politician Gültekin Uysal.png",
+     "crop": "auto"
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-ozdag",
+   "candidates": [
+    {
+     "file": "Ümit Özdağ (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Ümit Özdağ 2023 (cropped).jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Ümit Özdağ 2023.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Ümit Özdağ.jpg",
+     "crop": "auto"
+    },
+    {
+     "file": "Ümit Özdağ - 24.2.24.jpg",
+     "crop": [
+      0.5,
+      0.5,
+      0.2
+     ]
+    }
+   ],
+   "width": 500
+  },
+  {
+   "name": "leader-agiralioglu",
+   "candidates": [
+    {
+     "file": "Yavuz Ağıralioğlu.jpg",
+     "crop": [
+      0.45,
+      0.26,
+      0.52
+     ]
+    }
+   ],
+   "width": 500
+  }
+ ]
 }

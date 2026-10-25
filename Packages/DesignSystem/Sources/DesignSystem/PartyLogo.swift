@@ -45,7 +45,15 @@ public struct PartyLogo: View {
 
     @ViewBuilder
     private var mark: some View {
-        if let asset = party.logoAsset, let image = UIImage(named: asset) {
+        if let asset = party.logoAsset, let image = UIImage(named: asset), party.logoFills == true {
+            // Kendi zemini olan logo rozeti doldurur.
+            Image(uiImage: image)
+                .resizable()
+                .interpolation(.high)
+                .scaledToFill()
+                .scaleEffect(1.04)
+                .overlay { rim }
+        } else if let asset = party.logoAsset, let image = UIImage(named: asset) {
             // Gerçek logo: beyaz bir rozetin içinde, her logo aynı boşlukla oturur.
             Circle()
                 .fill(Color.white)

@@ -37,6 +37,9 @@ PARTIES = [
     ("anahtar", "ANAHTAR", "Anahtar Parti", "Yavuz Ağıralioğlu", "#0D47A1", 0, "logo-anahtar", ["leader-agiralioglu"]),
 ]
 
+# Kendi zemini olan (kare ya da tam daire) logolar rozeti doldurur; diğerleri beyaz rozetin içine oturur.
+FILL_LOGOS = {"logo-chp", "logo-iyi", "logo-saadet", "logo-yrp", "logo-dbp", "logo-mhp", "logo-dem", "logo-tip"}
+
 # Herkese aynı değer: hiçbir parti önde ya da geride görünmez.
 SYMBOLIC = 10.0
 UPDATED_AT = "2026-10-25T09:41:00+03:00"
@@ -48,6 +51,8 @@ def main():
         party = {"id": pid, "code": code, "name": name, "leaderName": leader, "color": color, "seats": seats}
         if logo:
             party["logoAsset"] = logo
+            if logo in FILL_LOGOS:
+                party["logoFills"] = True
         if photos:
             party["leaderPhotoAssets"] = photos
         parties.append(party)
