@@ -1,0 +1,1902 @@
+{
+  "note": "Tüm partiler, liderler ve rakamlar uydurmadır. Temsili anket / örnek veri.",
+  "parties": [
+    {
+      "id": "p01",
+      "code": "YUP",
+      "name": "Yeni Ufuk Partisi",
+      "leaderName": "Selin Arda",
+      "color": "#2F5FD0"
+    },
+    {
+      "id": "p02",
+      "code": "ADP",
+      "name": "Anadolu Demokrasi Partisi",
+      "leaderName": "Kemal Tunç",
+      "color": "#B0441A"
+    },
+    {
+      "id": "p03",
+      "code": "BHP",
+      "name": "Birlik ve Huzur Partisi",
+      "leaderName": "Murat Ergin",
+      "color": "#0E6F57"
+    },
+    {
+      "id": "p04",
+      "code": "HLK",
+      "name": "Halkın Kalkınma Partisi",
+      "leaderName": "Ayşe Doğan",
+      "color": "#B42D45"
+    },
+    {
+      "id": "p05",
+      "code": "ÇEP",
+      "name": "Çevre ve Emek Partisi",
+      "leaderName": "Deniz Kaya",
+      "color": "#3B7F2A"
+    },
+    {
+      "id": "p06",
+      "code": "GSP",
+      "name": "Gelecek Sesi Partisi",
+      "leaderName": "Emre Yalın",
+      "color": "#6A44C2"
+    },
+    {
+      "id": "p07",
+      "code": "MİD",
+      "name": "Milli Dayanışma Partisi",
+      "leaderName": "Hakan Sezer",
+      "color": "#7A5C0F"
+    },
+    {
+      "id": "p08",
+      "code": "ÖTP",
+      "name": "Özgür Toplum Partisi",
+      "leaderName": "Leyla Aksoy",
+      "color": "#A8327A"
+    },
+    {
+      "id": "p09",
+      "code": "KAP",
+      "name": "Kıyı ve Akdeniz Partisi",
+      "leaderName": "Orhan Bilge",
+      "color": "#1F6F8C"
+    },
+    {
+      "id": "p10",
+      "code": "YDP",
+      "name": "Yeşil Dönüşüm Partisi",
+      "leaderName": "Nazlı Er",
+      "color": "#276749"
+    },
+    {
+      "id": "p11",
+      "code": "EGP",
+      "name": "Eşit Gelecek Partisi",
+      "leaderName": "Tarık Uslu",
+      "color": "#4B5BB5"
+    },
+    {
+      "id": "p12",
+      "code": "SNA",
+      "name": "Sanayi ve Atılım Partisi",
+      "leaderName": "Cengiz Özbek",
+      "color": "#7A4A2A"
+    },
+    {
+      "id": "p13",
+      "code": "TBP",
+      "name": "Toprak ve Bereket Partisi",
+      "leaderName": "Fatma Ilgaz",
+      "color": "#586A12"
+    },
+    {
+      "id": "p14",
+      "code": "GKP",
+      "name": "Gençlik ve Kültür Partisi",
+      "leaderName": "Arda Soylu",
+      "color": "#B83280"
+    },
+    {
+      "id": "p15",
+      "code": "HAD",
+      "name": "Hukuk ve Adalet Partisi",
+      "leaderName": "Zeynep Akalın",
+      "color": "#34495E"
+    },
+    {
+      "id": "p16",
+      "code": "DNZ",
+      "name": "Deniz ve Emek Partisi",
+      "leaderName": "Barış Yüce",
+      "color": "#0B6A8C"
+    },
+    {
+      "id": "p17",
+      "code": "KYP",
+      "name": "Kent ve Yaşam Partisi",
+      "leaderName": "Gül Erkan",
+      "color": "#A0522D"
+    },
+    {
+      "id": "p18",
+      "code": "BİP",
+      "name": "Bilim ve İnovasyon Partisi",
+      "leaderName": "Onur Tekin",
+      "color": "#5A3FA0"
+    },
+    {
+      "id": "p19",
+      "code": "ÜRP",
+      "name": "Üretim Partisi",
+      "leaderName": "Sinan Polat",
+      "color": "#8A3324"
+    },
+    {
+      "id": "p20",
+      "code": "ÇAP",
+      "name": "Çağdaş Atılım Partisi",
+      "leaderName": "Pelin Ateş",
+      "color": "#2B6CB0"
+    },
+    {
+      "id": "p21",
+      "code": "YOP",
+      "name": "Yol Partisi",
+      "leaderName": "Erdem Kılıç",
+      "color": "#8C5A12"
+    },
+    {
+      "id": "p22",
+      "code": "SİP",
+      "name": "Sivil İrade Partisi",
+      "leaderName": "Hande Koç",
+      "color": "#6B46C1"
+    },
+    {
+      "id": "p23",
+      "code": "ESP",
+      "name": "Esnaf ve Sanatkâr Partisi",
+      "leaderName": "Yavuz Tan",
+      "color": "#9C4221"
+    },
+    {
+      "id": "p24",
+      "code": "KİP",
+      "name": "Köy İnsanları Partisi",
+      "leaderName": "Melis Yurt",
+      "color": "#2C7A7B"
+    },
+    {
+      "id": "p25",
+      "code": "OTP",
+      "name": "Ortak Toplum Partisi",
+      "leaderName": "Rıza Bozkurt",
+      "color": "#744210"
+    },
+    {
+      "id": "p26",
+      "code": "DÖP",
+      "name": "Dönüşüm Partisi",
+      "leaderName": "Ece Turan",
+      "color": "#9D2F6B"
+    },
+    {
+      "id": "p27",
+      "code": "BYP",
+      "name": "Bağımsız Yurttaş Partisi",
+      "leaderName": "Kaan Eren",
+      "color": "#4A5568"
+    },
+    {
+      "id": "p28",
+      "code": "TEP",
+      "name": "Teknoloji Partisi",
+      "leaderName": "İpek Kalkan",
+      "color": "#2C5282"
+    },
+    {
+      "id": "p29",
+      "code": "ÇİP",
+      "name": "Çiftçi Partisi",
+      "leaderName": "Halil Duman",
+      "color": "#556F1C"
+    },
+    {
+      "id": "p30",
+      "code": "UYP",
+      "name": "Uyum Partisi",
+      "leaderName": "Sevgi Çınar",
+      "color": "#97266D"
+    },
+    {
+      "id": "p31",
+      "code": "AİP",
+      "name": "Aile ve İnsan Partisi",
+      "leaderName": "Ahmet Gök",
+      "color": "#975A16"
+    },
+    {
+      "id": "p32",
+      "code": "GÜP",
+      "name": "Güneş Partisi",
+      "leaderName": "Selda Uz",
+      "color": "#A3401A"
+    },
+    {
+      "id": "p33",
+      "code": "DOP",
+      "name": "Dağ ve Ova Partisi",
+      "leaderName": "İlker Saran",
+      "color": "#22543D"
+    },
+    {
+      "id": "p34",
+      "code": "MEP",
+      "name": "Meclis Etkinlik Partisi",
+      "leaderName": "Burcu Aydın",
+      "color": "#553C9A"
+    },
+    {
+      "id": "p35",
+      "code": "KUP",
+      "name": "Kuzey Partisi",
+      "leaderName": "Ozan Çelik",
+      "color": "#2A4365"
+    },
+    {
+      "id": "p36",
+      "code": "GÖP",
+      "name": "Gönüllüler Partisi",
+      "leaderName": "Nil Sarı",
+      "color": "#9B2C2C"
+    },
+    {
+      "id": "p37",
+      "code": "YEP",
+      "name": "Yaşlılar ve Emekliler Partisi",
+      "leaderName": "Şükrü Ak",
+      "color": "#4C51BF"
+    },
+    {
+      "id": "p38",
+      "code": "SÇP",
+      "name": "Sessiz Çoğunluk Partisi",
+      "leaderName": "Aslı Var",
+      "color": "#5A6578"
+    },
+    {
+      "id": "p39",
+      "code": "İDP",
+      "name": "İklim ve Doğa Partisi",
+      "leaderName": "Ufuk Ser",
+      "color": "#2F6B4F"
+    },
+    {
+      "id": "p40",
+      "code": "BEP",
+      "name": "Barış Ekseni Partisi",
+      "leaderName": "Tuna Er",
+      "color": "#822727"
+    }
+  ],
+  "polls": [
+    {
+      "id": "genel-secim",
+      "title": "Genel Seçim Anketi",
+      "type": "supportAndNever",
+      "includesLeader": true,
+      "participantCount": 128460,
+      "isLive": true,
+      "partyIds": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21",
+        "p22",
+        "p23",
+        "p24",
+        "p25",
+        "p26",
+        "p27",
+        "p28",
+        "p29",
+        "p30",
+        "p31",
+        "p32",
+        "p33",
+        "p34",
+        "p35",
+        "p36",
+        "p37",
+        "p38",
+        "p39",
+        "p40"
+      ]
+    },
+    {
+      "id": "genc-secmen",
+      "title": "Genç Seçmen Anketi",
+      "type": "supportAndNever",
+      "includesLeader": true,
+      "participantCount": 23118,
+      "isLive": true,
+      "partyIds": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21",
+        "p22",
+        "p23",
+        "p24",
+        "p25",
+        "p26",
+        "p27",
+        "p28",
+        "p29",
+        "p30",
+        "p31",
+        "p32",
+        "p33",
+        "p34",
+        "p35",
+        "p36",
+        "p37",
+        "p38",
+        "p39",
+        "p40"
+      ]
+    },
+    {
+      "id": "lider-tercihi",
+      "title": "Lider Tercihi Anketi",
+      "type": "support",
+      "includesLeader": true,
+      "participantCount": 84215,
+      "isLive": true,
+      "partyIds": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21",
+        "p22",
+        "p23",
+        "p24",
+        "p25",
+        "p26",
+        "p27",
+        "p28",
+        "p29",
+        "p30",
+        "p31",
+        "p32",
+        "p33",
+        "p34",
+        "p35",
+        "p36",
+        "p37",
+        "p38",
+        "p39",
+        "p40"
+      ]
+    },
+    {
+      "id": "asla-oy-vermem",
+      "title": "Asla Oy Vermem Anketi",
+      "type": "never",
+      "includesLeader": false,
+      "participantCount": 61902,
+      "isLive": true,
+      "partyIds": [
+        "p01",
+        "p02",
+        "p03",
+        "p04",
+        "p05",
+        "p06",
+        "p07",
+        "p08",
+        "p09",
+        "p10",
+        "p11",
+        "p12",
+        "p13",
+        "p14",
+        "p15",
+        "p16",
+        "p17",
+        "p18",
+        "p19",
+        "p20",
+        "p21",
+        "p22",
+        "p23",
+        "p24",
+        "p25",
+        "p26",
+        "p27",
+        "p28",
+        "p29",
+        "p30",
+        "p31",
+        "p32",
+        "p33",
+        "p34",
+        "p35",
+        "p36",
+        "p37",
+        "p38",
+        "p39",
+        "p40"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "pollId": "genel-secim",
+      "updatedAt": "2026-10-25T09:41:00+03:00",
+      "rows": [
+        {
+          "partyId": "p01",
+          "partyPos": 16.4,
+          "partyPosCount": 21067,
+          "leaderPos": 18.9,
+          "leaderPosCount": 24279,
+          "partyNeg": 22.1,
+          "partyNegCount": 28390,
+          "leaderNeg": 25.4,
+          "leaderNegCount": 32629
+        },
+        {
+          "partyId": "p02",
+          "partyPos": 15.9,
+          "partyPosCount": 20425,
+          "leaderPos": 13.2,
+          "leaderPosCount": 16957,
+          "partyNeg": 23.8,
+          "partyNegCount": 30573,
+          "leaderNeg": 26.9,
+          "leaderNegCount": 34556
+        },
+        {
+          "partyId": "p03",
+          "partyPos": 11.2,
+          "partyPosCount": 14388,
+          "leaderPos": 14.8,
+          "leaderPosCount": 19012,
+          "partyNeg": 9.2,
+          "partyNegCount": 11818,
+          "leaderNeg": 7.8,
+          "leaderNegCount": 10020
+        },
+        {
+          "partyId": "p04",
+          "partyPos": 8.7,
+          "partyPosCount": 11176,
+          "leaderPos": 7.1,
+          "leaderPosCount": 9121,
+          "partyNeg": 6.4,
+          "partyNegCount": 8221,
+          "leaderNeg": 8.1,
+          "leaderNegCount": 10405
+        },
+        {
+          "partyId": "p05",
+          "partyPos": 6.3,
+          "partyPosCount": 8093,
+          "leaderPos": 8.4,
+          "leaderPosCount": 10791,
+          "partyNeg": 3.1,
+          "partyNegCount": 3982,
+          "leaderNeg": 2.6,
+          "leaderNegCount": 3340
+        },
+        {
+          "partyId": "p06",
+          "partyPos": 5.1,
+          "partyPosCount": 6551,
+          "leaderPos": 4.2,
+          "leaderPosCount": 5395,
+          "partyNeg": 4.8,
+          "partyNegCount": 6166,
+          "leaderNeg": 5.5,
+          "leaderNegCount": 7065
+        },
+        {
+          "partyId": "p07",
+          "partyPos": 4.4,
+          "partyPosCount": 5652,
+          "leaderPos": 5.6,
+          "leaderPosCount": 7194,
+          "partyNeg": 7.9,
+          "partyNegCount": 10148,
+          "leaderNeg": 6.2,
+          "leaderNegCount": 7965
+        },
+        {
+          "partyId": "p08",
+          "partyPos": 3.8,
+          "partyPosCount": 4881,
+          "leaderPos": 3.1,
+          "leaderPosCount": 3982,
+          "partyNeg": 2.2,
+          "partyNegCount": 2826,
+          "leaderNeg": 2.9,
+          "leaderNegCount": 3725
+        },
+        {
+          "partyId": "p09",
+          "partyPos": 3.1,
+          "partyPosCount": 3982,
+          "leaderPos": 2.6,
+          "leaderPosCount": 3340,
+          "partyNeg": 1.9,
+          "partyNegCount": 2441,
+          "leaderNeg": 1.3,
+          "leaderNegCount": 1670
+        },
+        {
+          "partyId": "p10",
+          "partyPos": 2.7,
+          "partyPosCount": 3468,
+          "leaderPos": 2.7,
+          "leaderPosCount": 3468,
+          "partyNeg": 1.4,
+          "partyNegCount": 1798,
+          "leaderNeg": 1.1,
+          "leaderNegCount": 1413
+        },
+        {
+          "partyId": "p11",
+          "partyPos": 2.4,
+          "partyPosCount": 3083,
+          "leaderPos": 1.8,
+          "leaderPosCount": 2312,
+          "partyNeg": 2.6,
+          "partyNegCount": 3340,
+          "leaderNeg": 2.0,
+          "leaderNegCount": 2569
+        },
+        {
+          "partyId": "p12",
+          "partyPos": 2.1,
+          "partyPosCount": 2698,
+          "leaderPos": 2.0,
+          "leaderPosCount": 2569,
+          "partyNeg": 1.7,
+          "partyNegCount": 2184,
+          "leaderNeg": 1.0,
+          "leaderNegCount": 1285
+        },
+        {
+          "partyId": "p13",
+          "partyPos": 1.9,
+          "partyPosCount": 2441,
+          "leaderPos": 2.0,
+          "leaderPosCount": 2569,
+          "partyNeg": 1.1,
+          "partyNegCount": 1413,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 1028
+        },
+        {
+          "partyId": "p14",
+          "partyPos": 1.7,
+          "partyPosCount": 2184,
+          "leaderPos": 1.2,
+          "leaderPosCount": 1542,
+          "partyNeg": 0.9,
+          "partyNegCount": 1156,
+          "leaderNeg": 0.7,
+          "leaderNegCount": 899
+        },
+        {
+          "partyId": "p15",
+          "partyPos": 1.5,
+          "partyPosCount": 1927,
+          "leaderPos": 1.6,
+          "leaderPosCount": 2055,
+          "partyNeg": 1.3,
+          "partyNegCount": 1670,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 1028
+        },
+        {
+          "partyId": "p16",
+          "partyPos": 1.3,
+          "partyPosCount": 1670,
+          "leaderPos": 1.1,
+          "leaderPosCount": 1413,
+          "partyNeg": 0.8,
+          "partyNegCount": 1028,
+          "leaderNeg": 0.6,
+          "leaderNegCount": 771
+        },
+        {
+          "partyId": "p17",
+          "partyPos": 1.2,
+          "partyPosCount": 1542,
+          "leaderPos": 0.9,
+          "leaderPosCount": 1156,
+          "partyNeg": 0.7,
+          "partyNegCount": 899,
+          "leaderNeg": 0.7,
+          "leaderNegCount": 899
+        },
+        {
+          "partyId": "p18",
+          "partyPos": 1.1,
+          "partyPosCount": 1413,
+          "leaderPos": 1.1,
+          "leaderPosCount": 1413,
+          "partyNeg": 0.6,
+          "partyNegCount": 771,
+          "leaderNeg": 0.4,
+          "leaderNegCount": 514
+        },
+        {
+          "partyId": "p19",
+          "partyPos": 1.0,
+          "partyPosCount": 1285,
+          "leaderPos": 0.7,
+          "leaderPosCount": 899,
+          "partyNeg": 1.0,
+          "partyNegCount": 1285,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 1028
+        },
+        {
+          "partyId": "p20",
+          "partyPos": 0.9,
+          "partyPosCount": 1156,
+          "leaderPos": 0.7,
+          "leaderPosCount": 899,
+          "partyNeg": 1.5,
+          "partyNegCount": 1927,
+          "leaderNeg": 1.1,
+          "leaderNegCount": 1413
+        },
+        {
+          "partyId": "p21",
+          "partyPos": 0.8,
+          "partyPosCount": 1028,
+          "leaderPos": 0.7,
+          "leaderPosCount": 899,
+          "partyNeg": 0.5,
+          "partyNegCount": 642,
+          "leaderNeg": 0.4,
+          "leaderNegCount": 514
+        },
+        {
+          "partyId": "p22",
+          "partyPos": 0.7,
+          "partyPosCount": 899,
+          "leaderPos": 0.7,
+          "leaderPosCount": 899,
+          "partyNeg": 0.4,
+          "partyNegCount": 514,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 385
+        },
+        {
+          "partyId": "p23",
+          "partyPos": 0.7,
+          "partyPosCount": 899,
+          "leaderPos": 0.7,
+          "leaderPosCount": 899,
+          "partyNeg": 0.6,
+          "partyNegCount": 771,
+          "leaderNeg": 0.5,
+          "leaderNegCount": 642
+        },
+        {
+          "partyId": "p24",
+          "partyPos": 0.6,
+          "partyPosCount": 771,
+          "leaderPos": 0.5,
+          "leaderPosCount": 642,
+          "partyNeg": 0.3,
+          "partyNegCount": 385,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        },
+        {
+          "partyId": "p25",
+          "partyPos": 0.6,
+          "partyPosCount": 771,
+          "leaderPos": 0.4,
+          "leaderPosCount": 514,
+          "partyNeg": 0.9,
+          "partyNegCount": 1156,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 1028
+        },
+        {
+          "partyId": "p26",
+          "partyPos": 0.5,
+          "partyPosCount": 642,
+          "leaderPos": 0.5,
+          "leaderPosCount": 642,
+          "partyNeg": 0.3,
+          "partyNegCount": 385,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 385
+        },
+        {
+          "partyId": "p27",
+          "partyPos": 0.5,
+          "partyPosCount": 642,
+          "leaderPos": 0.5,
+          "leaderPosCount": 642,
+          "partyNeg": 0.4,
+          "partyNegCount": 514,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        },
+        {
+          "partyId": "p28",
+          "partyPos": 0.4,
+          "partyPosCount": 514,
+          "leaderPos": 0.4,
+          "leaderPosCount": 514,
+          "partyNeg": 0.2,
+          "partyNegCount": 257,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p29",
+          "partyPos": 0.4,
+          "partyPosCount": 514,
+          "leaderPos": 0.3,
+          "leaderPosCount": 385,
+          "partyNeg": 0.3,
+          "partyNegCount": 385,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        },
+        {
+          "partyId": "p30",
+          "partyPos": 0.4,
+          "partyPosCount": 514,
+          "leaderPos": 0.4,
+          "leaderPosCount": 514,
+          "partyNeg": 0.5,
+          "partyNegCount": 642,
+          "leaderNeg": 0.4,
+          "leaderNegCount": 514
+        },
+        {
+          "partyId": "p31",
+          "partyPos": 0.3,
+          "partyPosCount": 385,
+          "leaderPos": 0.2,
+          "leaderPosCount": 257,
+          "partyNeg": 0.4,
+          "partyNegCount": 514,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 385
+        },
+        {
+          "partyId": "p32",
+          "partyPos": 0.3,
+          "partyPosCount": 385,
+          "leaderPos": 0.2,
+          "leaderPosCount": 257,
+          "partyNeg": 0.2,
+          "partyNegCount": 257,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p33",
+          "partyPos": 0.3,
+          "partyPosCount": 385,
+          "leaderPos": 0.3,
+          "leaderPosCount": 385,
+          "partyNeg": 0.2,
+          "partyNegCount": 257,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p34",
+          "partyPos": 0.2,
+          "partyPosCount": 257,
+          "leaderPos": 0.2,
+          "leaderPosCount": 257,
+          "partyNeg": 0.3,
+          "partyNegCount": 385,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        },
+        {
+          "partyId": "p35",
+          "partyPos": 0.2,
+          "partyPosCount": 257,
+          "leaderPos": 0.2,
+          "leaderPosCount": 257,
+          "partyNeg": 0.1,
+          "partyNegCount": 128,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p36",
+          "partyPos": 0.2,
+          "partyPosCount": 257,
+          "leaderPos": 0.1,
+          "leaderPosCount": 128,
+          "partyNeg": 0.2,
+          "partyNegCount": 257,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        },
+        {
+          "partyId": "p37",
+          "partyPos": 0.2,
+          "partyPosCount": 257,
+          "leaderPos": 0.2,
+          "leaderPosCount": 257,
+          "partyNeg": 0.1,
+          "partyNegCount": 128,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p38",
+          "partyPos": 0.1,
+          "partyPosCount": 128,
+          "leaderPos": 0.1,
+          "leaderPosCount": 128,
+          "partyNeg": 0.1,
+          "partyNegCount": 128,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p39",
+          "partyPos": 0.1,
+          "partyPosCount": 128,
+          "leaderPos": 0.1,
+          "leaderPosCount": 128,
+          "partyNeg": 0.1,
+          "partyNegCount": 128,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 128
+        },
+        {
+          "partyId": "p40",
+          "partyPos": 0.1,
+          "partyPosCount": 128,
+          "leaderPos": 0.1,
+          "leaderPosCount": 128,
+          "partyNeg": 0.2,
+          "partyNegCount": 257,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 257
+        }
+      ]
+    },
+    {
+      "pollId": "genc-secmen",
+      "updatedAt": "2026-10-25T09:41:00+03:00",
+      "rows": [
+        {
+          "partyId": "p01",
+          "partyPos": 14.0,
+          "partyPosCount": 3237,
+          "leaderPos": 16.0,
+          "leaderPosCount": 3699,
+          "partyNeg": 25.2,
+          "partyNegCount": 5826,
+          "leaderNeg": 27.9,
+          "leaderNegCount": 6450
+        },
+        {
+          "partyId": "p03",
+          "partyPos": 13.0,
+          "partyPosCount": 3005,
+          "leaderPos": 15.0,
+          "leaderPosCount": 3468,
+          "partyNeg": 10.7,
+          "partyNegCount": 2474,
+          "leaderNeg": 5.4,
+          "leaderNegCount": 1248
+        },
+        {
+          "partyId": "p02",
+          "partyPos": 12.0,
+          "partyPosCount": 2774,
+          "leaderPos": 11.0,
+          "leaderPosCount": 2543,
+          "partyNeg": 20.4,
+          "partyNegCount": 4716,
+          "leaderNeg": 29.2,
+          "leaderNegCount": 6750
+        },
+        {
+          "partyId": "p04",
+          "partyPos": 9.0,
+          "partyPosCount": 2081,
+          "leaderPos": 8.0,
+          "leaderPosCount": 1849,
+          "partyNeg": 7.1,
+          "partyNegCount": 1641,
+          "leaderNeg": 6.8,
+          "leaderNegCount": 1572
+        },
+        {
+          "partyId": "p05",
+          "partyPos": 9.0,
+          "partyPosCount": 2081,
+          "leaderPos": 11.0,
+          "leaderPosCount": 2543,
+          "partyNeg": 3.3,
+          "partyNegCount": 763,
+          "leaderNeg": 1.8,
+          "leaderNegCount": 416
+        },
+        {
+          "partyId": "p06",
+          "partyPos": 6.0,
+          "partyPosCount": 1387,
+          "leaderPos": 5.0,
+          "leaderPosCount": 1156,
+          "partyNeg": 3.6,
+          "partyNegCount": 832,
+          "leaderNeg": 5.7,
+          "leaderNegCount": 1318
+        },
+        {
+          "partyId": "p08",
+          "partyPos": 5.0,
+          "partyPosCount": 1156,
+          "leaderPos": 4.0,
+          "leaderPosCount": 925,
+          "partyNeg": 2.8,
+          "partyNegCount": 647,
+          "leaderNeg": 2.3,
+          "leaderNegCount": 532
+        },
+        {
+          "partyId": "p07",
+          "partyPos": 3.0,
+          "partyPosCount": 694,
+          "leaderPos": 4.0,
+          "leaderPosCount": 925,
+          "partyNeg": 6.1,
+          "partyNegCount": 1410,
+          "leaderNeg": 5.9,
+          "leaderNegCount": 1364
+        },
+        {
+          "partyId": "p09",
+          "partyPos": 2.9,
+          "partyPosCount": 670,
+          "leaderPos": 2.4,
+          "leaderPosCount": 555,
+          "partyNeg": 1.3,
+          "partyNegCount": 301,
+          "leaderNeg": 1.2,
+          "leaderNegCount": 277
+        },
+        {
+          "partyId": "p10",
+          "partyPos": 2.7,
+          "partyPosCount": 624,
+          "leaderPos": 2.2,
+          "leaderPosCount": 509,
+          "partyNeg": 1.7,
+          "partyNegCount": 393,
+          "leaderNeg": 1.1,
+          "leaderNegCount": 254
+        },
+        {
+          "partyId": "p11",
+          "partyPos": 2.4,
+          "partyPosCount": 555,
+          "leaderPos": 1.8,
+          "leaderPosCount": 416,
+          "partyNeg": 2.5,
+          "partyNegCount": 578,
+          "leaderNeg": 1.5,
+          "leaderNegCount": 347
+        },
+        {
+          "partyId": "p13",
+          "partyPos": 2.1,
+          "partyPosCount": 485,
+          "leaderPos": 2.4,
+          "leaderPosCount": 555,
+          "partyNeg": 1.4,
+          "partyNegCount": 324,
+          "leaderNeg": 0.6,
+          "leaderNegCount": 139
+        },
+        {
+          "partyId": "p12",
+          "partyPos": 2.0,
+          "partyPosCount": 462,
+          "leaderPos": 2.4,
+          "leaderPosCount": 555,
+          "partyNeg": 1.4,
+          "partyNegCount": 324,
+          "leaderNeg": 0.9,
+          "leaderNegCount": 208
+        },
+        {
+          "partyId": "p14",
+          "partyPos": 1.9,
+          "partyPosCount": 439,
+          "leaderPos": 1.4,
+          "leaderPosCount": 324,
+          "partyNeg": 0.7,
+          "partyNegCount": 162,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 185
+        },
+        {
+          "partyId": "p16",
+          "partyPos": 1.4,
+          "partyPosCount": 324,
+          "leaderPos": 1.0,
+          "leaderPosCount": 231,
+          "partyNeg": 0.6,
+          "partyNegCount": 139,
+          "leaderNeg": 0.4,
+          "leaderNegCount": 92
+        },
+        {
+          "partyId": "p15",
+          "partyPos": 1.3,
+          "partyPosCount": 301,
+          "leaderPos": 1.6,
+          "leaderPosCount": 370,
+          "partyNeg": 1.3,
+          "partyNegCount": 301,
+          "leaderNeg": 0.9,
+          "leaderNegCount": 208
+        },
+        {
+          "partyId": "p19",
+          "partyPos": 1.2,
+          "partyPosCount": 277,
+          "leaderPos": 0.8,
+          "leaderPosCount": 185,
+          "partyNeg": 1.1,
+          "partyNegCount": 254,
+          "leaderNeg": 0.7,
+          "leaderNegCount": 162
+        },
+        {
+          "partyId": "p17",
+          "partyPos": 1.1,
+          "partyPosCount": 254,
+          "leaderPos": 0.8,
+          "leaderPosCount": 185,
+          "partyNeg": 0.6,
+          "partyNegCount": 139,
+          "leaderNeg": 0.7,
+          "leaderNegCount": 162
+        },
+        {
+          "partyId": "p18",
+          "partyPos": 1.1,
+          "partyPosCount": 254,
+          "leaderPos": 1.2,
+          "leaderPosCount": 277,
+          "partyNeg": 0.7,
+          "partyNegCount": 162,
+          "leaderNeg": 0.4,
+          "leaderNegCount": 92
+        },
+        {
+          "partyId": "p21",
+          "partyPos": 1.0,
+          "partyPosCount": 231,
+          "leaderPos": 0.6,
+          "leaderPosCount": 139,
+          "partyNeg": 0.5,
+          "partyNegCount": 116,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p20",
+          "partyPos": 0.9,
+          "partyPosCount": 208,
+          "leaderPos": 0.7,
+          "leaderPosCount": 162,
+          "partyNeg": 1.4,
+          "partyNegCount": 324,
+          "leaderNeg": 1.1,
+          "leaderNegCount": 254
+        },
+        {
+          "partyId": "p22",
+          "partyPos": 0.8,
+          "partyPosCount": 185,
+          "leaderPos": 0.8,
+          "leaderPosCount": 185,
+          "partyNeg": 0.4,
+          "partyNegCount": 92,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p23",
+          "partyPos": 0.7,
+          "partyPosCount": 162,
+          "leaderPos": 0.8,
+          "leaderPosCount": 185,
+          "partyNeg": 0.5,
+          "partyNegCount": 116,
+          "leaderNeg": 0.5,
+          "leaderNegCount": 116
+        },
+        {
+          "partyId": "p24",
+          "partyPos": 0.7,
+          "partyPosCount": 162,
+          "leaderPos": 0.6,
+          "leaderPosCount": 139,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p25",
+          "partyPos": 0.6,
+          "partyPosCount": 139,
+          "leaderPos": 0.4,
+          "leaderPosCount": 92,
+          "partyNeg": 0.7,
+          "partyNegCount": 162,
+          "leaderNeg": 0.8,
+          "leaderNegCount": 185
+        },
+        {
+          "partyId": "p27",
+          "partyPos": 0.6,
+          "partyPosCount": 139,
+          "leaderPos": 0.7,
+          "leaderPosCount": 162,
+          "partyNeg": 0.5,
+          "partyNegCount": 116,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p26",
+          "partyPos": 0.5,
+          "partyPosCount": 116,
+          "leaderPos": 0.5,
+          "leaderPosCount": 116,
+          "partyNeg": 0.3,
+          "partyNegCount": 69,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p28",
+          "partyPos": 0.4,
+          "partyPosCount": 92,
+          "leaderPos": 0.5,
+          "leaderPosCount": 116,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p29",
+          "partyPos": 0.4,
+          "partyPosCount": 92,
+          "leaderPos": 0.3,
+          "leaderPosCount": 69,
+          "partyNeg": 0.3,
+          "partyNegCount": 69,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p30",
+          "partyPos": 0.4,
+          "partyPosCount": 92,
+          "leaderPos": 0.4,
+          "leaderPosCount": 92,
+          "partyNeg": 0.5,
+          "partyNegCount": 116,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p32",
+          "partyPos": 0.4,
+          "partyPosCount": 92,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 46
+        },
+        {
+          "partyId": "p33",
+          "partyPos": 0.4,
+          "partyPosCount": 92,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p31",
+          "partyPos": 0.3,
+          "partyPosCount": 69,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.3,
+          "partyNegCount": 69,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p34",
+          "partyPos": 0.2,
+          "partyPosCount": 46,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.3,
+          "partyNegCount": 69,
+          "leaderNeg": 0.3,
+          "leaderNegCount": 69
+        },
+        {
+          "partyId": "p35",
+          "partyPos": 0.2,
+          "partyPosCount": 46,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.1,
+          "partyNegCount": 23,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p36",
+          "partyPos": 0.2,
+          "partyPosCount": 46,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 46
+        },
+        {
+          "partyId": "p37",
+          "partyPos": 0.2,
+          "partyPosCount": 46,
+          "leaderPos": 0.2,
+          "leaderPosCount": 46,
+          "partyNeg": 0.1,
+          "partyNegCount": 23,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p38",
+          "partyPos": 0.1,
+          "partyPosCount": 23,
+          "leaderPos": 0.1,
+          "leaderPosCount": 23,
+          "partyNeg": 0.1,
+          "partyNegCount": 23,
+          "leaderNeg": 0.0,
+          "leaderNegCount": 0
+        },
+        {
+          "partyId": "p39",
+          "partyPos": 0.1,
+          "partyPosCount": 23,
+          "leaderPos": 0.1,
+          "leaderPosCount": 23,
+          "partyNeg": 0.1,
+          "partyNegCount": 23,
+          "leaderNeg": 0.1,
+          "leaderNegCount": 23
+        },
+        {
+          "partyId": "p40",
+          "partyPos": 0.1,
+          "partyPosCount": 23,
+          "leaderPos": 0.1,
+          "leaderPosCount": 23,
+          "partyNeg": 0.2,
+          "partyNegCount": 46,
+          "leaderNeg": 0.2,
+          "leaderNegCount": 46
+        }
+      ]
+    },
+    {
+      "pollId": "lider-tercihi",
+      "updatedAt": "2026-10-25T09:41:00+03:00",
+      "rows": [
+        {
+          "partyId": "p02",
+          "partyPos": 17.3,
+          "partyPosCount": 14569,
+          "leaderPos": 12.2,
+          "leaderPosCount": 10274
+        },
+        {
+          "partyId": "p01",
+          "partyPos": 14.9,
+          "partyPosCount": 12548,
+          "leaderPos": 20.0,
+          "leaderPosCount": 16843
+        },
+        {
+          "partyId": "p03",
+          "partyPos": 10.4,
+          "partyPosCount": 8758,
+          "leaderPos": 14.6,
+          "leaderPosCount": 12295
+        },
+        {
+          "partyId": "p04",
+          "partyPos": 8.7,
+          "partyPosCount": 7327,
+          "leaderPos": 7.3,
+          "leaderPosCount": 6148
+        },
+        {
+          "partyId": "p05",
+          "partyPos": 6.6,
+          "partyPosCount": 5558,
+          "leaderPos": 8.7,
+          "leaderPosCount": 7327
+        },
+        {
+          "partyId": "p06",
+          "partyPos": 4.8,
+          "partyPosCount": 4042,
+          "leaderPos": 4.2,
+          "leaderPosCount": 3537
+        },
+        {
+          "partyId": "p07",
+          "partyPos": 4.6,
+          "partyPosCount": 3874,
+          "leaderPos": 5.3,
+          "leaderPosCount": 4463
+        },
+        {
+          "partyId": "p08",
+          "partyPos": 4.0,
+          "partyPosCount": 3369,
+          "leaderPos": 3.5,
+          "leaderPosCount": 2948
+        },
+        {
+          "partyId": "p09",
+          "partyPos": 3.3,
+          "partyPosCount": 2779,
+          "leaderPos": 2.5,
+          "leaderPosCount": 2105
+        },
+        {
+          "partyId": "p10",
+          "partyPos": 2.8,
+          "partyPosCount": 2358,
+          "leaderPos": 2.6,
+          "leaderPosCount": 2190
+        },
+        {
+          "partyId": "p11",
+          "partyPos": 2.5,
+          "partyPosCount": 2105,
+          "leaderPos": 1.6,
+          "leaderPosCount": 1347
+        },
+        {
+          "partyId": "p12",
+          "partyPos": 2.4,
+          "partyPosCount": 2021,
+          "leaderPos": 2.1,
+          "leaderPosCount": 1769
+        },
+        {
+          "partyId": "p14",
+          "partyPos": 1.7,
+          "partyPosCount": 1432,
+          "leaderPos": 1.0,
+          "leaderPosCount": 842
+        },
+        {
+          "partyId": "p13",
+          "partyPos": 1.6,
+          "partyPosCount": 1347,
+          "leaderPos": 1.7,
+          "leaderPosCount": 1432
+        },
+        {
+          "partyId": "p16",
+          "partyPos": 1.5,
+          "partyPosCount": 1263,
+          "leaderPos": 1.0,
+          "leaderPosCount": 842
+        },
+        {
+          "partyId": "p15",
+          "partyPos": 1.3,
+          "partyPosCount": 1095,
+          "leaderPos": 1.7,
+          "leaderPosCount": 1432
+        },
+        {
+          "partyId": "p17",
+          "partyPos": 1.2,
+          "partyPosCount": 1011,
+          "leaderPos": 0.8,
+          "leaderPosCount": 674
+        },
+        {
+          "partyId": "p19",
+          "partyPos": 1.0,
+          "partyPosCount": 842,
+          "leaderPos": 0.7,
+          "leaderPosCount": 590
+        },
+        {
+          "partyId": "p18",
+          "partyPos": 0.9,
+          "partyPosCount": 758,
+          "leaderPos": 1.0,
+          "leaderPosCount": 842
+        },
+        {
+          "partyId": "p20",
+          "partyPos": 0.9,
+          "partyPosCount": 758,
+          "leaderPos": 0.7,
+          "leaderPosCount": 590
+        },
+        {
+          "partyId": "p21",
+          "partyPos": 0.8,
+          "partyPosCount": 674,
+          "leaderPos": 0.6,
+          "leaderPosCount": 505
+        },
+        {
+          "partyId": "p22",
+          "partyPos": 0.7,
+          "partyPosCount": 590,
+          "leaderPos": 0.8,
+          "leaderPosCount": 674
+        },
+        {
+          "partyId": "p24",
+          "partyPos": 0.7,
+          "partyPosCount": 590,
+          "leaderPos": 0.6,
+          "leaderPosCount": 505
+        },
+        {
+          "partyId": "p23",
+          "partyPos": 0.6,
+          "partyPosCount": 505,
+          "leaderPos": 0.7,
+          "leaderPosCount": 590
+        },
+        {
+          "partyId": "p26",
+          "partyPos": 0.6,
+          "partyPosCount": 505,
+          "leaderPos": 0.6,
+          "leaderPosCount": 505
+        },
+        {
+          "partyId": "p25",
+          "partyPos": 0.5,
+          "partyPosCount": 421,
+          "leaderPos": 0.4,
+          "leaderPosCount": 337
+        },
+        {
+          "partyId": "p27",
+          "partyPos": 0.4,
+          "partyPosCount": 337,
+          "leaderPos": 0.6,
+          "leaderPosCount": 505
+        },
+        {
+          "partyId": "p28",
+          "partyPos": 0.4,
+          "partyPosCount": 337,
+          "leaderPos": 0.4,
+          "leaderPosCount": 337
+        },
+        {
+          "partyId": "p29",
+          "partyPos": 0.4,
+          "partyPosCount": 337,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p30",
+          "partyPos": 0.4,
+          "partyPosCount": 337,
+          "leaderPos": 0.4,
+          "leaderPosCount": 337
+        },
+        {
+          "partyId": "p31",
+          "partyPos": 0.3,
+          "partyPosCount": 253,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p32",
+          "partyPos": 0.3,
+          "partyPosCount": 253,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p33",
+          "partyPos": 0.3,
+          "partyPosCount": 253,
+          "leaderPos": 0.3,
+          "leaderPosCount": 253
+        },
+        {
+          "partyId": "p34",
+          "partyPos": 0.2,
+          "partyPosCount": 168,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p35",
+          "partyPos": 0.2,
+          "partyPosCount": 168,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p36",
+          "partyPos": 0.2,
+          "partyPosCount": 168,
+          "leaderPos": 0.1,
+          "leaderPosCount": 84
+        },
+        {
+          "partyId": "p37",
+          "partyPos": 0.2,
+          "partyPosCount": 168,
+          "leaderPos": 0.2,
+          "leaderPosCount": 168
+        },
+        {
+          "partyId": "p38",
+          "partyPos": 0.1,
+          "partyPosCount": 84,
+          "leaderPos": 0.1,
+          "leaderPosCount": 84
+        },
+        {
+          "partyId": "p39",
+          "partyPos": 0.1,
+          "partyPosCount": 84,
+          "leaderPos": 0.1,
+          "leaderPosCount": 84
+        },
+        {
+          "partyId": "p40",
+          "partyPos": 0.1,
+          "partyPosCount": 84,
+          "leaderPos": 0.1,
+          "leaderPosCount": 84
+        }
+      ]
+    },
+    {
+      "pollId": "asla-oy-vermem",
+      "updatedAt": "2026-10-25T09:41:00+03:00",
+      "rows": [
+        {
+          "partyId": "p02",
+          "partyNeg": 25.7,
+          "partyNegCount": 15909
+        },
+        {
+          "partyId": "p01",
+          "partyNeg": 20.7,
+          "partyNegCount": 12814
+        },
+        {
+          "partyId": "p03",
+          "partyNeg": 8.7,
+          "partyNegCount": 5385
+        },
+        {
+          "partyId": "p07",
+          "partyNeg": 8.0,
+          "partyNegCount": 4952
+        },
+        {
+          "partyId": "p04",
+          "partyNeg": 5.9,
+          "partyNegCount": 3652
+        },
+        {
+          "partyId": "p06",
+          "partyNeg": 4.7,
+          "partyNegCount": 2909
+        },
+        {
+          "partyId": "p05",
+          "partyNeg": 3.2,
+          "partyNegCount": 1981
+        },
+        {
+          "partyId": "p11",
+          "partyNeg": 2.9,
+          "partyNegCount": 1795
+        },
+        {
+          "partyId": "p08",
+          "partyNeg": 2.2,
+          "partyNegCount": 1362
+        },
+        {
+          "partyId": "p09",
+          "partyNeg": 1.6,
+          "partyNegCount": 990
+        },
+        {
+          "partyId": "p12",
+          "partyNeg": 1.6,
+          "partyNegCount": 990
+        },
+        {
+          "partyId": "p10",
+          "partyNeg": 1.3,
+          "partyNegCount": 805
+        },
+        {
+          "partyId": "p13",
+          "partyNeg": 1.2,
+          "partyNegCount": 743
+        },
+        {
+          "partyId": "p15",
+          "partyNeg": 1.2,
+          "partyNegCount": 743
+        },
+        {
+          "partyId": "p20",
+          "partyNeg": 1.2,
+          "partyNegCount": 743
+        },
+        {
+          "partyId": "p14",
+          "partyNeg": 0.8,
+          "partyNegCount": 495
+        },
+        {
+          "partyId": "p16",
+          "partyNeg": 0.8,
+          "partyNegCount": 495
+        },
+        {
+          "partyId": "p19",
+          "partyNeg": 0.8,
+          "partyNegCount": 495
+        },
+        {
+          "partyId": "p25",
+          "partyNeg": 0.8,
+          "partyNegCount": 495
+        },
+        {
+          "partyId": "p17",
+          "partyNeg": 0.7,
+          "partyNegCount": 433
+        },
+        {
+          "partyId": "p18",
+          "partyNeg": 0.6,
+          "partyNegCount": 371
+        },
+        {
+          "partyId": "p23",
+          "partyNeg": 0.6,
+          "partyNegCount": 371
+        },
+        {
+          "partyId": "p21",
+          "partyNeg": 0.5,
+          "partyNegCount": 310
+        },
+        {
+          "partyId": "p30",
+          "partyNeg": 0.5,
+          "partyNegCount": 310
+        },
+        {
+          "partyId": "p22",
+          "partyNeg": 0.4,
+          "partyNegCount": 248
+        },
+        {
+          "partyId": "p27",
+          "partyNeg": 0.4,
+          "partyNegCount": 248
+        },
+        {
+          "partyId": "p31",
+          "partyNeg": 0.4,
+          "partyNegCount": 248
+        },
+        {
+          "partyId": "p24",
+          "partyNeg": 0.3,
+          "partyNegCount": 186
+        },
+        {
+          "partyId": "p26",
+          "partyNeg": 0.3,
+          "partyNegCount": 186
+        },
+        {
+          "partyId": "p29",
+          "partyNeg": 0.3,
+          "partyNegCount": 186
+        },
+        {
+          "partyId": "p34",
+          "partyNeg": 0.3,
+          "partyNegCount": 186
+        },
+        {
+          "partyId": "p28",
+          "partyNeg": 0.2,
+          "partyNegCount": 124
+        },
+        {
+          "partyId": "p32",
+          "partyNeg": 0.2,
+          "partyNegCount": 124
+        },
+        {
+          "partyId": "p33",
+          "partyNeg": 0.2,
+          "partyNegCount": 124
+        },
+        {
+          "partyId": "p36",
+          "partyNeg": 0.2,
+          "partyNegCount": 124
+        },
+        {
+          "partyId": "p40",
+          "partyNeg": 0.2,
+          "partyNegCount": 124
+        },
+        {
+          "partyId": "p35",
+          "partyNeg": 0.1,
+          "partyNegCount": 62
+        },
+        {
+          "partyId": "p37",
+          "partyNeg": 0.1,
+          "partyNegCount": 62
+        },
+        {
+          "partyId": "p38",
+          "partyNeg": 0.1,
+          "partyNegCount": 62
+        },
+        {
+          "partyId": "p39",
+          "partyNeg": 0.1,
+          "partyNegCount": 62
+        }
+      ]
+    }
+  ],
+  "sampleUser": {
+    "prefs": {
+      "followedPollIds": [
+        "genel-secim",
+        "genc-secmen"
+      ],
+      "lockScreenPollId": "genel-secim",
+      "notificationsByPoll": {
+        "genel-secim": true,
+        "genc-secmen": true
+      }
+    },
+    "ballots": [
+      {
+        "pollId": "genel-secim",
+        "partyYes": "p03",
+        "leaderYes": "p03",
+        "never": "p02",
+        "castAt": "2026-10-24T20:15:00+03:00"
+      },
+      {
+        "pollId": "genc-secmen",
+        "partyYes": "p03",
+        "leaderYes": "p03",
+        "never": "p02",
+        "castAt": "2026-10-24T20:18:00+03:00"
+      }
+    ]
+  }
+}
