@@ -1,0 +1,85 @@
+# Xcode projesi bu dosyadan üretilir: `xcodegen generate`
+# (.xcodeproj depoya girmez; Mac'te bir kez `brew install xcodegen` yeterli.)
+name: SecimAnketi
+
+options:
+  bundleIdPrefix: com.salihcanbolat
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: tr
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+
+packages:
+  PollCore:
+    path: Packages/PollCore
+  DesignSystem:
+    path: Packages/DesignSystem
+
+targets:
+  SecimAnketi:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+    dependencies:
+      - package: PollCore
+      - package: DesignSystem
+    settings:
+      base:
+        PRODUCT_NAME: SecimAnketi
+        PRODUCT_BUNDLE_IDENTIFIER: com.salihcanbolat.secimanketi
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Seçim Anketi
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_PREVIEWS: YES
+
+  SecimAnketiTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/SecimAnketiTests
+    dependencies:
+      - target: SecimAnketi
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.salihcanbolat.secimanketi.tests
+
+  SecimAnketiUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Tests/SecimAnketiUITests
+    dependencies:
+      - target: SecimAnketi
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.salihcanbolat.secimanketi.uitests
+
+schemes:
+  SecimAnketi:
+    build:
+      targets:
+        SecimAnketi: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SecimAnketiTests
+        - SecimAnketiUITests

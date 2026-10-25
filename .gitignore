@@ -1,0 +1,15 @@
+.DS_Store
+
+# Xcode projesi project.yml'den üretilir
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+
+# Swift paketleri
+.build/
+.swiftpm/
+Package.resolved
+
+# Test çıktıları (CI bunları docs/screenshots/ altına kopyalar)
+build/
