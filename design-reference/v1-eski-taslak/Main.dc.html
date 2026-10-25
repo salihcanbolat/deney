@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Seçim Pusulası</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1F5BD8}a:hover{color:#174AB3}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #1C1C1E; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #F2F2F7; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+<div style="flex: 1; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 58px 16px 14px; display: flex; flex-direction: column; gap: 12px">
+  <div style="display: flex; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 13px; font-weight: 600; color: #6B6B70">Örnek anket · temsili veriler</span>
+      <h1 style="margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.6px">Seçim Pusulası</h1>
+    </div>
+    <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: #E4ECFB; color: #1A4FBF; font-size: 12px; font-weight: 700; margin-bottom: 4px">
+      <span style="width: 7px; height: 7px; border-radius: 50%; background: #1F5BD8"></span>Canlı
+    </span>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: #5E5E63">
+    <span><b style="color: #1C1C1E">128.460</b> katılımcı · 40 parti</span>
+    <span>Güncellendi: 2 sn önce</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; padding: 2px; border-radius: 10px; background: #E3E3E8">
+    <button type="button" onClick="{{setPos}}" style="height: 32px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; color: #1C1C1E; cursor: pointer; background: {{segPosBg}}; box-shadow: {{segPosShadow}}">Olumlu oya göre</button>
+    <button type="button" onClick="{{setNeg}}" style="height: 32px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; color: #1C1C1E; cursor: pointer; background: {{segNegBg}}; box-shadow: {{segNegShadow}}">Olumsuz tercihe göre</button>
+  </div>
+
+  <div style="border-radius: 18px; background: #FFFFFF; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #E3E3E8; font-size: 11.5px; font-weight: 600; color: #5E5E63">
+      <span>Soldan sağa: en çok → en az {{sortLabel}}</span>
+      <span>Basılı tut: hızlı istatistik</span>
+    </div>
+    <div style="max-height: 352px; overflow-y: auto">
+      <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1px; background: #E6E6EB">
+        <sc-for list="{{parties}}" as="p" hint-placeholder-count="40">
+          <button type="button" aria-label="{{p.aria}}" style="position: relative; border: none; margin: 0; background: {{p.cellBg}}; padding: 14px 0 7px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; min-height: 84px">
+            <span style="position: absolute; top: 4px; left: 5px; font-size: 9px; font-weight: 600; color: #6B6B70">{{p.place}}</span>
+            <span style="width: 32px; height: 32px; border-radius: 50%; background: {{p.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35)">{{p.letter}}</span>
+            <span style="font-size: 10px; font-weight: 700; color: #1C1C1E; letter-spacing: 0.2px">{{p.code}}</span>
+            <span style="font-size: 9.5px; font-weight: 700; color: {{p.valColor}}">{{p.val}}</span>
+            <sc-if value="{{p.mine}}" hint-placeholder-val="{{false}}">
+              <span aria-hidden="true" style="position: absolute; inset: 0; box-shadow: inset 0 0 0 2px #1F5BD8; pointer-events: none"></span>
+              <span aria-hidden="true" style="position: absolute; top: 4px; right: 4px; width: 14px; height: 14px; border-radius: 50%; background: #1F5BD8; display: flex; align-items: center; justify-content: center">
+                <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-5"></path></svg>
+              </span>
+            </sc-if>
+            <sc-if value="{{p.never}}" hint-placeholder-val="{{false}}">
+              <span aria-hidden="true" style="position: absolute; top: 4px; right: 4px; width: 14px; height: 14px; border-radius: 50%; background: #B4531A; display: flex; align-items: center; justify-content: center">
+                <svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><path d="M3 3l6 6M9 3l-6 6"></path></svg>
+              </span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-radius: 18px; background: #FFFFFF; padding: 14px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: #5E5E63">SENİN TERCİHİN</span>
+      <a href="Vote.dc.html" style="font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 0">Düzenle</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="display: flex; gap: 10px; align-items: center; padding: 10px; border-radius: 12px; background: #EEF3FD">
+        <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #0E6F57; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">B</span>
+        <div style="display: flex; flex-direction: column; min-width: 0">
+          <span style="font-size: 11px; font-weight: 700; color: #1A4FBF">Destekliyorum</span>
+          <span style="font-size: 13px; font-weight: 700">BHP</span>
+          <span style="font-size: 11px; color: #5E5E63">Lider: Murat Ergin</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; padding: 10px; border-radius: 12px; background: #FBF0E8">
+        <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #B0441A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">A</span>
+        <div style="display: flex; flex-direction: column; min-width: 0">
+          <span style="font-size: 11px; font-weight: 700; color: #9A4415">Asla oy vermem</span>
+          <span style="font-size: 13px; font-weight: 700">ADP</span>
+          <span style="font-size: 11px; color: #5E5E63">Lider: Kemal Tunç</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center; font-size: 12px; color: #5E5E63">
+      <span>Öncelikler:</span>
+      <span style="padding: 4px 8px; border-radius: 8px; background: #F2F2F7; color: #1C1C1E; font-weight: 600">1 · BHP</span>
+      <span style="padding: 4px 8px; border-radius: 8px; background: #F2F2F7; color: #1C1C1E; font-weight: 600">2 · ÇEP</span>
+      <span style="padding: 4px 8px; border-radius: 8px; border: 1px dashed #B9B9C0">3 · boş</span>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Ana menü" style="flex: none; height: 83px; box-sizing: border-box; padding: 7px 8px 0; background: #FBFBFD; border-top: 1px solid #D9D9DE; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+  <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #1F5BD8; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>Pusula</a>
+  <a href="Vote.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"></rect><path d="M8 12.3l2.8 2.8L16.2 9.6"></path></svg>Oy Ver</a>
+  <a href="Results.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V4M19 20v-6"></path></svg>Sonuçlar</a>
+  <a href="Press.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="8" rx="2"></rect><rect x="3.5" y="14" width="7.5" height="6.5" rx="2"></rect><rect x="13" y="14" width="7.5" height="6.5" rx="2"></rect></svg>Pano</a>
+</nav>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Yeni Ufuk Partisi|Selin Arda|#2F5FD0|16.4|22.1;ADP|Anadolu Demokrasi Partisi|Kemal Tunç|#B0441A|15.9|23.8;BHP|Birlik ve Huzur Partisi|Murat Ergin|#0E6F57|11.2|9.2;HLK|Halkın Kalkınma Partisi|Ayşe Doğan|#B42D45|8.7|6.4;ÇEP|Çevre ve Emek Partisi|Deniz Kaya|#3B7F2A|6.3|3.1;GSP|Gelecek Sesi Partisi|Emre Yalın|#6A44C2|5.1|4.8;MİD|Milli Dayanışma Partisi|Hakan Sezer|#7A5C0F|4.4|7.9;ÖTP|Özgür Toplum Partisi|Leyla Aksoy|#A8327A|3.8|2.2;KAP|Kıyı ve Akdeniz Partisi|Orhan Bilge|#1F6F8C|3.1|1.9;YDP|Yeşil Dönüşüm Partisi|Nazlı Er|#276749|2.7|1.4;EGP|Eşit Gelecek Partisi|Tarık Uslu|#4B5BB5|2.4|2.6;SNA|Sanayi ve Atılım Partisi|Cengiz Özbek|#7A4A2A|2.1|1.7;TBP|Toprak ve Bereket Partisi|Fatma Ilgaz|#586A12|1.9|1.1;GKP|Gençlik ve Kültür Partisi|Arda Soylu|#B83280|1.7|0.9;HAD|Hukuk ve Adalet Partisi|Zeynep Akalın|#34495E|1.5|1.3;DNZ|Deniz ve Emek Partisi|Barış Yüce|#0B6A8C|1.3|0.8;KYP|Kent ve Yaşam Partisi|Gül Erkan|#A0522D|1.2|0.7;BİP|Bilim ve İnovasyon Partisi|Onur Tekin|#5A3FA0|1.1|0.6;ÜRP|Üretim Partisi|Sinan Polat|#8A3324|1.0|1.0;ÇAP|Çağdaş Atılım Partisi|Pelin Ateş|#2B6CB0|0.9|1.5;YOP|Yol Partisi|Erdem Kılıç|#8C5A12|0.8|0.5;SİP|Sivil İrade Partisi|Hande Koç|#6B46C1|0.7|0.4;ESP|Esnaf ve Sanatkâr Partisi|Yavuz Tan|#9C4221|0.7|0.6;KİP|Köy İnsanları Partisi|Melis Yurt|#2C7A7B|0.6|0.3;OTP|Ortak Toplum Partisi|Rıza Bozkurt|#744210|0.6|0.9;DÖP|Dönüşüm Partisi|Ece Turan|#9D2F6B|0.5|0.3;BYP|Bağımsız Yurttaş Partisi|Kaan Eren|#4A5568|0.5|0.4;TEP|Teknoloji Partisi|İpek Kalkan|#2C5282|0.4|0.2;ÇİP|Çiftçi Partisi|Halil Duman|#556F1C|0.4|0.3;UYP|Uyum Partisi|Sevgi Çınar|#97266D|0.4|0.5;AİP|Aile ve İnsan Partisi|Ahmet Gök|#975A16|0.3|0.4;GÜP|Güneş Partisi|Selda Uz|#A3401A|0.3|0.2;DOP|Dağ ve Ova Partisi|İlker Saran|#22543D|0.3|0.2;MEP|Meclis Etkinlik Partisi|Burcu Aydın|#553C9A|0.2|0.3;KUP|Kuzey Partisi|Ozan Çelik|#2A4365|0.2|0.1;GÖP|Gönüllüler Partisi|Nil Sarı|#9B2C2C|0.2|0.2;YEP|Yaşlılar ve Emekliler Partisi|Şükrü Ak|#4C51BF|0.2|0.1;SÇP|Sessiz Çoğunluk Partisi|Aslı Var|#5A6578|0.1|0.1;İDP|İklim ve Doğa Partisi|Ufuk Ser|#2F6B4F|0.1|0.1;BEP|Barış Ekseni Partisi|Tuna Er|#822727|0.1|0.2";
+function pct(v){ return v.toFixed(1).replace('.', ','); }
+function loadParties(){
+  return RAW.split(';').map(function(r, i){
+    var f = r.split('|'); var pos = parseFloat(f[4]), neg = parseFloat(f[5]);
+    return { i: i, code: f[0], name: f[1], leader: f[2], color: f[3], pos: pos, neg: neg, posTxt: pct(pos), negTxt: pct(neg), mine: f[0] === 'BHP', never: f[0] === 'ADP' };
+  });
+}
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var sort = (this.state && this.state.sort) || 'pos';
+    var list = loadParties();
+    if (sort === 'neg') list.sort(function(a, b){ return b.neg - a.neg; });
+    var on = '#FFFFFF', off = 'transparent', sh = '0 1px 3px rgba(0,0,0,0.12)';
+    return {
+      parties: list.map(function(p, k){
+        return Object.assign({}, p, {
+          place: k + 1,
+          letter: p.code.charAt(0),
+          val: '%' + (sort === 'neg' ? p.negTxt : p.posTxt),
+          valColor: sort === 'neg' ? '#B4531A' : '#1F5BD8',
+          cellBg: p.mine ? '#F1F5FE' : '#FFFFFF',
+          aria: p.name + ', olumlu yüzde ' + p.posTxt + ', olumsuz yüzde ' + p.negTxt
+        });
+      }),
+      sortLabel: sort === 'neg' ? 'olumsuz tercih' : 'olumlu oy',
+      segPosBg: sort === 'pos' ? on : off, segPosShadow: sort === 'pos' ? sh : 'none',
+      segNegBg: sort === 'neg' ? on : off, segNegShadow: sort === 'neg' ? sh : 'none',
+      setPos: function(){ self.setState({ sort: 'pos' }); },
+      setNeg: function(){ self.setState({ sort: 'neg' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

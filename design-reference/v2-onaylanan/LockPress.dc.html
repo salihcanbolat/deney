@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kilit ekranı – basılı tut</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F3EBDD}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #0B0B0D; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif; color: #FFFFFF; font-variant-numeric: tabular-nums">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #161C27; display: flex; flex-direction: column; align-items: center">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+<div aria-hidden="true" style="position: absolute; top: 300px; left: -200px; width: 790px; height: 790px; border-radius: 50%; background: #1A2130"></div>
+
+<div style="position: relative; z-index: 1; margin-top: 66px; display: flex; flex-direction: column; align-items: center">
+  <span style="font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.82); letter-spacing: 0.1px">Pazar 25 Ekim</span>
+  <span style="font-size: 96px; font-weight: 700; line-height: 0.98; letter-spacing: -3px; color: rgba(255,255,255,0.94)">9:41</span>
+</div>
+
+<section aria-label="Canlı seçim anketi" style="position: relative; z-index: 2; margin-top: 12px; width: 350px; box-sizing: border-box; padding: 11px 8px 10px; border-radius: 26px; background: rgba(255,255,255,0.10); box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.22); backdrop-filter: blur(30px) saturate(140%); -webkit-backdrop-filter: blur(30px) saturate(140%); display: flex; flex-direction: column; gap: 8px">
+
+  <sc-if value="{{idle}}" hint-placeholder-val="{{true}}">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px; height: 16px">
+      <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.86)">Genel Seçim Anketi</span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.86)"><span style="width: 6px; height: 6px; border-radius: 50%; background: #F3EBDD; box-shadow: 0 0 0 3px rgba(243,235,221,0.18)"></span>Canlı</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{held}}" hint-placeholder-val="{{false}}">
+    <div aria-live="polite" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 6px">
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+        <span style="font-size: 15px; font-weight: 600; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.name}}</span>
+        <span style="font-size: 12px; color: rgba(255,255,255,0.72)">{{a.leader}} · {{a.place}}. sıra</span>
+      </div>
+      <div style="flex: none; display: grid; grid-template-columns: 12px 38px 38px; row-gap: 2px; font-size: 11px; font-weight: 600; text-align: right; color: #F3EBDD">
+        <span></span><span style="color: rgba(255,255,255,0.6); font-weight: 500">Parti</span><span style="color: rgba(255,255,255,0.6); font-weight: 500">Lider</span>
+        <span style="color: rgba(255,255,255,0.6); text-align: left">▲</span><span>{{a.ppTxt}}</span><span>{{a.lpTxt}}</span>
+        <span style="color: rgba(255,255,255,0.6); text-align: left">▼</span><span>{{a.pnTxt}}</span><span>{{a.lnTxt}}</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <div onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerCancel="{{up}}" style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); touch-action: none; user-select: none; -webkit-user-select: none">
+    <sc-for list="{{cols}}" as="c" hint-placeholder-count="8">
+      <button type="button" aria-label="{{c.aria}}" onFocus="{{c.focus}}" style="position: relative; border: none; margin: 0; padding: 0; background: transparent; display: flex; flex-direction: column; align-items: center; cursor: pointer; opacity: {{c.op}}; transition: opacity 200ms ease">
+        <span style="height: {{posZone}}px; width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 1px; transition: height 260ms cubic-bezier(.2,.8,.2,1)">
+          <span style="width: {{barW}}px; height: {{c.ppH}}px; border-radius: 3px 3px 1px 1px; background: #F3EBDD; transition: height 260ms cubic-bezier(.2,.8,.2,1), width 260ms ease"></span>
+          <span style="width: {{barW}}px; height: {{c.lpH}}px; border-radius: 3px 3px 1px 1px; background: #F3EBDD; transition: height 260ms cubic-bezier(.2,.8,.2,1), width 260ms ease"></span>
+        </span>
+        <span style="margin: 5px 0; width: 26px; height: 26px; border-radius: 50%; background: {{c.color}}; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: {{c.ring}}; transform: {{c.tf}}; transition: transform 200ms ease">{{c.letter}}</span>
+        <sc-if value="{{held}}" hint-placeholder-val="{{false}}">
+          <span style="height: {{negZone}}px; width: 100%; display: flex; align-items: flex-start; justify-content: center; gap: 1px">
+            <span style="width: {{barW}}px; height: {{c.pnH}}px; border-radius: 1px 1px 3px 3px; background: #F3EBDD; transition: height 260ms cubic-bezier(.2,.8,.2,1)"></span>
+            <span style="width: {{barW}}px; height: {{c.lnH}}px; border-radius: 1px 1px 3px 3px; background: #F3EBDD; transition: height 260ms cubic-bezier(.2,.8,.2,1)"></span>
+          </span>
+        </sc-if>
+        <sc-if value="{{c.isA}}" hint-placeholder-val="{{false}}">
+          <span aria-hidden="true" style="position: absolute; left: 50%; top: {{fingerTop}}px; width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; background: rgba(255,255,255,0.13); box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.45); pointer-events: none"></span>
+          <sc-if value="{{showSwipe}}" hint-placeholder-val="{{false}}">
+            <svg aria-hidden="true" width="44" height="10" viewBox="0 0 44 10" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" style="position: absolute; top: {{swipeTop}}px; right: 78%; pointer-events: none"><path d="M2 5h34" stroke-dasharray="1.5 4"></path><path d="M35 1.5l4 3.5-4 3.5" stroke-linejoin="round"></path></svg>
+          </sc-if>
+        </sc-if>
+      </button>
+    </sc-for>
+  </div>
+</section>
+
+<sc-if value="{{idle}}" hint-placeholder-val="{{true}}">
+  <span style="position: relative; z-index: 1; margin-top: 10px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.62)">Sol mum parti, sağ mum lider · Basılı tut</span>
+</sc-if>
+
+<div aria-hidden="true" style="position: absolute; bottom: 46px; left: 46px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.14); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; z-index: 1">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1.2 5H9.2z"></path><path d="M9.2 8h5.6v12a1 1 0 0 1-1 1h-3.6a1 1 0 0 1-1-1z"></path><path d="M12 12v2.5"></path></svg>
+</div>
+<div aria-hidden="true" style="position: absolute; bottom: 46px; right: 46px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.14); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; z-index: 1">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5h3l1.8-2.5h6.4L17 8.5h3V19H4z"></path><circle cx="12" cy="13.2" r="3.3"></circle></svg>
+</div>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #FFFFFF; z-index: 1"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startHeld":{"editor":"boolean","default":true,"section":"Etkileşim"},"startIndex":{"editor":"int","default":0,"min":0,"max":7,"section":"Etkileşim"},"showSwipe":{"editor":"boolean","default":false,"section":"Etkileşim"},"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Yeni Ufuk Partisi|Selin Arda|#2F5FD0|16.4|18.9|22.1|25.4;ADP|Anadolu Demokrasi Partisi|Kemal Tunç|#B0441A|15.9|13.2|23.8|26.9;BHP|Birlik ve Huzur Partisi|Murat Ergin|#0E6F57|11.2|14.8|9.2|7.8;HLK|Halkın Kalkınma Partisi|Ayşe Doğan|#B42D45|8.7|7.1|6.4|8.1;ÇEP|Çevre ve Emek Partisi|Deniz Kaya|#3B7F2A|6.3|8.4|3.1|2.6;GSP|Gelecek Sesi Partisi|Emre Yalın|#6A44C2|5.1|4.2|4.8|5.5;MİD|Milli Dayanışma Partisi|Hakan Sezer|#7A5C0F|4.4|5.6|7.9|6.2;ÖTP|Özgür Toplum Partisi|Leyla Aksoy|#A8327A|3.8|3.1|2.2|2.9";
+function pct(v){ return '%' + v.toFixed(1).replace('.', ','); }
+class Component extends DCLogic {
+  colFrom(e) {
+    var r = e.currentTarget.getBoundingClientRect();
+    return Math.max(0, Math.min(7, Math.floor((e.clientX - r.left) / r.width * 8)));
+  }
+  renderVals() {
+    var self = this;
+    var s = this.state || {};
+    var held = s.held === undefined ? (this.props.startHeld ?? true) : s.held;
+    var active = s.active === undefined ? (this.props.startIndex ?? 0) : s.active;
+    var MAX = 27;
+    var posZone = held ? 92 : 34, negZone = held ? 70 : 0, barW = held ? 10 : 7;
+    var ps = RAW.split(';').map(function(r, i){
+      var f = r.split('|');
+      var pp = +f[4], lp = +f[5], pn = +f[6], ln = +f[7];
+      return { i: i, place: i + 1, code: f[0], name: f[1], leader: f[2], color: f[3], letter: f[0].charAt(0), pp: pp, lp: lp, pn: pn, ln: ln, ppTxt: pct(pp), lpTxt: pct(lp), pnTxt: pct(pn), lnTxt: pct(ln) };
+    });
+    return {
+      held: held, idle: !held, a: ps[active], posZone: posZone, negZone: negZone, barW: barW,
+      fingerTop: posZone - 5, swipeTop: posZone + 13, showSwipe: this.props.showSwipe ?? false,
+      cols: ps.map(function(p){
+        var isA = held && p.i === active;
+        return Object.assign({}, p, {
+          isA: isA,
+          ppH: Math.max(2, p.pp / MAX * (posZone - 2)).toFixed(1),
+          lpH: Math.max(2, p.lp / MAX * (posZone - 2)).toFixed(1),
+          pnH: isA ? Math.max(2, p.pn / MAX * (negZone - 2)).toFixed(1) : 0,
+          lnH: isA ? Math.max(2, p.ln / MAX * (negZone - 2)).toFixed(1) : 0,
+          op: !held || isA ? 1 : 0.28,
+          tf: isA ? 'scale(1.18)' : 'none',
+          ring: isA ? '0 0 0 2px rgba(255,255,255,0.95)' : 'inset 0 0 0 0.5px rgba(255,255,255,0.35)',
+          aria: p.name + ': parti ' + p.ppTxt + ', lider ' + p.lpTxt + '; olumsuz parti ' + p.pnTxt + ', lider ' + p.lnTxt,
+          focus: function(){ self.setState({ held: true, active: p.i }); }
+        });
+      }),
+      down: function(e){
+        self._drag = true;
+        try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+        self.setState({ held: true, active: self.colFrom(e) });
+      },
+      move: function(e){
+        if (!self._drag) return;
+        var idx = self.colFrom(e);
+        if (idx !== (self.state || {}).active) self.setState({ active: idx });
+      },
+      up: function(){ self._drag = false; self.setState({ held: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

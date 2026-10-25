@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Oy Ver – destek ve asla</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1F5BD8}a:hover{color:#174AB3}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #1C1C1E; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #F2F2F7; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+<div style="flex: 1; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 56px 16px 16px; display: flex; flex-direction: column; gap: 12px">
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <span style="font-size: 13px; font-weight: 600; color: #5E5E63">Adım 1 / 2 · Parti ve lider</span>
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px">Oy Ver</h1>
+    <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px"><span style="height: 4px; border-radius: 2px; background: #1F5BD8"></span><span style="height: 4px; border-radius: 2px; background: #D6D6DC"></span></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <button type="button" onClick="{{toSup}}" aria-pressed="{{isSup}}" style="text-align: left; border: none; border-radius: 16px; padding: 10px; background: #FFFFFF; box-shadow: {{supRing}}; display: flex; flex-direction: column; gap: 6px; cursor: pointer">
+      <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: #1A4FBF"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#1F5BD8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.3l2.3 2.3 4.7-5"></path></svg>Desteklediğim</span>
+      <span style="display: flex; align-items: center; gap: 8px">
+        <span style="width: 30px; height: 30px; flex: none; border-radius: 50%; background: {{sup.color}}; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{sup.letter}}</span>
+        <span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 14px; font-weight: 700">{{sup.code}}</span><span style="font-size: 11px; color: #5E5E63; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{sup.name}}</span></span>
+      </span>
+    </button>
+    <button type="button" onClick="{{toNev}}" aria-pressed="{{isNev}}" style="text-align: left; border: none; border-radius: 16px; padding: 10px; background: #FFFFFF; box-shadow: {{nevRing}}; display: flex; flex-direction: column; gap: 6px; cursor: pointer">
+      <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: #9A4415"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="#B4531A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6"></path></svg>Asla oy vermem</span>
+      <span style="display: flex; align-items: center; gap: 8px">
+        <span style="width: 30px; height: 30px; flex: none; border-radius: 50%; background: {{nev.color}}; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{nev.letter}}</span>
+        <span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 14px; font-weight: 700">{{nev.code}}</span><span style="font-size: 11px; color: #5E5E63; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{nev.name}}</span></span>
+      </span>
+    </button>
+  </div>
+
+  <section style="border-radius: 18px; background: #FFFFFF; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #E3E3E8">
+      <span style="font-size: 13px; font-weight: 700; color: {{modeColor}}">{{modeLabel}}</span>
+      <span style="font-size: 11.5px; color: #5E5E63">Logoya dokun</span>
+    </div>
+    <div style="max-height: 258px; overflow-y: auto">
+      <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1px; background: #E6E6EB">
+        <sc-for list="{{cells}}" as="c" hint-placeholder-count="40">
+          <button type="button" onClick="{{c.pick}}" aria-label="{{c.aria}}" style="position: relative; border: none; margin: 0; padding: 9px 0 6px; background: {{c.bg}}; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; min-height: 64px">
+            <span style="width: 30px; height: 30px; border-radius: 50%; background: {{c.color}}; color: #FFFFFF; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{c.ring}}">{{c.letter}}</span>
+            <span style="font-size: 9.5px; font-weight: 700">{{c.code}}</span>
+            <sc-if value="{{c.isSup}}" hint-placeholder-val="{{false}}">
+              <span aria-hidden="true" style="position: absolute; top: 4px; right: 4px; width: 15px; height: 15px; border-radius: 50%; background: #1F5BD8; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-5"></path></svg></span>
+            </sc-if>
+            <sc-if value="{{c.isNev}}" hint-placeholder-val="{{false}}">
+              <span aria-hidden="true" style="position: absolute; top: 4px; right: 4px; width: 15px; height: 15px; border-radius: 50%; background: #B4531A; display: flex; align-items: center; justify-content: center"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"><path d="M3 3l6 6M9 3l-6 6"></path></svg></span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-radius: 18px; background: #FFFFFF; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <span style="width: 36px; height: 36px; flex: none; border-radius: 50%; background: #F2F2F7; color: {{sup.color}}; box-shadow: inset 0 0 0 2px {{sup.color}}; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{sup.initials}}</span>
+      <div style="display: flex; flex-direction: column">
+        <span style="font-size: 11.5px; font-weight: 600; color: #5E5E63">Lider tercihin · {{sup.code}} lideri</span>
+        <span style="font-size: 15px; font-weight: 700">{{sup.leader}}</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; padding: 2px; border-radius: 10px; background: #E3E3E8">
+      <button type="button" onClick="{{lYes}}" style="height: 34px; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 600; color: {{lYesColor}}; background: {{lYesBg}}; cursor: pointer">Destekliyorum</button>
+      <button type="button" onClick="{{lMid}}" style="height: 34px; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 600; color: {{lMidColor}}; background: {{lMidBg}}; cursor: pointer">Kararsızım</button>
+      <button type="button" onClick="{{lNo}}" style="height: 34px; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 600; color: {{lNoColor}}; background: {{lNoBg}}; cursor: pointer">Desteklemiyorum</button>
+    </div>
+  </section>
+
+  <a href="Priority.dc.html" style="height: 50px; flex: none; border-radius: 14px; background: #1F5BD8; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px">Devam: Önceliklerim<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
+</div>
+
+<nav aria-label="Ana menü" style="flex: none; height: 83px; box-sizing: border-box; padding: 7px 8px 0; background: #FBFBFD; border-top: 1px solid #D9D9DE; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+  <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>Pusula</a>
+  <a href="Vote.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #1F5BD8; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"></rect><path d="M8 12.3l2.8 2.8L16.2 9.6"></path></svg>Oy Ver</a>
+  <a href="Results.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V4M19 20v-6"></path></svg>Sonuçlar</a>
+  <a href="Press.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="8" rx="2"></rect><rect x="3.5" y="14" width="7.5" height="6.5" rx="2"></rect><rect x="13" y="14" width="7.5" height="6.5" rx="2"></rect></svg>Pano</a>
+</nav>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Yeni Ufuk Partisi|Selin Arda|#2F5FD0;ADP|Anadolu Demokrasi Partisi|Kemal Tunç|#B0441A;BHP|Birlik ve Huzur Partisi|Murat Ergin|#0E6F57;HLK|Halkın Kalkınma Partisi|Ayşe Doğan|#B42D45;ÇEP|Çevre ve Emek Partisi|Deniz Kaya|#3B7F2A;GSP|Gelecek Sesi Partisi|Emre Yalın|#6A44C2;MİD|Milli Dayanışma Partisi|Hakan Sezer|#7A5C0F;ÖTP|Özgür Toplum Partisi|Leyla Aksoy|#A8327A;KAP|Kıyı ve Akdeniz Partisi|Orhan Bilge|#1F6F8C;YDP|Yeşil Dönüşüm Partisi|Nazlı Er|#276749;EGP|Eşit Gelecek Partisi|Tarık Uslu|#4B5BB5;SNA|Sanayi ve Atılım Partisi|Cengiz Özbek|#7A4A2A;TBP|Toprak ve Bereket Partisi|Fatma Ilgaz|#586A12;GKP|Gençlik ve Kültür Partisi|Arda Soylu|#B83280;HAD|Hukuk ve Adalet Partisi|Zeynep Akalın|#34495E;DNZ|Deniz ve Emek Partisi|Barış Yüce|#0B6A8C;KYP|Kent ve Yaşam Partisi|Gül Erkan|#A0522D;BİP|Bilim ve İnovasyon Partisi|Onur Tekin|#5A3FA0;ÜRP|Üretim Partisi|Sinan Polat|#8A3324;ÇAP|Çağdaş Atılım Partisi|Pelin Ateş|#2B6CB0;YOP|Yol Partisi|Erdem Kılıç|#8C5A12;SİP|Sivil İrade Partisi|Hande Koç|#6B46C1;ESP|Esnaf ve Sanatkâr Partisi|Yavuz Tan|#9C4221;KİP|Köy İnsanları Partisi|Melis Yurt|#2C7A7B;OTP|Ortak Toplum Partisi|Rıza Bozkurt|#744210;DÖP|Dönüşüm Partisi|Ece Turan|#9D2F6B;BYP|Bağımsız Yurttaş Partisi|Kaan Eren|#4A5568;TEP|Teknoloji Partisi|İpek Kalkan|#2C5282;ÇİP|Çiftçi Partisi|Halil Duman|#556F1C;UYP|Uyum Partisi|Sevgi Çınar|#97266D;AİP|Aile ve İnsan Partisi|Ahmet Gök|#975A16;GÜP|Güneş Partisi|Selda Uz|#A3401A;DOP|Dağ ve Ova Partisi|İlker Saran|#22543D;MEP|Meclis Etkinlik Partisi|Burcu Aydın|#553C9A;KUP|Kuzey Partisi|Ozan Çelik|#2A4365;GÖP|Gönüllüler Partisi|Nil Sarı|#9B2C2C;YEP|Yaşlılar ve Emekliler Partisi|Şükrü Ak|#4C51BF;SÇP|Sessiz Çoğunluk Partisi|Aslı Var|#5A6578;İDP|İklim ve Doğa Partisi|Ufuk Ser|#2F6B4F;BEP|Barış Ekseni Partisi|Tuna Er|#822727";
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var s = this.state || {};
+    var mode = s.mode || 'sup', sup = s.sup === undefined ? 2 : s.sup, nev = s.nev === undefined ? 1 : s.nev, lp = s.lp || 'yes';
+    var ps = RAW.split(';').map(function(r, i){
+      var f = r.split('|'); var n = f[2].split(' ');
+      return { i: i, code: f[0], name: f[1], leader: f[2], color: f[3], letter: f[0].charAt(0), initials: n[0].charAt(0) + n[n.length - 1].charAt(0) };
+    });
+    function seg(k){ return { bg: lp === k ? '#FFFFFF' : 'transparent', color: lp === k ? (k === 'no' ? '#9A4415' : (k === 'yes' ? '#1A4FBF' : '#1C1C1E')) : '#4A4A50' }; }
+    var y = seg('yes'), m = seg('mid'), n = seg('no');
+    return {
+      sup: ps[sup], nev: ps[nev], isSup: mode === 'sup', isNev: mode === 'nev',
+      supRing: mode === 'sup' ? '0 0 0 2px #1F5BD8' : '0 1px 2px rgba(0,0,0,0.06)',
+      nevRing: mode === 'nev' ? '0 0 0 2px #B4531A' : '0 1px 2px rgba(0,0,0,0.06)',
+      modeLabel: mode === 'sup' ? 'Desteklediğin partiyi seç' : 'Asla oy vermeyeceğin partiyi seç',
+      modeColor: mode === 'sup' ? '#1A4FBF' : '#9A4415',
+      toSup: function(){ self.setState({ mode: 'sup' }); },
+      toNev: function(){ self.setState({ mode: 'nev' }); },
+      lYes: function(){ self.setState({ lp: 'yes' }); }, lMid: function(){ self.setState({ lp: 'mid' }); }, lNo: function(){ self.setState({ lp: 'no' }); },
+      lYesBg: y.bg, lYesColor: y.color, lMidBg: m.bg, lMidColor: m.color, lNoBg: n.bg, lNoColor: n.color,
+      cells: ps.map(function(p){
+        var isS = p.i === sup, isN = p.i === nev;
+        return Object.assign({}, p, {
+          isSup: isS, isNev: isN,
+          bg: isS ? '#EEF3FD' : (isN ? '#FBF1EA' : '#FFFFFF'),
+          ring: isS ? '0 0 0 2px #FFFFFF, 0 0 0 4px #1F5BD8' : (isN ? '0 0 0 2px #FFFFFF, 0 0 0 4px #E07A2E' : 'none'),
+          aria: p.name + (isS ? ', desteklenen' : '') + (isN ? ', asla oy verilmeyecek' : ''),
+          pick: function(){
+            var st = self.state || {}; var md = st.mode || 'sup';
+            var cs = st.sup === undefined ? 2 : st.sup, cn = st.nev === undefined ? 1 : st.nev;
+            if (md === 'sup') self.setState({ sup: p.i, nev: cn === p.i ? cs : cn });
+            else self.setState({ nev: p.i, sup: cs === p.i ? cn : cs });
+          }
+        });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

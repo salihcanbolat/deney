@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Widget boyutları</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1F5BD8}a:hover{color:#174AB3}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #1C1C1E; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #D5DDEA; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; padding-top: 62px; gap: 6px">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+  <div style="display: flex; gap: 22px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+      <section aria-label="Küçük widget: ilk dört parti" style="width: 158px; height: 158px; box-sizing: border-box; border-radius: 24px; background: #FFFFFF; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 6px 18px rgba(20,30,60,0.10)">
+        <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.5px; color: #4A4A50">İLK 4 · CANLI</span>
+        <div style="flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+          <sc-for list="{{top4}}" as="p" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 12px; background: {{p.bg}}">
+              <span style="width: 26px; height: 26px; border-radius: 50%; background: {{p.color}}; color: #FFFFFF; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{p.letter}}</span>
+              <span style="font-size: 10px; font-weight: 800">{{p.code}} <span style="color: #1F5BD8">%{{p.posTxt}}</span></span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <span style="font-size: 11px; font-weight: 500">Seçim Anketi</span>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+      <section aria-label="Küçük widget: senin partin" style="width: 158px; height: 158px; box-sizing: border-box; border-radius: 24px; background: #FFFFFF; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 6px 18px rgba(20,30,60,0.10)">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start">
+          <span style="width: 40px; height: 40px; border-radius: 50%; background: #0E6F57; color: #FFFFFF; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center">B</span>
+          <span style="font-size: 10px; font-weight: 800; color: #1A4FBF; text-align: right; line-height: 1.3">SENİN<br>PARTİN</span>
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <span style="font-size: 13px; font-weight: 700">BHP · 3. sıra</span>
+          <span style="font-size: 30px; font-weight: 800; color: #1F5BD8; letter-spacing: -0.6px; line-height: 1.1">%11,2</span>
+          <span style="font-size: 11px; font-weight: 600; color: #4A4A50">Olumsuz %9,2 · <span style="color: #1A4FBF">▲0,4</span></span>
+        </div>
+      </section>
+      <span style="font-size: 11px; font-weight: 500">Seçim Anketi</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+    <section aria-label="Orta widget: ilk sekiz parti mum grafiği" style="width: 338px; height: 158px; box-sizing: border-box; border-radius: 24px; background: #FFFFFF; padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 6px 18px rgba(20,30,60,0.10)">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.5px; color: #4A4A50">SEÇİM PUSULASI · İLK 8</span>
+        <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: #1A4FBF"><span style="width: 5px; height: 5px; border-radius: 50%; background: #1F5BD8"></span>Canlı</span>
+      </div>
+      <div style="position: relative; flex: 1; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr))">
+        <span aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: #8E8E93"></span>
+        <sc-for list="{{top8}}" as="p" hint-placeholder-count="8">
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <span style="height: 34px; display: flex; align-items: flex-end"><span style="width: 12px; height: {{p.upS}}px; border-radius: 3px 3px 0 0; background: #1F5BD8"></span></span>
+            <span style="height: 1px"></span>
+            <span style="height: 34px; display: flex; align-items: flex-start"><span style="width: 12px; height: {{p.downS}}px; border-radius: 0 0 3px 3px; background: #E07A2E"></span></span>
+            <span style="margin-top: 3px; width: 20px; height: 20px; border-radius: 50%; background: {{p.color}}; color: #FFFFFF; font-size: 9.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{p.ring}}">{{p.letter}}</span>
+            <span style="font-size: 8.5px; font-weight: 700; padding-top: 1px">{{p.code}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <span style="font-size: 11px; font-weight: 500">Seçim Anketi</span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+    <section aria-label="Geniş widget: sekiz sütunlu pusula" style="width: 338px; height: 354px; box-sizing: border-box; border-radius: 24px; background: #FFFFFF; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 6px 18px rgba(20,30,60,0.10)">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 10px; font-weight: 800; letter-spacing: 0.5px; color: #4A4A50">SEÇİM PUSULASI · GENİŞ</span>
+        <span style="font-size: 10px; font-weight: 600; color: #5E5E63">128.460 katılımcı</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); row-gap: 4px">
+        <sc-for list="{{top24}}" as="p" hint-placeholder-count="24">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 2px; height: 46px">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: {{p.color}}; color: #FFFFFF; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{p.ring}}">{{p.letter}}</span>
+            <span style="font-size: 9px; font-weight: 700">{{p.code}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position: relative; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); height: 62px; border-top: 1px solid #ECECF0; padding-top: 6px">
+        <span aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: #8E8E93"></span>
+        <sc-for list="{{top8}}" as="p" hint-placeholder-count="8">
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <span style="height: 28px; display: flex; align-items: flex-end"><span style="width: 12px; height: {{p.upL}}px; border-radius: 3px 3px 0 0; background: #1F5BD8"></span></span>
+            <span style="height: 1px"></span>
+            <span style="height: 28px; display: flex; align-items: flex-start"><span style="width: 12px; height: {{p.downL}}px; border-radius: 0 0 3px 3px; background: #E07A2E"></span></span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: auto">
+        <div style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-radius: 12px; background: #EEF3FD">
+          <span style="width: 22px; height: 22px; border-radius: 50%; background: #0E6F57; color: #FFFFFF; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center">B</span>
+          <span style="font-size: 11px; font-weight: 700">BHP <span style="color: #1F5BD8">%11,2</span></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-radius: 12px; background: #FBF1EA">
+          <span style="width: 22px; height: 22px; border-radius: 50%; background: #B0441A; color: #FFFFFF; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center">A</span>
+          <span style="font-size: 11px; font-weight: 700">Asla: ADP <span style="color: #9A4415">%23,8</span></span>
+        </div>
+      </div>
+    </section>
+    <span style="font-size: 11px; font-weight: 500">Seçim Anketi</span>
+  </div>
+
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|#2F5FD0|16.4|22.1;ADP|#B0441A|15.9|23.8;BHP|#0E6F57|11.2|9.2;HLK|#B42D45|8.7|6.4;ÇEP|#3B7F2A|6.3|3.1;GSP|#6A44C2|5.1|4.8;MİD|#7A5C0F|4.4|7.9;ÖTP|#A8327A|3.8|2.2;KAP|#1F6F8C|3.1|1.9;YDP|#276749|2.7|1.4;EGP|#4B5BB5|2.4|2.6;SNA|#7A4A2A|2.1|1.7;TBP|#586A12|1.9|1.1;GKP|#B83280|1.7|0.9;HAD|#34495E|1.5|1.3;DNZ|#0B6A8C|1.3|0.8;KYP|#A0522D|1.2|0.7;BİP|#5A3FA0|1.1|0.6;ÜRP|#8A3324|1.0|1.0;ÇAP|#2B6CB0|0.9|1.5;YOP|#8C5A12|0.8|0.5;SİP|#6B46C1|0.7|0.4;ESP|#9C4221|0.7|0.6;KİP|#2C7A7B|0.6|0.3";
+function pct(v){ return v.toFixed(1).replace('.', ','); }
+class Component extends DCLogic {
+  renderVals() {
+    var ps = RAW.split(';').map(function(r){
+      var f = r.split('|'); var pos = parseFloat(f[2]), neg = parseFloat(f[3]);
+      return {
+        code: f[0], color: f[1], letter: f[0].charAt(0), posTxt: pct(pos),
+        upS: Math.max(2, pos / 24 * 33).toFixed(1), downS: Math.max(2, neg / 24 * 33).toFixed(1),
+        upL: Math.max(2, pos / 24 * 27).toFixed(1), downL: Math.max(2, neg / 24 * 27).toFixed(1),
+        ring: f[0] === 'BHP' ? '0 0 0 2px #FFFFFF, 0 0 0 3.5px #1F5BD8' : 'none',
+        bg: f[0] === 'BHP' ? '#EEF3FD' : '#F6F6F9'
+      };
+    });
+    return { top4: ps.slice(0, 4), top8: ps.slice(0, 8), top24: ps.slice(0, 24) };
+  }
+}
+</script>
+</body>
+</html>

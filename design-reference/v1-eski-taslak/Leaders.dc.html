@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Lider istatistikleri</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1F5BD8}a:hover{color:#174AB3}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #1C1C1E; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #F2F2F7; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+<div style="flex: 1; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 56px 16px 16px; display: flex; flex-direction: column; gap: 10px">
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <span style="font-size: 13px; font-weight: 600; color: #5E5E63">Sonuçlar · örnek veri</span>
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px">Liderler</h1>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; padding: 2px; border-radius: 10px; background: #E3E3E8">
+    <a href="Candles.dc.html" style="height: 32px; border-radius: 8px; font-size: 13px; font-weight: 600; color: #1C1C1E; text-decoration: none; display: flex; align-items: center; justify-content: center">Partiler</a>
+    <span style="height: 32px; border-radius: 8px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.12); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">Liderler</span>
+  </div>
+
+  <section style="border-radius: 20px; background: #FFFFFF; padding: 14px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span style="width: 52px; height: 52px; flex: none; border-radius: 50%; background: #E6F2EE; color: #0E6F57; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; box-shadow: inset 0 0 0 2.5px #0E6F57">ME</span>
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 11px; font-weight: 700; color: #1A4FBF; letter-spacing: 0.4px">SENİN LİDERİN</span>
+        <span style="font-size: 18px; font-weight: 700">Murat Ergin</span>
+        <span style="font-size: 12px; color: #5E5E63">Birlik ve Huzur Partisi · 3. sıradaki lider</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <div style="padding: 10px; border-radius: 12px; background: #F1F5FE; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 11px; font-weight: 700; color: #1A4FBF">Lider onayı</span>
+        <span style="font-size: 24px; font-weight: 800; color: #1F5BD8">%34</span>
+        <span style="font-size: 11px; color: #5E5E63">Partisinden 22,8 puan yüksek</span>
+      </div>
+      <div style="padding: 10px; border-radius: 12px; background: #FBF1EA; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 11px; font-weight: 700; color: #9A4415">Lider reddi</span>
+        <span style="font-size: 24px; font-weight: 800; color: #B4531A">%23</span>
+        <span style="font-size: 11px; color: #5E5E63">Son 7 gün: −1,2 puan</span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Liderlerin onay ve ret mum grafiği" style="border-radius: 20px; background: #FFFFFF; padding: 12px 8px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; padding: 0 6px; font-size: 11.5px; font-weight: 600; color: #4A4A50">
+      <span style="display: inline-flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 2px; background: #1F5BD8"></span>Onay ↑</span>
+      <span style="display: inline-flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 2px; background: #E07A2E"></span>Ret ↓</span>
+      <span>İlk 16 lider</span>
+    </div>
+    <div style="position: relative; display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px">
+      <span aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 94px; height: 1.5px; background: #8E8E93"></span>
+      <sc-for list="{{leaders}}" as="l" hint-placeholder-count="16">
+        <div role="img" aria-label="{{l.aria}}" style="display: flex; flex-direction: column; align-items: center; border-radius: 8px; background: {{l.bg}}">
+          <span style="height: 14px; font-size: 8px; font-weight: 700; color: #1A4FBF">{{l.lApp}}</span>
+          <span style="height: 80px; display: flex; align-items: flex-end"><span style="width: 11px; height: {{l.upH}}px; border-radius: 3px 3px 0 0; background: #1F5BD8"></span></span>
+          <span style="height: 1.5px"></span>
+          <span style="height: 80px; display: flex; align-items: flex-start"><span style="width: 11px; height: {{l.downH}}px; border-radius: 0 0 3px 3px; background: #E07A2E"></span></span>
+          <span style="height: 14px; font-size: 8px; font-weight: 700; color: #9A4415">{{l.lRej}}</span>
+          <span style="margin-top: 3px; width: 19px; height: 19px; border-radius: 50%; background: #F2F2F7; color: {{l.color}}; box-shadow: inset 0 0 0 1.5px {{l.color}}; font-size: 7.5px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{l.initials}}</span>
+          <span style="height: 14px; font-size: 7.5px; font-weight: 700; padding-top: 2px">{{l.code}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-radius: 20px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
+    <sc-for list="{{top}}" as="l" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #ECECF0; background: {{l.rowBg}}">
+        <span style="width: 16px; font-size: 13px; font-weight: 700; color: #5E5E63">{{l.rank}}</span>
+        <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #F2F2F7; color: {{l.color}}; box-shadow: inset 0 0 0 2px {{l.color}}; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{l.initials}}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 14px; font-weight: 700">{{l.leader}} <span style="font-size: 11.5px; font-weight: 600; color: #5E5E63">· {{l.code}}</span></span>
+          <div aria-hidden="true" style="display: flex; height: 5px; border-radius: 3px; overflow: hidden; background: #E9E9EE">
+            <span style="width: {{l.lApp}}%; background: #1F5BD8"></span><span style="flex: 1"></span><span style="width: {{l.lRej}}%; background: #E07A2E"></span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; font-size: 12px; font-weight: 700">
+          <span style="color: #1A4FBF">%{{l.lApp}}</span>
+          <span style="color: #9A4415">%{{l.lRej}}</span>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+</div>
+
+<nav aria-label="Ana menü" style="flex: none; height: 83px; box-sizing: border-box; padding: 7px 8px 0; background: #FBFBFD; border-top: 1px solid #D9D9DE; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+  <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>Pusula</a>
+  <a href="Vote.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"></rect><path d="M8 12.3l2.8 2.8L16.2 9.6"></path></svg>Oy Ver</a>
+  <a href="Results.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #1F5BD8; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V4M19 20v-6"></path></svg>Sonuçlar</a>
+  <a href="Press.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="8" rx="2"></rect><rect x="3.5" y="14" width="7.5" height="6.5" rx="2"></rect><rect x="13" y="14" width="7.5" height="6.5" rx="2"></rect></svg>Pano</a>
+</nav>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Selin Arda|#2F5FD0|16.4|22.1;ADP|Kemal Tunç|#B0441A|15.9|23.8;BHP|Murat Ergin|#0E6F57|11.2|9.2;HLK|Ayşe Doğan|#B42D45|8.7|6.4;ÇEP|Deniz Kaya|#3B7F2A|6.3|3.1;GSP|Emre Yalın|#6A44C2|5.1|4.8;MİD|Hakan Sezer|#7A5C0F|4.4|7.9;ÖTP|Leyla Aksoy|#A8327A|3.8|2.2;KAP|Orhan Bilge|#1F6F8C|3.1|1.9;YDP|Nazlı Er|#276749|2.7|1.4;EGP|Tarık Uslu|#4B5BB5|2.4|2.6;SNA|Cengiz Özbek|#7A4A2A|2.1|1.7;TBP|Fatma Ilgaz|#586A12|1.9|1.1;GKP|Arda Soylu|#B83280|1.7|0.9;HAD|Zeynep Akalın|#34495E|1.5|1.3;DNZ|Barış Yüce|#0B6A8C|1.3|0.8";
+class Component extends DCLogic {
+  renderVals() {
+    var SC = 78 / 64;
+    var list = RAW.split(';').map(function(r, i){
+      var f = r.split('|'); var pos = parseFloat(f[3]), neg = parseFloat(f[4]);
+      var n = f[1].split(' ');
+      var app = Math.min(64, Math.round(pos * 1.8 + 14)), rej = Math.min(58, Math.round(neg * 1.3 + 11));
+      return { code: f[0], leader: f[1], color: f[2], initials: n[0].charAt(0) + n[n.length - 1].charAt(0), lApp: app, lRej: rej, mine: f[0] === 'BHP' };
+    });
+    list.sort(function(a, b){ return b.lApp - a.lApp; });
+    list.forEach(function(l, k){
+      l.rank = k + 1;
+      l.upH = (l.lApp * SC).toFixed(1); l.downH = (l.lRej * SC).toFixed(1);
+      l.bg = l.mine ? '#E8EFFC' : 'transparent';
+      l.rowBg = l.mine ? '#F1F5FE' : '#FFFFFF';
+      l.aria = l.leader + ' (' + l.code + '): onay yüzde ' + l.lApp + ', ret yüzde ' + l.lRej;
+    });
+    return { leaders: list, top: list.slice(0, 4) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Oy pusulası</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#3F3596}a:hover{color:#2F2775}
+button{font-family:inherit}
+@keyframes stampIn{0%{transform:scale(1.6) rotate(-12deg);opacity:0}65%{transform:scale(0.94) rotate(-12deg);opacity:1}100%{transform:scale(1) rotate(-12deg);opacity:0.9}}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #0B0B0D; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #F2F2F7; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+<div style="flex: none; box-sizing: border-box; padding: 54px 16px 12px; display: flex; flex-direction: column; gap: 12px">
+  <div style="position: relative; height: 44px; display: flex; align-items: center; justify-content: space-between">
+    <a href="Polls.dc.html" style="display: inline-flex; align-items: center; gap: 1px; margin-left: -6px; font-size: 17px; text-decoration: none; min-height: 44px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>Anketler</a>
+    <h1 style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0; font-size: 17px; font-weight: 600">Oy Kabini</h1>
+    <span style="font-size: 15px; color: #6D6D72">{{doneTxt}}</span>
+  </div>
+  <div role="tablist" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; padding: 2px; border-radius: 9px; background: #E3E3E8">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+      <button type="button" role="tab" aria-selected="{{t.on}}" onClick="{{t.go}}" style="height: 30px; border: none; border-radius: 7px; background: {{t.bg}}; box-shadow: {{t.sh}}; font-size: 13px; font-weight: {{t.fw}}; color: #1C1C1E; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px">
+        <sc-if value="{{t.done}}" hint-placeholder-val="{{false}}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#3F3596" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.3l2.3 2.3 4.7-5"></path></svg></sc-if>{{t.label}}
+      </button>
+    </sc-for>
+  </div>
+</div>
+
+<div style="flex: 1; min-height: 0; padding: 0 16px; display: flex">
+  <section aria-label="Temsili anket pusulası" style="flex: 1; min-height: 0; display: flex; flex-direction: column; border-radius: 4px; background: #FBF8F1; box-shadow: 0 0 0 0.5px #D9D0BC, 0 10px 30px rgba(60,50,30,0.12), 0 2px 6px rgba(60,50,30,0.06)">
+    <div style="flex: none; padding: 12px 14px 10px; border-bottom: 1px solid #2E2A22; display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #2E2A22">TEMSİLİ ANKET PUSULASI</span>
+      <span style="font-size: 15px; font-weight: 600; color: #2E2A22">{{sheetTitle}}</span>
+      <span style="font-size: 12px; color: #6A6458">{{sheetHint}}</span>
+    </div>
+    <div style="flex: 1; min-height: 0; overflow-y: auto">
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+        <sc-for list="{{boxes}}" as="b" hint-placeholder-count="12">
+          <button type="button" onClick="{{b.stamp}}" aria-label="{{b.aria}}" aria-pressed="{{b.on}}" style="position: relative; border: none; box-shadow: inset -0.5px -0.5px 0 #D2C8B3; margin: 0; padding: 12px 4px 6px; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; min-height: 162px">
+            <sc-if value="{{isLeader}}" hint-placeholder-val="{{false}}">
+              <span style="width: 42px; height: 50px; border-radius: 5px; background: #EFE9DC; box-shadow: inset 0 0 0 0.5px #CFC6B2; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #4A453B">{{b.initials}}</span>
+              <span style="font-size: 12px; font-weight: 700; line-height: 1.15; text-align: center; color: #2E2A22">{{b.leader}}</span>
+              <span style="font-size: 11px; color: #6A6458">{{b.code}}</span>
+            </sc-if>
+            <sc-if value="{{isParty}}" hint-placeholder-val="{{true}}">
+              <span style="width: 40px; height: 40px; border-radius: 50%; background: {{b.color}}; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{b.letter}}</span>
+              <span style="font-size: 13px; font-weight: 700; color: #2E2A22">{{b.code}}</span>
+              <span style="font-size: 11px; line-height: 1.2; text-align: center; color: #4A453B; height: 27px; overflow: hidden; padding: 0 2px">{{b.name}}</span>
+            </sc-if>
+            <span style="margin-top: auto; width: 100%; height: 62px; display: flex; align-items: center; justify-content: center">
+              <sc-if value="{{b.on}}" hint-placeholder-val="{{false}}">
+                <span aria-hidden="true" style="width: 54px; height: 54px; border-radius: 50%; box-shadow: inset 0 0 0 2.5px #3F3596, inset 0 0 0 5px rgba(251,248,241,0.9), inset 0 0 0 6.5px #3F3596; color: #3F3596; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; letter-spacing: 1px; animation: stampIn 300ms cubic-bezier(.2,.9,.3,1.2) both">{{stampWord}}</span>
+              </sc-if>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div style="flex: none; padding: 14px 16px 36px; display: flex; flex-direction: column; gap: 8px">
+  <a href="Sealed.dc.html" style="height: 50px; border-radius: 14px; background: #3F3596; color: #FFFFFF; text-decoration: none; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center">Pusulayı katla ve zarfa koy</a>
+  <span style="text-align: center; font-size: 13px; color: #6D6D72">Lider ve Asla bölümleri isteğe bağlıdır.</span>
+</div>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Yeni Ufuk Partisi|Selin Arda|#2F5FD0;ADP|Anadolu Demokrasi Partisi|Kemal Tunç|#B0441A;BHP|Birlik ve Huzur Partisi|Murat Ergin|#0E6F57;HLK|Halkın Kalkınma Partisi|Ayşe Doğan|#B42D45;ÇEP|Çevre ve Emek Partisi|Deniz Kaya|#3B7F2A;GSP|Gelecek Sesi Partisi|Emre Yalın|#6A44C2;MİD|Milli Dayanışma Partisi|Hakan Sezer|#7A5C0F;ÖTP|Özgür Toplum Partisi|Leyla Aksoy|#A8327A;KAP|Kıyı ve Akdeniz Partisi|Orhan Bilge|#1F6F8C;YDP|Yeşil Dönüşüm Partisi|Nazlı Er|#276749;EGP|Eşit Gelecek Partisi|Tarık Uslu|#4B5BB5;SNA|Sanayi ve Atılım Partisi|Cengiz Özbek|#7A4A2A;TBP|Toprak ve Bereket Partisi|Fatma Ilgaz|#586A12;GKP|Gençlik ve Kültür Partisi|Arda Soylu|#B83280;HAD|Hukuk ve Adalet Partisi|Zeynep Akalın|#34495E;DNZ|Deniz ve Emek Partisi|Barış Yüce|#0B6A8C;KYP|Kent ve Yaşam Partisi|Gül Erkan|#A0522D;BİP|Bilim ve İnovasyon Partisi|Onur Tekin|#5A3FA0;ÜRP|Üretim Partisi|Sinan Polat|#8A3324;ÇAP|Çağdaş Atılım Partisi|Pelin Ateş|#2B6CB0;YOP|Yol Partisi|Erdem Kılıç|#8C5A12;SİP|Sivil İrade Partisi|Hande Koç|#6B46C1;ESP|Esnaf ve Sanatkâr Partisi|Yavuz Tan|#9C4221;KİP|Köy İnsanları Partisi|Melis Yurt|#2C7A7B";
+var TABS = [
+  { k: 'party', label: 'Parti', title: 'Parti tercihi', hint: 'Desteklediğin partinin kutusuna dokun', word: 'EVET' },
+  { k: 'leader', label: 'Lider', title: 'Lider tercihi', hint: 'Desteklediğin liderin kutusuna dokun', word: 'EVET' },
+  { k: 'never', label: 'Asla', title: 'Asla oy vermeyeceğim', hint: 'Asla oy vermeyeceğin partinin kutusuna dokun', word: 'ASLA' }
+];
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var tab = st.tab || 'party';
+    var picks = st.picks || { party: 2, leader: -1, never: -1 };
+    var T = TABS.filter(function(t){ return t.k === tab; })[0];
+    var ps = RAW.split(';').map(function(r, i){
+      var f = r.split('|'); var n = f[2].split(' ');
+      return { i: i, code: f[0], name: f[1], leader: f[2], color: f[3], letter: f[0].charAt(0), initials: n[0].charAt(0) + n[n.length - 1].charAt(0) };
+    });
+    var done = ['party', 'leader', 'never'].filter(function(k){ return picks[k] >= 0; }).length;
+    return {
+      isLeader: tab === 'leader', isParty: tab !== 'leader',
+      sheetTitle: T.title, sheetHint: T.hint, stampWord: T.word,
+      doneTxt: done + ' mühür',
+      tabs: TABS.map(function(t){
+        var on = t.k === tab;
+        return { label: t.label, on: on, done: picks[t.k] >= 0, fw: on ? 600 : 500, bg: on ? '#FFFFFF' : 'transparent', sh: on ? '0 3px 8px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.04)' : 'none', go: function(){ self.setState({ tab: t.k }); } };
+      }),
+      boxes: ps.map(function(p){
+        var on = picks[tab] === p.i;
+        return Object.assign({}, p, {
+          on: on,
+          aria: (tab === 'leader' ? p.leader + ', ' + p.code : p.name) + (on ? ', mühürlendi' : ''),
+          stamp: function(){
+            var cur = Object.assign({}, (self.state && self.state.picks) || { party: 2, leader: -1, never: -1 });
+            cur[tab] = cur[tab] === p.i ? -1 : p.i;
+            self.setState({ picks: cur });
+          }
+        });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

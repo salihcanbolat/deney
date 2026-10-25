@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Canlı Pano – parmağı kaydırma</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1F5BD8}a:hover{color:#174AB3}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 430px; height: 884px; box-sizing: border-box; padding: 20px; background: #1C1C1E; border-radius: 68px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif; color: #1C1C1E">
+<div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #EEF0F5; display: flex; flex-direction: column">
+<div aria-hidden="true" style="position: absolute; top: 11px; left: 135px; width: 120px; height: 35px; border-radius: 20px; background: #000000; z-index: 5"></div>
+
+<div style="flex: 1; min-height: 0; box-sizing: border-box; padding: 56px 16px 0; display: flex; flex-direction: column; gap: 10px">
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 40px">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px">Canlı Pano</h1>
+    <span style="padding: 5px 10px; border-radius: 999px; background: #E2E4EA; font-size: 11.5px; font-weight: 700; color: #4A4A50">Örnek veri</span>
+  </div>
+
+  <section aria-live="polite" aria-label="Parti istatistik paneli" style="height: 306px; box-sizing: border-box; border-radius: 24px; background: #FFFFFF; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 28px rgba(22,34,70,0.12), 0 1px 2px rgba(0,0,0,0.05)">
+    <sc-if value="{{held}}" hint-placeholder-val="{{true}}">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span style="width: 48px; height: 48px; flex: none; border-radius: 50%; background: {{a.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; box-shadow: inset 0 0 0 3px rgba(255,255,255,0.35)">{{a.letter}}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+          <span style="font-size: 12px; font-weight: 600; color: #5E5E63">{{a.code}} · {{a.place}}. sırada / 40</span>
+          <span style="font-size: 17px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{a.name}}</span>
+        </div>
+        <sc-if value="{{a.mine}}" hint-placeholder-val="{{false}}">
+          <span style="flex: none; padding: 5px 9px; border-radius: 999px; background: #E4ECFB; color: #1A4FBF; font-size: 11px; font-weight: 700">Senin partin</span>
+        </sc-if>
+        <sc-if value="{{a.notMine}}" hint-placeholder-val="{{true}}">
+          <span style="flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; background: #F2F2F7; color: #4A4A50; font-size: 11px; font-weight: 700"><span style="width: 6px; height: 6px; border-radius: 50%; background: #1F5BD8"></span>Basılı</span>
+        </sc-if>
+      </div>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 60px; gap: 10px; align-items: center">
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 10px; border-radius: 14px; background: #F1F5FE">
+          <span style="font-size: 11px; font-weight: 700; color: #1A4FBF">Olumlu oy</span>
+          <span style="font-size: 27px; font-weight: 800; color: #1F5BD8; letter-spacing: -0.5px">%{{a.posTxt}}</span>
+          <span style="font-size: 11px; color: #5E5E63">{{a.posN}} oy</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 10px; border-radius: 14px; background: #FBF1EA">
+          <span style="font-size: 11px; font-weight: 700; color: #9A4415">Olumsuz tercih</span>
+          <span style="font-size: 27px; font-weight: 800; color: #B4531A; letter-spacing: -0.5px">%{{a.negTxt}}</span>
+          <span style="font-size: 11px; color: #5E5E63">{{a.negN}} kişi</span>
+        </div>
+        <div role="img" aria-label="Mum grafiği: olumlu yukarı, olumsuz aşağı" style="position: relative; width: 60px; height: 92px">
+          <span style="position: absolute; left: 4px; right: 4px; top: 46px; height: 1px; background: #8E8E93"></span>
+          <span style="position: absolute; left: 29px; width: 2px; bottom: 46px; height: {{a.upWick}}px; background: #9DB8F0"></span>
+          <span style="position: absolute; left: 22px; width: 16px; bottom: 46px; height: {{a.upH}}px; border-radius: 4px 4px 0 0; background: #1F5BD8"></span>
+          <span style="position: absolute; left: 29px; width: 2px; top: 47px; height: {{a.downWick}}px; background: #F0C2A0"></span>
+          <span style="position: absolute; left: 22px; width: 16px; top: 47px; height: {{a.downH}}px; border-radius: 0 0 4px 4px; background: #E07A2E"></span>
+        </div>
+      </div>
+
+      <sc-if value="{{showSpark}}" hint-placeholder-val="{{true}}">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 14px; background: #F6F6F9">
+          <div style="display: flex; flex-direction: column; flex: none; width: 92px">
+            <span style="font-size: 11px; font-weight: 600; color: #5E5E63">Son 7 gün</span>
+            <span style="font-size: 14px; font-weight: 800; color: {{a.deltaColor}}">{{a.deltaTxt}} puan</span>
+          </div>
+          <svg viewBox="0 0 100 32" preserveAspectRatio="none" role="img" aria-label="Son 7 gün olumlu oy değişimi" style="flex: 1; height: 34px">
+            <polyline points="{{a.spark}}" fill="none" stroke="#1F5BD8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"></polyline>
+          </svg>
+        </div>
+      </sc-if>
+      <sc-if value="{{showTrail}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 14px; background: #F6F6F9; min-height: 52px; box-sizing: border-box">
+          <span style="font-size: 11px; font-weight: 600; color: #5E5E63; width: 54px; flex: none; line-height: 1.25">Kaydırma izi</span>
+          <sc-for list="{{trailChips}}" as="t" hint-placeholder-count="3">
+            <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px 4px 4px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 0 0 1px #E3E3E8">
+              <span style="width: 18px; height: 18px; border-radius: 50%; background: {{t.color}}; color: #FFFFFF; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{t.letter}}</span>
+              <span style="font-size: 10.5px; font-weight: 700">{{t.code}}</span>
+              <span style="font-size: 10px; font-weight: 600; color: #1F5BD8">%{{t.posTxt}}</span>
+            </span>
+            <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="none" stroke="#8E8E93" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2l3 3-3 3"></path></svg>
+          </sc-for>
+          <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px 4px 4px; border-radius: 999px; background: #1F5BD8; color: #FFFFFF">
+            <span style="width: 18px; height: 18px; border-radius: 50%; background: {{a.color}}; color: #FFFFFF; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px #FFFFFF">{{a.letter}}</span>
+            <span style="font-size: 10.5px; font-weight: 700">{{a.code}}</span>
+          </span>
+        </div>
+      </sc-if>
+
+      <div style="display: flex; align-items: center; gap: 10px">
+        <span style="width: 36px; height: 36px; flex: none; border-radius: 50%; background: #F2F2F7; color: {{a.color}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; box-shadow: inset 0 0 0 2px {{a.color}}">{{a.initials}}</span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px">
+          <div style="display: flex; justify-content: space-between; font-size: 12px">
+            <span><span style="color: #5E5E63">Lider · </span><b>{{a.leader}}</b></span>
+            <a href="Leaders.dc.html" style="font-weight: 600; text-decoration: none">Ayrıntı</a>
+          </div>
+          <div aria-hidden="true" style="display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: #E9E9EE">
+            <span style="width: {{a.lApp}}%; background: #1F5BD8"></span>
+            <span style="flex: 1"></span>
+            <span style="width: {{a.lRej}}%; background: #E07A2E"></span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 600">
+            <span style="color: #1A4FBF">Onay %{{a.lApp}}</span>
+            <span style="color: #9A4415">Ret %{{a.lRej}}</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{idle}}" hint-placeholder-val="{{false}}">
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 0 20px">
+        <span style="width: 64px; height: 64px; border-radius: 50%; background: #F1F5FE; display: flex; align-items: center; justify-content: center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1F5BD8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"></path><path d="M12 9.5a1.5 1.5 0 0 1 3 0V11"></path><path d="M15 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a5 5 0 0 1-4-2l-2.6-3.5a1.5 1.5 0 0 1 2.3-1.9L9 15"></path></svg>
+        </span>
+        <span style="font-size: 17px; font-weight: 700">Bir parti logosuna basılı tut</span>
+        <span style="font-size: 13.5px; line-height: 1.4; color: #5E5E63">Parmağını kaldırmadan diğer logolara kaydır; bu panel parmağının altındaki partiyi anında gösterir.</span>
+      </div>
+    </sc-if>
+  </section>
+
+  <section aria-label="Geniş widget – seçim pusulası" style="position: relative; border-radius: 24px; background: #FFFFFF; padding: 12px 10px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px">
+      <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.6px; color: #4A4A50">SEÇİM PUSULASI · GENİŞ</span>
+      <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: #1A4FBF"><span style="width: 6px; height: 6px; border-radius: 50%; background: #1F5BD8"></span>Canlı</span>
+    </div>
+    <div onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerCancel="{{up}}" style="position: relative; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); touch-action: none; user-select: none; -webkit-user-select: none">
+      <sc-for list="{{cells}}" as="c" hint-placeholder-count="32">
+        <button type="button" aria-label="{{c.aria}}" onFocus="{{c.focus}}" style="position: relative; height: 58px; border: none; margin: 0; padding: 6px 0 0; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: {{c.op}}; z-index: {{c.z}}">
+          <span style="width: 34px; height: 34px; border-radius: 50%; background: {{c.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; transform: {{c.tf}}; box-shadow: {{c.ring}}">{{c.letter}}</span>
+          <span style="font-size: 9.5px; font-weight: 700; color: #1C1C1E">{{c.code}}</span>
+          <sc-if value="{{c.isActive}}" hint-placeholder-val="{{false}}">
+            <span aria-hidden="true" style="position: absolute; left: 50%; top: 12px; width: 52px; height: 52px; margin-left: -26px; border-radius: 50%; background: rgba(28,28,30,0.16); box-shadow: 0 0 0 1px rgba(255,255,255,0.7) inset; pointer-events: none"></span>
+            <span aria-hidden="true" style="position: absolute; left: 50%; bottom: 52px; width: 62px; margin-left: -31px; padding: 8px 0 7px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 8px 20px rgba(22,34,70,0.22), 0 0 0 1px rgba(0,0,0,0.04); display: flex; flex-direction: column; align-items: center; gap: 3px; pointer-events: none">
+              <span style="width: 38px; height: 38px; border-radius: 50%; background: {{c.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800">{{c.letter}}</span>
+              <span style="font-size: 10.5px; font-weight: 800; color: #1C1C1E">%{{c.posTxt}}</span>
+            </span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 0; font-size: 11px; color: #5E5E63">
+      <span style="display: inline-flex; align-items: center; gap: 5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5E5E63" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M15 7l5 5-5 5"></path></svg>Basılı tut ve kaydır</span>
+      <span>İlk 32 / 40 parti</span>
+    </div>
+  </section>
+</div>
+
+<nav aria-label="Ana menü" style="flex: none; height: 83px; box-sizing: border-box; padding: 7px 8px 0; background: #FBFBFD; border-top: 1px solid #D9D9DE; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+  <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>Pusula</a>
+  <a href="Vote.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"></rect><path d="M8 12.3l2.8 2.8L16.2 9.6"></path></svg>Oy Ver</a>
+  <a href="Results.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #6B6B70; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20v-9M12 20V4M19 20v-6"></path></svg>Sonuçlar</a>
+  <a href="Press.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #1F5BD8; font-size: 10px; font-weight: 600; min-height: 44px">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="8" rx="2"></rect><rect x="3.5" y="14" width="7.5" height="6.5" rx="2"></rect><rect x="13" y="14" width="7.5" height="6.5" rx="2"></rect></svg>Pano</a>
+</nav>
+<div aria-hidden="true" style="position: absolute; bottom: 8px; left: 128px; width: 134px; height: 5px; border-radius: 3px; background: #1C1C1E"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startIndex":{"editor":"int","default":2,"min":0,"max":31,"section":"Etkileşim"},"startTrail":{"editor":null,"default":[1,9,10,2]},"showTrail":{"editor":"boolean","default":true,"section":"Etkileşim"},"$preview":{"width":430,"height":884}}'>
+var RAW = "YUP|Yeni Ufuk Partisi|Selin Arda|#2F5FD0|16.4|22.1;ADP|Anadolu Demokrasi Partisi|Kemal Tunç|#B0441A|15.9|23.8;BHP|Birlik ve Huzur Partisi|Murat Ergin|#0E6F57|11.2|9.2;HLK|Halkın Kalkınma Partisi|Ayşe Doğan|#B42D45|8.7|6.4;ÇEP|Çevre ve Emek Partisi|Deniz Kaya|#3B7F2A|6.3|3.1;GSP|Gelecek Sesi Partisi|Emre Yalın|#6A44C2|5.1|4.8;MİD|Milli Dayanışma Partisi|Hakan Sezer|#7A5C0F|4.4|7.9;ÖTP|Özgür Toplum Partisi|Leyla Aksoy|#A8327A|3.8|2.2;KAP|Kıyı ve Akdeniz Partisi|Orhan Bilge|#1F6F8C|3.1|1.9;YDP|Yeşil Dönüşüm Partisi|Nazlı Er|#276749|2.7|1.4;EGP|Eşit Gelecek Partisi|Tarık Uslu|#4B5BB5|2.4|2.6;SNA|Sanayi ve Atılım Partisi|Cengiz Özbek|#7A4A2A|2.1|1.7;TBP|Toprak ve Bereket Partisi|Fatma Ilgaz|#586A12|1.9|1.1;GKP|Gençlik ve Kültür Partisi|Arda Soylu|#B83280|1.7|0.9;HAD|Hukuk ve Adalet Partisi|Zeynep Akalın|#34495E|1.5|1.3;DNZ|Deniz ve Emek Partisi|Barış Yüce|#0B6A8C|1.3|0.8;KYP|Kent ve Yaşam Partisi|Gül Erkan|#A0522D|1.2|0.7;BİP|Bilim ve İnovasyon Partisi|Onur Tekin|#5A3FA0|1.1|0.6;ÜRP|Üretim Partisi|Sinan Polat|#8A3324|1.0|1.0;ÇAP|Çağdaş Atılım Partisi|Pelin Ateş|#2B6CB0|0.9|1.5;YOP|Yol Partisi|Erdem Kılıç|#8C5A12|0.8|0.5;SİP|Sivil İrade Partisi|Hande Koç|#6B46C1|0.7|0.4;ESP|Esnaf ve Sanatkâr Partisi|Yavuz Tan|#9C4221|0.7|0.6;KİP|Köy İnsanları Partisi|Melis Yurt|#2C7A7B|0.6|0.3;OTP|Ortak Toplum Partisi|Rıza Bozkurt|#744210|0.6|0.9;DÖP|Dönüşüm Partisi|Ece Turan|#9D2F6B|0.5|0.3;BYP|Bağımsız Yurttaş Partisi|Kaan Eren|#4A5568|0.5|0.4;TEP|Teknoloji Partisi|İpek Kalkan|#2C5282|0.4|0.2;ÇİP|Çiftçi Partisi|Halil Duman|#556F1C|0.4|0.3;UYP|Uyum Partisi|Sevgi Çınar|#97266D|0.4|0.5;AİP|Aile ve İnsan Partisi|Ahmet Gök|#975A16|0.3|0.4;GÜP|Güneş Partisi|Selda Uz|#A3401A|0.3|0.2";
+var TOTAL = 128460;
+function pct(v){ return v.toFixed(1).replace('.', ','); }
+function num(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+function loadParties(){
+  return RAW.split(';').map(function(r, i){
+    var f = r.split('|'); var pos = parseFloat(f[4]), neg = parseFloat(f[5]);
+    return { i: i, code: f[0], name: f[1], leader: f[2], color: f[3], pos: pos, neg: neg, posTxt: pct(pos), negTxt: pct(neg), letter: f[0].charAt(0) };
+  });
+}
+function detail(p){
+  var vals = [], k;
+  for (k = 0; k < 6; k++) vals.push(p.pos * (1 + 0.09 * Math.sin(k * 1.3 + p.i * 0.9)));
+  vals.push(p.pos);
+  var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), rg = (mx - mn) || 1;
+  var pts = vals.map(function(v, j){ return (j * 100 / 6).toFixed(1) + ',' + (29 - (v - mn) / rg * 26).toFixed(1); }).join(' ');
+  var d = vals[6] - vals[0];
+  var sc = 40 / 24;
+  var names = p.leader.split(' ');
+  return Object.assign({}, p, {
+    place: p.i + 1,
+    mine: p.code === 'BHP', notMine: p.code !== 'BHP',
+    posN: num(p.pos / 100 * TOTAL), negN: num(p.neg / 100 * TOTAL),
+    upH: Math.max(2, Math.min(44, p.pos * sc)).toFixed(1), downH: Math.max(2, Math.min(44, p.neg * sc)).toFixed(1),
+    upWick: Math.max(4, Math.min(46, mx * sc + 4)).toFixed(1), downWick: Math.max(4, Math.min(45, p.neg * 1.12 * sc + 3)).toFixed(1),
+    spark: pts,
+    deltaTxt: (d >= 0 ? '+' : '−') + pct(Math.abs(d)), deltaColor: d >= 0 ? '#1A4FBF' : '#9A4415',
+    initials: names[0].charAt(0) + names[names.length - 1].charAt(0),
+    lApp: Math.min(64, Math.round(p.pos * 1.8 + 14)), lRej: Math.min(58, Math.round(p.neg * 1.3 + 11))
+  });
+}
+class Component extends DCLogic {
+  cellFrom(e) {
+    var r = e.currentTarget.getBoundingClientRect();
+    var c = Math.floor((e.clientX - r.left) / r.width * 8);
+    var row = Math.floor((e.clientY - r.top) / r.height * 4);
+    c = Math.max(0, Math.min(7, c)); row = Math.max(0, Math.min(3, row));
+    return row * 8 + c;
+  }
+  renderVals() {
+    var self = this;
+    var s = this.state || {};
+    var start = this.props.startIndex ?? 2;
+    var showTrail = this.props.showTrail ?? true;
+    var held = s.held === undefined ? true : s.held;
+    var active = s.active === undefined ? start : s.active;
+    var trail = s.trail || (this.props.startTrail ?? [1, 9, 10, 2]);
+    var parties = loadParties();
+    var a = detail(parties[active]);
+    var before = trail.slice(0, -1).filter(function(x){ return x !== active; }).slice(-3);
+    return {
+      held: held, idle: !held, a: a,
+      showTrail: showTrail, showSpark: !showTrail,
+      trailChips: before.map(function(x){ return parties[x]; }),
+      cells: parties.map(function(p){
+        var isActive = held && p.i === active;
+        var visited = held && showTrail && !isActive && trail.indexOf(p.i) >= 0;
+        return Object.assign({}, p, {
+          isActive: isActive,
+          op: !held || isActive || visited ? 1 : 0.5,
+          z: isActive ? 4 : 1,
+          tf: isActive ? 'scale(1.12)' : 'none',
+          ring: isActive ? '0 0 0 2px #FFFFFF, 0 0 0 4px #1F5BD8' : (visited ? '0 0 0 2px #FFFFFF, 0 0 0 4px #A9C1F2' : 'none'),
+          aria: p.name + ' istatistiklerini göster',
+          focus: function(){ self.setState({ held: true, active: p.i, trail: [p.i] }); }
+        });
+      }),
+      down: function(e){
+        var idx = self.cellFrom(e);
+        self._drag = true;
+        try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+        self.setState({ held: true, active: idx, trail: [idx] });
+      },
+      move: function(e){
+        if (!self._drag) return;
+        var idx = self.cellFrom(e);
+        var st = self.state || {};
+        if (idx === st.active) return;
+        self.setState({ active: idx, trail: (st.trail || []).concat([idx]).slice(-8) });
+      },
+      up: function(){ self._drag = false; self.setState({ held: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
