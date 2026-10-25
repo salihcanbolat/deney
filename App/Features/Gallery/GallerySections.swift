@@ -4,10 +4,10 @@ import PollCore
 
 // MARK: - Canlı önizleme
 
-/// Mumların kendi kendine oynayan önizlemesi: dinlenme → basılı tut → parmağı kaydır → bırak.
-/// Gerçek jest Aşama 2'de gelir; burada yalnızca animasyonların hissi görülür.
+/// Şeridin kendi kendine oynayan önizlemesi: dinlenme → basılı tut → parmağı kaydır → bırak.
+/// Gerçek jest kilit ekranında; burada yalnızca animasyonların hissi görülür.
 struct CandleDemoCard: View {
-    let sample: StripSample
+    let data: StripData
     var animated = true
 
     @State private var held = false
@@ -15,9 +15,7 @@ struct CandleDemoCard: View {
 
     var body: some View {
         LockBackdrop {
-            StripPanel(title: sample.title) {
-                StripColumnsPreview(columns: sample.columns, scale: sample.scale, held: held, activeIndex: activeIndex)
-            }
+            StripView(data: data, held: $held, activeIndex: $activeIndex, interactive: false)
         }
         .task(id: animated) {
             guard animated else { return }
@@ -51,20 +49,16 @@ struct CandleDemoCard: View {
 // MARK: - Mum çifti
 
 struct CandleStatesCard: View {
-    let sample: StripSample
+    let data: StripData
 
     var body: some View {
         LockBackdrop {
             VStack(spacing: 12) {
                 caption("Dinlenme · 34 pt alan, 7 pt mum")
-                StripPanel(title: sample.title) {
-                    StripColumnsPreview(columns: sample.columns, scale: sample.scale, held: false, activeIndex: 0)
-                }
+                StripView(data: data, held: .constant(false), activeIndex: .constant(0), interactive: false)
                 caption("Basılı tutma · 92 pt artı, 70 pt eksi alan, 10 pt mum")
                     .padding(.top, 6)
-                StripPanel(title: sample.title) {
-                    StripColumnsPreview(columns: sample.columns, scale: sample.scale, held: true, activeIndex: 2)
-                }
+                StripView(data: data, held: .constant(true), activeIndex: .constant(2), interactive: false)
             }
         }
     }

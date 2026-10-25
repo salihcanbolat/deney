@@ -19,7 +19,7 @@ struct GalleryContent: View {
     var animated = true
 
     var body: some View {
-        let sample = StripSample(data)
+        let sample = StripData(data)
         VStack(alignment: .leading, spacing: 0) {
             Text("Bileşenler")
                 .font(AppFont.largeTitle)
@@ -27,18 +27,18 @@ struct GalleryContent: View {
                 .foregroundStyle(Palette.label)
                 .padding(.leading, 4)
                 .padding(.bottom, 2)
-            Text("Aşama 1 · Temsili anketler · örnek veri")
+            Text("Temsili anketler · örnek veri")
                 .font(AppFont.footnote)
                 .foregroundStyle(Palette.secondaryText)
                 .padding(.leading, 4)
                 .padding(.bottom, 22)
 
             VStack(alignment: .leading, spacing: 26) {
-                GroupedSection(title: "CANLI ÖNİZLEME", footer: "Dinlenme → basılı tut → parmağı kaydır → bırak. Gerçek jest Aşama 2'de.") {
-                    CandleDemoCard(sample: sample, animated: animated)
+                GroupedSection(title: "CANLI ÖNİZLEME", footer: "Dinlenme → basılı tut → parmağı kaydır → bırak. Gerçek jest kilit ekranında.") {
+                    CandleDemoCard(data: sample, animated: animated)
                 }
                 GroupedSection(title: "MUM ÇİFTİ", footer: "Sol mum parti, sağ mum lider. Tüm mumlar aynı ölçeği kullanır (tavan %\(Int(sample.scale.ceiling))).") {
-                    CandleStatesCard(sample: sample)
+                    CandleStatesCard(data: sample)
                 }
                 GroupedSection(title: "PARTİ LOGOSU", footer: "Şimdilik parti renginde daire + kodun ilk harfi. Gerçek logo geldiğinde yalnızca veri değişir.") {
                     LogoShowcase(parties: sample.columns.map(\.party))
