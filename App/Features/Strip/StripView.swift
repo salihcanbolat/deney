@@ -246,7 +246,10 @@ struct HeldHeader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             // İsimler hızlı kaydırmada üst üste binmesin diye kısa ve net bir geçiş.
             .animation(.easeOut(duration: 0.12), value: column.id)
-            RatioTable(row: column.row, isSymbolic: column.isSymbolic)
+            // Sembolik veride tablo yalnızca "–" gösterirdi; yeri parti adına bırakılır.
+            if !column.isSymbolic {
+                RatioTable(row: column.row)
+            }
         }
         .padding(.horizontal, 6)
         .accessibilityHidden(true)
