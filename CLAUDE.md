@@ -334,4 +334,4 @@ Bölüm 13'teki sorular ve keşifte çıkan ek konular şöyle karara bağlandı
 - `Packages/PollCore`: arayüzsüz çekirdek (modeller, örnek veri, `CandleScale`, `StripGeometry`); `swift test` ile test edilir.
 - `Packages/DesignSystem`: token'lar, `PartyLogo`, `VoteCandlePair`.
 - Örnek veri `tools/generate_mock_data.py` ile üretilir; JSON'u elle düzenleme.
-- CI (`.github/workflows/ios.yml`) her push'ta derler ve test eder. Commit mesajında `[ekran]` varsa ekran görüntülerini ve videoyu aynı dalda `docs/screenshots/latest/` altına yazar; sonraki push'tan önce `git pull --rebase` gerekir.
+- CI (`.github/workflows/ios.yml`) her push'ta derler ve test eder. Commit mesajında `[ekran]` varsa ekran görüntülerini (ve mesajda `[video]` da varsa ekran kaydını) aynı dalda `docs/screenshots/latest/` altına yazar; sonraki push'tan önce `git pull --rebase` gerekir.

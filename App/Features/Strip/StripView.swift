@@ -208,15 +208,17 @@ struct HeldHeader: View {
                     .font(LockFont.partyName)
                     .foregroundStyle(.white)
                     .lineLimit(1)
-                    .contentTransition(.interpolate)
+                    .contentTransition(.opacity)
                 Text("\(column.party.leaderName) · \(column.place). sıra")
                     .font(LockFont.leaderLine)
                     .monospacedDigit()
                     .foregroundStyle(Color.white.opacity(0.72))
                     .lineLimit(1)
-                    .contentTransition(.interpolate)
+                    .contentTransition(.opacity)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            // İsimler hızlı kaydırmada üst üste binmesin diye kısa ve net bir geçiş.
+            .animation(.easeOut(duration: 0.12), value: column.id)
             RatioTable(row: column.row)
         }
         .padding(.horizontal, 6)
@@ -229,7 +231,7 @@ struct RatioTable: View {
     let row: PollResultRow
 
     var body: some View {
-        Grid(horizontalSpacing: 0, verticalSpacing: 2) {
+        Grid(horizontalSpacing: 6, verticalSpacing: 2) {
             GridRow {
                 Color.clear.frame(width: 12, height: 1)
                 heading("Parti")
@@ -310,7 +312,7 @@ struct StripGlass: View {
         shape
             .fill(.ultraThinMaterial)
             .environment(\.colorScheme, .dark)
-            .opacity(0.55)
+            .opacity(0.2)
             .overlay { shape.fill(Palette.stripGlassFill) }
             .overlay { shape.strokeBorder(Palette.stripGlassStroke, lineWidth: 0.5) }
     }

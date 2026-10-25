@@ -103,12 +103,16 @@ jobs:
 
       - name: Ekran görüntülerini dala yaz
         if: always() && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ekran]'))
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           set -e
           OUT=docs/screenshots/latest
           rm -rf "$OUT"
           mkdir -p "$OUT"
           cp -R "$SHOTS"/. "$OUT"/ 2>/dev/null || true
+          # Video büyük; yalnızca commit mesajında [video] varsa depoya yazılır.
+          if ! echo "$COMMIT_MESSAGE" | grep -q "\[video\]"; then rm -f "$OUT"/demo.*; fi
           {
             echo "Kaynak commit: $GITHUB_SHA"
             echo "Tarih (UTC): $(date -u +%Y-%m-%dT%H:%M:%SZ)"
