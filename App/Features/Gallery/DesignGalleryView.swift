@@ -37,10 +37,10 @@ struct GalleryContent: View {
                 GroupedSection(title: "CANLI ÖNİZLEME", footer: "Dinlenme → basılı tut → parmağı kaydır → bırak. Gerçek jest kilit ekranında.") {
                     CandleDemoCard(data: sample, animated: animated)
                 }
-                GroupedSection(title: "MUM ÇİFTİ", footer: "Sol mum parti, sağ mum lider. Tüm mumlar aynı ölçeği kullanır (tavan %\(Int(sample.scale.ceiling))).") {
+                GroupedSection(title: "MUM ÇİFTİ", footer: "Sol mum parti, sağ mum lider. Değerler sembolik ve eşit; gerçek oylar geldiğinde mumlar ortak ölçekle uzar.") {
                     CandleStatesCard(data: sample)
                 }
-                GroupedSection(title: "PARTİ LOGOSU", footer: "Şimdilik parti renginde daire + kodun ilk harfi. Gerçek logo geldiğinde yalnızca veri değişir.") {
+                GroupedSection(title: "PARTİ LOGOSU", footer: "Gerçek logolar beyaz rozetin içinde. Logosu henüz olmayan parti, kendi renginde bir rozetle gösterilir.") {
                     LogoShowcase(parties: sample.columns.map(\.party))
                 }
                 GroupedSection(title: "RENKLER", footer: "Soldaki kutu açık mod, sağdaki koyu mod önerisi.") {

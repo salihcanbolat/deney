@@ -32,7 +32,7 @@ Türkiye'deki seçimler için **çevrim içi, canlı ve temsili bir anket uygula
 
 ## 2. Kesin kurallar (pazarlık konusu değil)
 
-- **Tüm veriler örnek veridir.** Partiler, liderler ve rakamlar uydurmadır. Gerçek parti, kişi ya da gerçek anket sonucu kullanma. Arayüzde "temsili anket / örnek veri" ibaresi görünür olmalı.
+- **Rakamlar uydurulmaz.** *(25 Ekim 2026'da kullanıcı kararıyla güncellendi, Bölüm 15.14.)* Partiler, genel başkanlar, logolar ve fotoğraflar gerçektir. Oranlar ise gerçek oylar gelene kadar herkes için eşit ve sembolik tutulur; arayüz oran göstermez, "Sembolik" yazar. Uydurma anket sonucu asla kullanılmaz.
 - **Mumlar tek ve sabit bir renktedir.** Parti renkleri mumlarda kullanılmaz, yalnızca logolarda bulunur. Gerekçe: oylar vatandaşa aittir.
 - **Mum düzeni:** Logo merkezdedir ve sıfır çizgisi gibi davranır.
   - Logonun **üstünde**, birbirine bitişik iki mum yukarı uzanır: **solda parti oyu, sağda liderin oyu**.
@@ -327,6 +327,12 @@ Bölüm 13'teki sorular ve keşifte çıkan ek konular şöyle karara bağlandı
 11. **Bundle ID:** `com.salihcanbolat.secimanketi`. Ücretli geliştirici hesabı Aşama 4'ten önce gerekli (App Group, widget, Sign in with Apple, Live Activity).
 12. **Ekran görüntüleri:** GitHub Actions'ın macOS makinesinde üretilir (bulut oturumunda Xcode yok).
 13. **Hareket:** Kullanıcının isteği: animasyonlar çok güzel ve iOS tarzında olmalı. Tüm geçişler iOS yay eğrileriyle yapılır ve yarıda kesilebilir.
+14. **Gerçek partiler (25 Ekim 2026):** Kullanıcı gerçek parti logolarını ve genel başkanlarını istedi, repoyu gizli yapacak, rakamların sembolik olacağını söyledi. Uygulanan:
+    - Veri `tools/generate_mock_data.py`'de: 17 parti, sıra TBMM sandalye sayısı (NTV, 20 Ekim 2026), tüm oranlar eşit ve `isSymbolic: true`.
+    - Logolar ve fotoğraflar Wikimedia'dan CI'da indirilir (`tools/party_assets.json`, `.github/workflows/assets.yml`). Lisans ve kullanım sorumluluğu proje sahibinde; fotoğraflar çoğunlukla CC BY-SA (atıf gerekir).
+    - Belirsizler: CHP liderliği mahkeme kararına bağlı (Kılıçdaroğlu); YENİ Parti'nin kalıcı logosu kongrede belirlenecek; Yeni Yol genel başkanı zayıf kaynaklı. HÜDA PAR, Yeni Yol ve DP için serbest logo bulunamadı.
+    - Basılı tutunca başlıkta lider fotoğrafı gösterilir (tasarıma kullanıcı isteğiyle eklendi).
+15. **Görsel kalite:** Kullanıcı premium görünüm istedi. Kilit ekranında: iOS 26'da Liquid Glass cam, balmumu dokulu mumlar (renk aynı, yalnızca ışık), madeni para rozet logolar, mürekkep tonlarında duvar kâğıdı.
 
 ## 16. Geliştirme notları
 

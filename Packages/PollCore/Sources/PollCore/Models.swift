@@ -13,8 +13,10 @@ public struct Party: Identifiable, Hashable, Codable, Sendable {
     public let logoAsset: String?
     /// Lider fotoğrafları için asset adları (eş genel başkanlı partilerde iki tane). Yoksa baş harfler gösterilir.
     public let leaderPhotoAssets: [String]?
+    /// TBMM'deki sandalye sayısı (sıralama için; oy oranı değildir).
+    public let seats: Int?
 
-    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAssets: [String]? = nil) {
+    public init(id: String, code: String, name: String, leaderName: String, color: String, logoAsset: String? = nil, leaderPhotoAssets: [String]? = nil, seats: Int? = nil) {
         self.id = id
         self.code = code
         self.name = name
@@ -22,6 +24,7 @@ public struct Party: Identifiable, Hashable, Codable, Sendable {
         self.color = color
         self.logoAsset = logoAsset
         self.leaderPhotoAssets = leaderPhotoAssets
+        self.seats = seats
     }
 
     /// Logo yer tutucusundaki harf: kodun ilk harfi ("ÇEP" → "Ç").

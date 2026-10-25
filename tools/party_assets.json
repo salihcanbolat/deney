@@ -1,1 +1,33 @@
-{ "assets": [] }
+{
+  "note": "Kaynak: Wikimedia Commons (ve AK Parti, DSP, DBP için Türkçe Vikipedi). Lisanslar dosya sayfalarında; fotoğraflar çoğunlukla CC BY-SA, atıf gerekir. Kullanım kararı ve sorumluluğu proje sahibine aittir.",
+  "assets": [
+    { "name": "logo-akp", "wiki": "tr", "file": "Adalet ve Kalkınma Partisi logo.png" },
+    { "name": "logo-yeni", "file": "Yeni Parti (Türkiye, 2026) logo compress transparan.png" },
+    { "name": "logo-dem", "file": "DEM PARTİ LOGOSU.png" },
+    { "name": "logo-mhp", "file": "Milliyetçi Hareket Partisi Logo.svg" },
+    { "name": "logo-chp", "file": "CHP logo (2024, vertical red).svg" },
+    { "name": "logo-iyi", "file": "İYİ Party square logo.svg" },
+    { "name": "logo-yrp", "file": "Yeniden Refah Partisi logo.svg" },
+    { "name": "logo-tip", "file": "Türkiye İşçi Partisi.svg" },
+    { "name": "logo-dbp", "wiki": "tr", "file": "Dbp logo.png" },
+    { "name": "logo-emep", "file": "Emek Partisi Logo.svg" },
+    { "name": "logo-saadet", "file": "Saadet Partisi logo.svg" },
+    { "name": "logo-dsp", "wiki": "tr", "file": "DSP-logo.png" },
+    { "name": "logo-zafer", "file": "Zafer Partisi Logo.jpg" },
+    { "name": "logo-anahtar", "file": "Anahtar Parti logo.jpg" },
+
+    { "name": "leader-erdogan", "file": "Turkish President Recep Tayyip Erdoğan in January 2024 (cropped).jpg", "width": 400 },
+    { "name": "leader-ozel", "file": "Özgür Özel.jpg", "width": 400 },
+    { "name": "leader-hatimogullari", "file": "Tülay Hatimoğulları Oruç 2023 (cropped).jpg", "width": 400 },
+    { "name": "leader-bahceli", "file": "Devlet Bahçeli MHP.jpg", "width": 400 },
+    { "name": "leader-kilicdaroglu", "file": "Kemal Kılıçdaroğlu in 2024 (cropped).jpg", "width": 400 },
+    { "name": "leader-dervisoglu", "file": "Müsavat Dervişoğlu (20230328).jpg", "width": 400 },
+    { "name": "leader-yapicioglu", "file": "Zekeriya Yapıcıoğlu 2023.jpg", "width": 400 },
+    { "name": "leader-erbakan", "file": "Fatiherbakan.jpg", "width": 400 },
+    { "name": "leader-bas", "file": "Erkan Baş 2023.jpg", "width": 400 },
+    { "name": "leader-ucar", "file": "Çiğdem Kılıçgün Uçar.png", "width": 400 },
+    { "name": "leader-uysal", "file": "Turkish politician Gültekin Uysal.png", "width": 400 },
+    { "name": "leader-ozdag", "file": "Ümit Özdağ - 24.2.24.jpg", "width": 400 },
+    { "name": "leader-agiralioglu", "file": "Yavuz Ağıralioğlu.jpg", "width": 400 }
+  ]
+}

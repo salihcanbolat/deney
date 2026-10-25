@@ -5,49 +5,32 @@ final class MockDatasetTests: XCTestCase {
     let data = MockDataset.standard
 
     func testCounts() {
-        XCTAssertEqual(data.parties.count, 40)
-        XCTAssertEqual(Set(data.parties.map(\.id)).count, 40)
-        XCTAssertEqual(Set(data.parties.map(\.code)).count, 40)
+        XCTAssertEqual(data.parties.count, 17)
+        XCTAssertEqual(Set(data.parties.map(\.id)).count, data.parties.count)
+        XCTAssertEqual(Set(data.parties.map(\.code)).count, data.parties.count)
         XCTAssertEqual(data.polls.map(\.title), ["Genel Seçim Anketi", "Genç Seçmen Anketi", "Lider Tercihi Anketi", "Asla Oy Vermem Anketi"])
-        XCTAssertEqual(data.polls.map(\.participantCount), [128_460, 23_118, 84_215, 61_902])
         for poll in data.polls {
-            XCTAssertEqual(data.result(for: poll.id)?.rows.count, 40, poll.id)
+            XCTAssertEqual(data.result(for: poll.id)?.rows.count, data.parties.count, poll.id)
         }
     }
 
-    /// Bölüm 9'daki tablo birebir.
-    func testGeneralPollTopEightMatchesBrief() throws {
-        let result = try XCTUnwrap(data.result(for: "genel-secim"))
-        let expected: [(String, Double, Double, Double, Double)] = [
-            ("YUP", 16.4, 18.9, 22.1, 25.4),
-            ("ADP", 15.9, 13.2, 23.8, 26.9),
-            ("BHP", 11.2, 14.8, 9.2, 7.8),
-            ("HLK", 8.7, 7.1, 6.4, 8.1),
-            ("ÇEP", 6.3, 8.4, 3.1, 2.6),
-            ("GSP", 5.1, 4.2, 4.8, 5.5),
-            ("MİD", 4.4, 5.6, 7.9, 6.2),
-            ("ÖTP", 3.8, 3.1, 2.2, 2.9),
-        ]
-        for (row, item) in zip(result.top(8), expected) {
-            XCTAssertEqual(data.party(row.partyId)?.code, item.0)
-            XCTAssertEqual(row.partyPos, item.1)
-            XCTAssertEqual(row.leaderPos, item.2)
-            XCTAssertEqual(row.partyNeg, item.3)
-            XCTAssertEqual(row.leaderNeg, item.4)
-        }
-        let selin = try XCTUnwrap(data.party(code: "YUP"))
-        XCTAssertEqual(selin.name, "Yeni Ufuk Partisi")
-        XCTAssertEqual(selin.leaderName, "Selin Arda")
-        XCTAssertEqual(selin.color, "#2F5FD0")
-    }
-
-    func testRowsAreRankedAndPlacesStartAtOne() throws {
+    /// Oranlar uydurulmaz: tüm sonuçlar sembolik ve her parti için eşit.
+    func testResultsAreSymbolicAndEqual() {
         for result in data.results {
-            let values = result.rows.map(\.rankingValue)
-            XCTAssertEqual(values, values.sorted(by: >), result.pollId)
+            XCTAssertTrue(result.isSymbolic, result.pollId)
+            XCTAssertEqual(Set(result.rows.flatMap(\.allValues)).count, 1, result.pollId)
         }
+        XCTAssertTrue(data.polls.allSatisfy { $0.participantCount == 0 && !$0.isLive })
+    }
+
+    /// Eşit değerlerde sıra, verideki sıradır: TBMM sandalye sayısı.
+    func testOrderFollowsSeatCount() throws {
         let general = try XCTUnwrap(data.result(for: "genel-secim"))
-        XCTAssertEqual(general.place(of: try XCTUnwrap(data.party(code: "BHP")).id), 3)
+        let seats = general.rows.compactMap { data.party($0.partyId)?.seats }
+        XCTAssertEqual(seats, seats.sorted(by: >))
+        XCTAssertEqual(general.top(8).compactMap { data.party($0.partyId)?.code },
+                       ["AK PARTİ", "YENİ PARTİ", "DEM PARTİ", "MHP", "CHP", "İYİ PARTİ", "YENİ YOL", "HÜDA PAR"])
+        XCTAssertEqual(general.place(of: "mhp"), 4)
     }
 
     func testPollTypesMatchCollectedSections() throws {
@@ -59,12 +42,8 @@ final class MockDatasetTests: XCTestCase {
         XCTAssertEqual(data.poll("lider-tercihi")?.type, .support)
     }
 
-    func testSampleUserBallot() throws {
-        let ballot = try XCTUnwrap(data.sampleUser.ballots.first { $0.pollId == "genel-secim" })
-        XCTAssertEqual(ballot.partyYes.flatMap(data.party(_:))?.code, "BHP")
-        XCTAssertEqual(ballot.leaderYes.flatMap(data.party(_:))?.leaderName, "Murat Ergin")
-        XCTAssertEqual(ballot.never.flatMap(data.party(_:))?.code, "ADP")
-        XCTAssertEqual(ballot.stampCount, 3)
+    func testNoSampleBallots() {
+        XCTAssertTrue(data.sampleUser.ballots.isEmpty)
         XCTAssertEqual(data.sampleUser.prefs.lockScreenPollId, "genel-secim")
     }
 
@@ -80,8 +59,8 @@ final class MockDatasetTests: XCTestCase {
 }
 
 final class CandleScaleTests: XCTestCase {
-    func testCeilingMatchesDesignMax() throws {
-        let rows = try XCTUnwrap(MockDataset.standard.result(for: "genel-secim")).top(8)
+    func testCeilingRoundsPeakUp() {
+        let rows = [PollResultRow(partyId: "a", partyPos: 16.4, leaderNeg: 26.9), PollResultRow(partyId: "b", partyPos: 3)]
         XCTAssertEqual(CandleScale(rows: rows).ceiling, 27)
     }
 

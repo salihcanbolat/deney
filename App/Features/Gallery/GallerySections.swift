@@ -222,7 +222,7 @@ private struct SampleScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 12) {
                     tile(symbol: "checkmark", fill: Palette.inkFill, glyph: .white)
-                    titles("Genel Seçim Anketi", "Destek + Asla · 128.460 oy")
+                    titles("Genel Seçim Anketi", "Destek + Asla · henüz oy yok")
                     Image(systemName: "bell.fill")
                         .font(.system(size: 18))
                         .foregroundStyle(Palette.ink)
@@ -238,7 +238,7 @@ private struct SampleScreen: View {
                 Hairline()
                 HStack(spacing: 12) {
                     tile(symbol: "xmark", fill: Palette.inkTint, glyph: Palette.ink)
-                    titles("Asla Oy Vermem Anketi", "Yalnız asla · 61.902 oy")
+                    titles("Asla Oy Vermem Anketi", "Yalnız asla · henüz oy yok")
                     Text("Katıl")
                         .font(AppFont.subhead.weight(.semibold))
                         .foregroundStyle(Palette.ink)

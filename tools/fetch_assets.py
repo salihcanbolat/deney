@@ -2,7 +2,8 @@
 """Parti logolarını ve lider fotoğraflarını Wikimedia Commons'tan indirip asset kataloğuna yazar.
 
 Kaynak listesi: tools/party_assets.json
-  { "assets": [ { "name": "logo-akp", "commons": "AK Parti logo.svg", "width": 512 }, ... ] }
+  { "assets": [ { "name": "logo-mhp", "file": "Milliyetçi Hareket Partisi Logo.svg", "width": 512 }, ... ] }
+  "wiki": "tr" verilirse dosya Commons yerine Türkçe Vikipedi'den alınır.
 
 Her görsel App/Resources/Assets.xcassets/Parties/<name>.imageset/ altına yazılır.
 Wikimedia, Special:FilePath üzerinden SVG'leri istenen genişlikte PNG'ye çevirir.
@@ -25,8 +26,9 @@ CATALOG = ROOT / "App/Resources/Assets.xcassets/Parties"
 USER_AGENT = "SecimAnketi/0.1 (https://github.com/salihcanbolat/deney; iOS uygulaması görsel indirme)"
 
 
-def download(commons_name, width):
-    url = "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(commons_name) + f"?width={width}"
+def download(file_name, width, wiki):
+    host = "tr.wikipedia.org" if wiki == "tr" else "commons.wikimedia.org"
+    url = f"https://{host}/wiki/Special:FilePath/" + urllib.parse.quote(file_name) + f"?width={width}"
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=60) as response:
         return response.read(), response.headers.get("Content-Type", "")
@@ -63,9 +65,9 @@ def main():
     assets = json.loads(SOURCES.read_text(encoding="utf-8"))["assets"]
     failures = []
     for item in assets:
-        name, commons, width = item["name"], item["commons"], item.get("width", 512)
+        name, commons, width = item["name"], item["file"], item.get("width", 512)
         try:
-            data, content_type = download(commons, width)
+            data, content_type = download(commons, width, item.get("wiki"))
             ext = extension(content_type, data)
             write_imageset(name, data, ext)
             print(f"tamam  {name:28} {len(data) // 1024:5} KB  {commons}")

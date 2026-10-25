@@ -9,15 +9,15 @@ final class LockScreenUITests: XCTestCase {
 
     func testDesignStates() throws {
         try launch().saveScreenshot("20-kilit-dinlenme")
-        try launch(["-stripHeld", "YES", "-stripIndex", "0"]).saveScreenshot("21-kilit-basili-yup")
-        try launch(["-stripHeld", "YES", "-stripIndex", "2"]).saveScreenshot("22-kilit-kaydirma-bhp")
+        try launch(["-stripHeld", "YES", "-stripIndex", "0"]).saveScreenshot("21-kilit-basili-akp")
+        try launch(["-stripHeld", "YES", "-stripIndex", "2"]).saveScreenshot("22-kilit-kaydirma-dem")
     }
 
     func testPressAndDragAcrossParties() throws {
         let app = launch()
-        let first = column(app, named: "Yeni Ufuk Partisi")
-        let sixth = column(app, named: "Gelecek Sesi Partisi")
-        let third = column(app, named: "Birlik ve Huzur Partisi")
+        let first = column(app, named: "Adalet ve Kalkınma Partisi")
+        let sixth = column(app, named: "İYİ Parti")
+        let third = column(app, named: "Halkların Eşitlik ve Demokrasi Partisi")
         XCTAssertTrue(first.waitForExistence(timeout: 10))
 
         // Basılı tut, parmağı kaldırmadan sağa kaydır, bekle.
