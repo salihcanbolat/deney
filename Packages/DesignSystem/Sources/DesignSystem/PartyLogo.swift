@@ -49,15 +49,46 @@ public struct PartyLogo: View {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFill()
+                .overlay { rim }
         } else {
-            Circle()
-                .fill(Color(hex: party.color))
-                .overlay {
-                    Text(party.monogram)
-                        .font(.system(size: Self.monogramSize(for: size), weight: .bold))
-                        .foregroundStyle(.white)
-                }
+            coin
         }
+    }
+
+    /// Yer tutucu rozet: parti renginde, sol üstten ışık alan bir madeni para.
+    private var coin: some View {
+        let base = RGBA(hex: party.color)
+        return Circle()
+            .fill(RadialGradient(
+                colors: [
+                    base.mixed(with: .white, amount: 0.24).color,
+                    base.color,
+                    base.mixed(with: .black, amount: 0.28).color,
+                ],
+                center: UnitPoint(x: 0.3, y: 0.22),
+                startRadius: 0,
+                endRadius: size * 0.9
+            ))
+            .overlay { rim }
+            .overlay {
+                Text(party.monogram)
+                    .font(.system(size: Self.monogramSize(for: size), weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.28), radius: 0.5, y: 0.5)
+            }
+    }
+
+    /// Üst kenarda ışık, alt kenarda gölge: logoya kabartma hissi verir.
+    private var rim: some View {
+        Circle()
+            .strokeBorder(
+                LinearGradient(
+                    colors: [.white.opacity(0.55), .white.opacity(0.06), .black.opacity(0.18)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                lineWidth: max(0.75, size * 0.035)
+            )
     }
 
     /// Tasarımdaki harf boyutları: 20 pt logoda 9, 26 pt'de 12, 40 pt'de 17.

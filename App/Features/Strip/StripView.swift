@@ -41,7 +41,7 @@ struct StripView: View {
         }
         .padding(EdgeInsets(top: 11, leading: 8, bottom: 10, trailing: 8))
         .frame(width: StripMetrics.width)
-        .background { StripGlass() }
+        .modifier(StripGlass())
         .sensoryFeedback(.impact(weight: .light), trigger: held) { _, isHeld in isHeld && isTouching }
         .sensoryFeedback(.selection, trigger: selectionTick)
     }
@@ -83,6 +83,7 @@ struct StripView: View {
             }
         }
         .frame(width: columnsWidth)
+        .background(alignment: .topLeading) { spotlight }
         .contentShape(Rectangle())
         .gesture(pressAndDrag, including: interactive ? .all : .subviews)
         .onChange(of: focusedColumn) { _, column in
@@ -97,6 +98,22 @@ struct StripView: View {
                 }
             }
         }
+    }
+
+    /// Basılı sütunun arkasında parmağı izleyen yumuşak bir ışık.
+    private var spotlight: some View {
+        let columnWidth = columnsWidth / CGFloat(max(data.columns.count, 1))
+        let logoCenterY = StripMetrics.heldPositiveZone + StripMetrics.logoVerticalPadding + StripMetrics.logoSize / 2
+        return Circle()
+            .fill(RadialGradient(
+                colors: [Palette.voteCandle.opacity(0.16), Palette.voteCandle.opacity(0)],
+                center: .center, startRadius: 0, endRadius: 64
+            ))
+            .frame(width: 128, height: 128)
+            .offset(x: columnWidth * (CGFloat(activeIndex) + 0.5) - 64, y: logoCenterY - 64)
+            .opacity(held ? 1 : 0)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
     }
 
     // MARK: Jest
@@ -159,7 +176,8 @@ struct StripColumn: View {
                 leader: column.row.leaderPos,
                 scale: scale,
                 zoneHeight: held ? StripMetrics.heldPositiveZone : StripMetrics.restPositiveZone,
-                candleWidth: candleWidth
+                candleWidth: candleWidth,
+                glowing: isActive
             )
             PartyLogo(column.party, size: StripMetrics.logoSize, border: isActive ? .focusRing : .hairline)
                 .animation(Motion.logoFocus) { $0.scaleEffect(isActive ? StripMetrics.activeLogoScale : 1) }
@@ -171,7 +189,8 @@ struct StripColumn: View {
                 scale: scale,
                 zoneHeight: held ? StripMetrics.heldNegativeZone : 0,
                 candleWidth: candleWidth,
-                direction: .down
+                direction: .down,
+                glowing: isActive
             )
         }
         .frame(maxWidth: .infinity)
@@ -305,15 +324,24 @@ struct LiveBadge: View {
     }
 }
 
-/// Şerit zemini: arkasını bulanıklaştıran cam, %10 beyaz ve 0,5 pt iç kenar.
-struct StripGlass: View {
-    var body: some View {
+/// Şerit zemini. iOS 26'da sistemin Liquid Glass camı (kilit ekranı widget'larıyla aynı malzeme);
+/// daha eski sürümlerde tasarımdaki %10 beyaz cam, arkasını bulanıklaştırarak.
+struct StripGlass: ViewModifier {
+    @ViewBuilder
+    func body(content: Content) -> some View {
         let shape = RoundedRectangle(cornerRadius: StripMetrics.cornerRadius, style: .continuous)
-        shape
-            .fill(.ultraThinMaterial)
-            .environment(\.colorScheme, .dark)
-            .opacity(0.2)
-            .overlay { shape.fill(Palette.stripGlassFill) }
-            .overlay { shape.strokeBorder(Palette.stripGlassStroke, lineWidth: 0.5) }
+        if #available(iOS 26.0, *) {
+            content
+                .glassEffect(.clear.tint(Color.white.opacity(0.05)), in: shape)
+        } else {
+            content.background {
+                shape
+                    .fill(.ultraThinMaterial)
+                    .environment(\.colorScheme, .dark)
+                    .opacity(0.2)
+                    .overlay { shape.fill(Palette.stripGlassFill) }
+                    .overlay { shape.strokeBorder(Palette.stripGlassStroke, lineWidth: 0.5) }
+            }
+        }
     }
 }

@@ -18,6 +18,17 @@ public enum Palette {
 
     /// Tüm mumlar. Parti renkleri mumlarda asla kullanılmaz.
     public static let voteCandle = Color(hex: "#F3EBDD")
+    /// Mumun dolgusu: aynı kâğıt beyazı, soldan gelen ışıkla balmumu bir silindir gibi.
+    /// Renk değişmez, yalnızca ışık düşer; parti rengi yine kullanılmaz.
+    public static let voteCandleWax = LinearGradient(
+        stops: [
+            .init(color: Color(hex: "#FFFCF6"), location: 0),
+            .init(color: Color(hex: "#F3EBDD"), location: 0.42),
+            .init(color: Color(hex: "#DACDB6"), location: 1),
+        ],
+        startPoint: .leading,
+        endPoint: .trailing
+    )
     public static let lockWallpaper = Color(hex: "#161C27")
     /// Duvar kâğıdındaki büyük dairenin rengi.
     public static let lockWallpaperGlow = Color(hex: "#1A2130")

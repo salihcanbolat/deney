@@ -27,6 +27,22 @@ struct RGBA {
     }
 }
 
+extension RGBA {
+    static let white = RGBA(hex: "#FFFFFF")
+    static let black = RGBA(hex: "#000000")
+
+    /// İki renk arasında doğrusal karışım (`amount` 0 → self, 1 → other).
+    func mixed(with other: RGBA, amount: Double) -> RGBA {
+        var out = self
+        out.red += (other.red - red) * amount
+        out.green += (other.green - green) * amount
+        out.blue += (other.blue - blue) * amount
+        return out
+    }
+
+    var color: Color { Color(.sRGB, red: red, green: green, blue: blue, opacity: alpha) }
+}
+
 public extension Color {
     init(hex: String) {
         let rgba = RGBA(hex: hex)

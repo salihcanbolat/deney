@@ -18,19 +18,22 @@ public struct VoteCandlePair: View {
     private let zoneHeight: CGFloat
     private let candleWidth: CGFloat
     private let direction: Direction
+    private let glowing: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// - Parameters:
     ///   - party: Parti oyu (%). `nil` ise mum çizilmez.
     ///   - leader: Liderin oyu (%). `nil` ise mum çizilmez.
     ///   - zoneHeight: Mumların uzanabildiği alan. 0 verilirse çift kapanır.
-    public init(party: Double?, leader: Double?, scale: CandleScale, zoneHeight: CGFloat, candleWidth: CGFloat, direction: Direction = .up) {
+    ///   - glowing: Basılı tutulan sütunda mumların çevresine yumuşak bir ışık düşer.
+    public init(party: Double?, leader: Double?, scale: CandleScale, zoneHeight: CGFloat, candleWidth: CGFloat, direction: Direction = .up, glowing: Bool = false) {
         self.party = party
         self.leader = leader
         self.scale = scale
         self.zoneHeight = zoneHeight
         self.candleWidth = candleWidth
         self.direction = direction
+        self.glowing = glowing
     }
 
     public var body: some View {
@@ -42,6 +45,7 @@ public struct VoteCandlePair: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: zoneHeight, alignment: direction == .up ? .bottom : .top)
+        .shadow(color: Palette.voteCandle.opacity(glowing ? 0.45 : 0), radius: 7)
         .animation(reduceMotion ? .easeInOut(duration: 0.15) : Motion.candle, value: [partyHeight, leaderHeight, zoneHeight, candleWidth])
         .accessibilityHidden(true)
     }
@@ -52,7 +56,7 @@ public struct VoteCandlePair: View {
 
     private func candle(height: CGFloat) -> some View {
         UnevenRoundedRectangle(cornerRadii: cornerRadii, style: .circular)
-            .fill(Palette.voteCandle)
+            .fill(Palette.voteCandleWax)
             .frame(width: candleWidth, height: height)
     }
 
