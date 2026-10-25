@@ -32,7 +32,7 @@ PARTIES = [
     ("emep", "EMEP", "Emek Partisi", "Seyit Aslan", "#C62828", 2, "logo-emep", []),
     ("saadet", "SAADET", "Saadet Partisi", "Mahmut Arıkan", "#D32F2F", 1, "logo-saadet", []),
     ("dsp", "DSP", "Demokratik Sol Parti", "Önder Aksakal", "#1565C0", 1, "logo-dsp", []),
-    ("dp", "DP", "Demokrat Parti", "Gültekin Uysal", "#C62828", 1, None, ["leader-uysal"]),
+    ("dp", "DP", "Demokrat Parti", "Gültekin Uysal", "#C62828", 1, None, []),
     ("zafer", "ZAFER", "Zafer Partisi", "Ümit Özdağ", "#B71C1C", 0, "logo-zafer", ["leader-ozdag"]),
     ("anahtar", "ANAHTAR", "Anahtar Parti", "Yavuz Ağıralioğlu", "#0D47A1", 0, "logo-anahtar", ["leader-agiralioglu"]),
 ]

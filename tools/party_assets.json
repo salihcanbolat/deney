@@ -311,24 +311,6 @@
    "width": 500
   },
   {
-   "name": "leader-uysal",
-   "candidates": [
-    {
-     "file": "Gültekin Uysal (cropped).jpg",
-     "crop": "auto"
-    },
-    {
-     "file": "Gültekin Uysal.jpg",
-     "crop": "auto"
-    },
-    {
-     "file": "Turkish politician Gültekin Uysal.png",
-     "crop": "auto"
-    }
-   ],
-   "width": 500
-  },
-  {
    "name": "leader-ozdag",
    "candidates": [
     {

@@ -169,10 +169,7 @@
       "name": "Demokrat Parti",
       "leaderName": "Gültekin Uysal",
       "color": "#C62828",
-      "seats": 1,
-      "leaderPhotoAssets": [
-        "leader-uysal"
-      ]
+      "seats": 1
     },
     {
       "id": "zafer",
