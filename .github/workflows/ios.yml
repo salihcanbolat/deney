@@ -12,7 +12,7 @@ on:
       - Tests/**
       - project.yml
       - .github/workflows/ios.yml
-      - .github/scripts/**
+      - .github/scripts/pick_simulator.py
   workflow_dispatch:
 
 concurrency:

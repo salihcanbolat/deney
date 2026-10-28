@@ -20,12 +20,19 @@ adb shell am start -W -n "$PAKET/.MainActivity"
 sleep 5
 goruntu 30-uygulama-acildi
 
-# Ekranı kapat ve aç: kilit ekranı (emülatörde kaydırmalı kilit)
+# Emülatörde varsayılan kilit yok; PIN koyunca gerçek, güvenli kilit ekranı gelir.
+adb shell locksettings set-pin 1234 || true
+kilit_durumu() { { adb shell dumpsys activity activities | grep -iE "KeyguardShowing|Occluded|topResumedActivity" | head -5 || true; } | tee -a "$OUT/kilit-durumu.txt"; }
+
+# Ana ekrana dön, ekranı kapat ve aç: kilit ekranı
+adb shell input keyevent KEYCODE_HOME
+sleep 1
 adb shell input keyevent KEYCODE_SLEEP
 sleep 2
 adb shell input keyevent KEYCODE_WAKEUP
 sleep 4
 goruntu 31-kilit-ekrani-bildirim
+echo "== kilitlendikten sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
 
 # Bildirimi bul ve dokun
 adb shell uiautomator dump /sdcard/ekran.xml >/dev/null
@@ -35,7 +42,10 @@ import re, sys
 xml = open(sys.argv[1], encoding="utf-8").read()
 for m in re.finditer(r'<node [^>]*>', xml):
     n = m.group(0)
-    if "Canlı Anket" in n or "canli_anket" in n or "Seçim Anketi" in n:
+    # Yalnızca sistem arayüzündeki bildirim (uygulamanın kendi metni değil)
+    if 'package="com.android.systemui"' not in n:
+        continue
+    if "Canlı Anket" in n or "Seçim Anketi" in n or "Sembolik" in n:
         b = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n)
         if b:
             x1, y1, x2, y2 = map(int, b.groups())
@@ -52,8 +62,13 @@ if [ -n "${KONUM:-}" ]; then
   goruntu 32-kilit-ekrani-bildirim-genis
   adb shell input tap "$1" "$2"
   sleep 3
+  # Bazı sürümler kilit ekranında ikinci dokunuş ister ("Açmak için tekrar dokun")
+  if ! adb shell dumpsys activity activities | grep -q "topResumedActivity.*KilitInceleme"; then
+    adb shell input tap "$1" "$2"
+    sleep 3
+  fi
   goruntu 33-inceleme-kilit-ustunde
-  echo "kilit durumu:"; adb shell dumpsys window | grep -iE "mDreamingLockscreen|isKeyguardShowing|mShowingLockscreen" || true
+  echo "== bildirime dokunduktan sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
 
   # Ekran 4: şeridin ilk sütununa basılı tut, sağa kaydır
   W=$(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | cut -dx -f1)
@@ -70,4 +85,7 @@ if [ -n "${KONUM:-}" ]; then
   adb shell input keyevent KEYCODE_BACK
   sleep 2
   goruntu 35-geri-kilit-ekrani
+  echo "== geri tuşundan sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
+else
+  echo "Bildirim kilit ekranında bulunamadı; öğe dökümü kilit-ekrani-ogeleri.xml içinde."
 fi
