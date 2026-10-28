@@ -12,6 +12,7 @@ import com.salihcanbolat.secimanketi.bilesen.SeritKarti
 import com.salihcanbolat.secimanketi.bilesen.rememberSeritDurumu
 import com.salihcanbolat.secimanketi.tema.Olcu
 import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
 import com.salihcanbolat.secimanketi.veri.Anketler
 import com.salihcanbolat.secimanketi.veri.SembolikVeri
 import com.salihcanbolat.secimanketi.veri.SeritOgesi
@@ -26,8 +27,8 @@ import java.time.LocalDateTime
 fun KilitIncelemeEkrani(
     modifier: Modifier = Modifier,
     anket: Anket = Anketler.genelSecim,
-    ogeler: List<SeritOgesi> = SembolikVeri.serit(anket),
-    sembolik: Boolean = true,
+    anketDurumu: AnketDurumu = SembolikVeri.durum(),
+    ogeler: List<SeritOgesi> = SembolikVeri.serit(anket, anketDurumu),
     durum: SeritDurumu = rememberSeritDurumu(),
     sabitZaman: LocalDateTime? = null,
     uyanis: Boolean = true,
@@ -38,7 +39,7 @@ fun KilitIncelemeEkrani(
         SeritKarti(
             anket = anket,
             ogeler = ogeler,
-            sembolik = sembolik,
+            anketDurumu = anketDurumu,
             durum = durum,
             ipucu = "Basılı tut, kaydır",
             ipucuVurgulu = true,

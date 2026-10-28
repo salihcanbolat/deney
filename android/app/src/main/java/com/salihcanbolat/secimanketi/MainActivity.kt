@@ -11,6 +11,7 @@ import com.salihcanbolat.secimanketi.bildirim.CanliAnketBildirimi
 import com.salihcanbolat.secimanketi.ekran.Uygulama
 import com.salihcanbolat.secimanketi.tema.SecimTemasi
 import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
 import com.salihcanbolat.secimanketi.veri.UygulamaDurumu
 
 /**
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var durum: UygulamaDurumu
 
     private val bildirimIzni = registerForActivityResult(ActivityResultContracts.RequestPermission()) { verildi ->
-        if (verildi) bildirimiGuncelle(durum.kilitAnketi)
+        if (verildi) bildirimiGuncelle(durum.kilitAnketi, durum.anketDurumu(durum.kilitAnketiId))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun bildirimiGuncelle(anket: Anket) {
-        CanliAnketBildirimi.goster(this, anket)
+    private fun bildirimiGuncelle(anket: Anket, anketDurumu: AnketDurumu) {
+        CanliAnketBildirimi.goster(this, anket, anketDurumu)
     }
 }

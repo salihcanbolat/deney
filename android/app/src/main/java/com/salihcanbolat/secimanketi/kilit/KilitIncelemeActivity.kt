@@ -22,10 +22,12 @@ class KilitIncelemeActivity : ComponentActivity() {
         animasyonsuz()
         enableEdgeToEdge()
         // Bildirimdeki anketle aynı: kullanıcının kilit ekranına aldığı anket.
-        val kilitAnketi = UygulamaDurumu.yukle(this).kilitAnketi
+        val uygulamaDurumu = UygulamaDurumu.yukle(this)
+        val kilitAnketi = uygulamaDurumu.kilitAnketi
+        val anketDurumu = uygulamaDurumu.anketDurumu(kilitAnketi.id)
         setContent {
             SecimTemasi {
-                KilitIncelemeEkrani(anket = kilitAnketi)
+                KilitIncelemeEkrani(anket = kilitAnketi, anketDurumu = anketDurumu)
             }
         }
     }

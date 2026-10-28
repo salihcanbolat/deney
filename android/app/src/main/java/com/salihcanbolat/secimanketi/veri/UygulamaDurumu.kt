@@ -34,14 +34,36 @@ class UygulamaDurumu(
     private val ziller = mutableStateMapOf<String, Boolean>()
     private val oylar = mutableStateMapOf<String, Oy>()
 
+    /** Anketlerin sonuç durumu (Ekran 6). Sunucu gelene kadar hepsi sembolik. */
+    private val anketDurumlari = mutableStateMapOf<String, AnketDurumu>()
+
+    /**
+     * Google ile giriş yapıldı mı. Giriş sunucu aşamasında bağlanacak; o zamana kadar false ve
+     * oy göndermek için zorunlu tutulmuyor ([GIRIS_ZORUNLU]).
+     */
+    var girisYapildi by mutableStateOf(false)
+        private set
+
     init {
         Anketler.tumu.forEach { anket ->
             ziller[anket.id] = tercihler?.getBoolean(ZIL + anket.id, false) ?: false
             tercihler?.getString(OY + anket.id, null)?.let { oyuCoz(anket.id, it) }?.let { oylar[anket.id] = it }
+            tercihler?.getString(DURUM + anket.id, null)?.let(::durumuCoz)?.let { anketDurumlari[anket.id] = it }
         }
     }
 
     val kilitAnketi: Anket get() = Anketler.bul(kilitAnketiId)
+
+    fun anketDurumu(anketId: String): AnketDurumu = anketDurumlari[anketId] ?: SembolikVeri.durum()
+
+    /** Sunucudan (ya da hata ayıklama önizlemesinden) gelen durum. */
+    fun anketDurumunuGuncelle(anketId: String, durum: AnketDurumu) {
+        anketDurumlari[anketId] = durum
+        tercihler?.edit()?.putString(DURUM + anketId, durumuYaz(durum))?.apply()
+    }
+
+    /** Kilit ekranındaki anketin şerit öğeleri, durumuna göre (yayın yasağında boş). */
+    fun serit(anket: Anket): List<SeritOgesi> = SembolikVeri.serit(anket, anketDurumu(anket.id))
 
     fun zilAcikMi(anketId: String): Boolean = ziller[anketId] == true
     fun oy(anketId: String): Oy? = oylar[anketId]
@@ -68,6 +90,24 @@ class UygulamaDurumu(
 
     private fun oyuYaz(oy: Oy) = listOf(oy.partiId, oy.liderPartiId, oy.aslaPartiId).joinToString("|") { it ?: "" } + "|" + oy.zaman
 
+    /** Son bilinen durum (bağlantı yokken gösterilir). Kişisel bilgi içermez. */
+    private fun durumuYaz(d: AnketDurumu) = listOf(
+        d.katilimciSayisi, d.sonGuncelleme ?: "", d.sembolikMi, d.yayinYasagiMi, d.yayinYasagiBitis ?: "", d.baglantiVar,
+    ).joinToString("|")
+
+    private fun durumuCoz(metin: String): AnketDurumu? {
+        val p = metin.split('|')
+        if (p.size != 6) return null
+        return AnketDurumu(
+            katilimciSayisi = p[0].toIntOrNull() ?: return null,
+            sonGuncelleme = p[1].toLongOrNull(),
+            sembolikMi = p[2].toBoolean(),
+            yayinYasagiMi = p[3].toBoolean(),
+            yayinYasagiBitis = p[4].toLongOrNull(),
+            baglantiVar = p[5].toBoolean(),
+        )
+    }
+
     private fun oyuCoz(anketId: String, metin: String): Oy? {
         val parcalar = metin.split('|')
         if (parcalar.size != 4) return null
@@ -76,10 +116,14 @@ class UygulamaDurumu(
     }
 
     companion object {
+        /** Google ile giriş bağlanınca true olacak; oy göndermeden önce giriş istenir. */
+        const val GIRIS_ZORUNLU = false
+
         private const val DOSYA = "uygulama_durumu"
         private const val KILIT = "kilit_anketi"
         private const val ZIL = "zil:"
         private const val OY = "oy:"
+        private const val DURUM = "durum:"
 
         fun yukle(context: Context) = UygulamaDurumu(context.getSharedPreferences(DOSYA, Context.MODE_PRIVATE))
     }

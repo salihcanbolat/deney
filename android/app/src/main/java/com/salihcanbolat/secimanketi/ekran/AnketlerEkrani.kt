@@ -60,6 +60,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalHapticFeedback
+import com.salihcanbolat.secimanketi.bilesen.BaglantiYokKarti
+import com.salihcanbolat.secimanketi.bilesen.DurumRozeti
+import com.salihcanbolat.secimanketi.bilesen.YasakPaneli
+import com.salihcanbolat.secimanketi.bilesen.yenidenYayinMetni
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
+import com.salihcanbolat.secimanketi.veri.SonucGorunumu
 import com.salihcanbolat.secimanketi.bilesen.LogoKutusu
 import com.salihcanbolat.secimanketi.bilesen.Simge
 import com.salihcanbolat.secimanketi.bilesen.Simgeler
@@ -101,8 +111,12 @@ fun AnketlerEkrani(
     modifier: Modifier = Modifier,
     bugun: LocalDate = LocalDate.now(),
     altBoslukEk: Dp = 0.dp,
+    onYenidenDene: () -> Unit = {},
+    /** Yalnızca hata ayıklama sürümünde: "CANLI · tarih" etiketine uzun basınca durum önizlemesi. */
+    onDurumOnizleme: (() -> Unit)? = null,
 ) {
     val kilitAnketi = durum.kilitAnketi
+    val kilitDurumu = durum.anketDurumu(kilitAnketi.id)
     val katildiklarim = Anketler.tumu.filter { durum.katildiMi(it.id) }
     val katilabileceklerim = Anketler.tumu.filterNot { durum.katildiMi(it.id) }
 
@@ -115,11 +129,14 @@ fun AnketlerEkrani(
                 .padding(start = Olcu.EkranKenarBoslugu, end = Olcu.EkranKenarBoslugu, top = ustBosluk(64.dp), bottom = 120.dp + altBoslukEk),
             verticalArrangement = Arrangement.spacedBy(22.dp),
         ) {
-            Baslik(bugun, onHesap, Modifier.belirme(0, olcek = 0.985f))
+            Baslik(bugun, onHesap, Modifier.belirme(0, olcek = 0.985f), onDurumOnizleme)
+            if (kilitDurumu.cevrimdisi) {
+                BaglantiYokKarti(kilitDurumu, onYenidenDene, Modifier.belirme(30, olcek = 0.985f))
+            }
             KilitEkraniKarti(
                 anket = kilitAnketi,
-                ogeler = SembolikVeri.serit(kilitAnketi),
-                sembolik = true,
+                ogeler = durum.serit(kilitAnketi),
+                anketDurumu = kilitDurumu,
                 onClick = { onIncele(kilitAnketi) },
                 modifier = Modifier.belirme(50, olcek = 0.985f),
             )
@@ -154,6 +171,7 @@ fun AnketlerEkrani(
                             onZil = { durum.zilDegistir(anket.id) },
                             onKilit = { durum.kilideAl(anket.id) },
                             onEylem = { onKatil(anket) },
+                            eylemMetni = if (durum.anketDurumu(anket.id).gorunum == SonucGorunumu.HENUZ_OY_YOK) "İlk oyu ver" else "Katıl",
                             modifier = Modifier.belirme(330, olcek = 0.985f),
                         )
                     }
@@ -199,11 +217,25 @@ private fun BoxScope.NefesAlanIsik() {
 }
 
 @Composable
-private fun Baslik(bugun: LocalDate, onHesap: () -> Unit, modifier: Modifier = Modifier) {
+private fun Baslik(bugun: LocalDate, onHesap: () -> Unit, modifier: Modifier = Modifier, onUzunBas: (() -> Unit)? = null) {
     val tarih = DateTimeFormatter.ofPattern("d MMMM yyyy", Turkce).format(bugun).uppercase(Turkce)
+    val dokunus = LocalHapticFeedback.current
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                modifier = if (onUzunBas != null) {
+                    Modifier.pointerInput(onUzunBas) {
+                        detectTapGestures(onLongPress = {
+                            dokunus.performHapticFeedback(HapticFeedbackType.LongPress)
+                            onUzunBas()
+                        })
+                    }
+                } else {
+                    Modifier
+                },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 CanliNokta()
                 Text("CANLI · $tarih", style = UstEtiket, color = Renk.MetinEnSoluk)
             }
@@ -267,54 +299,65 @@ fun BolumBasligi(metin: String, modifier: Modifier = Modifier) {
     )
 }
 
-/** Kilit ekranındaki anketin kartı: adı ve mum şeridinin küçük hali. Dokununca Ekran 4 açılır. */
+/**
+ * Kilit ekranındaki anketin kartı: adı ve mum şeridinin küçük hali. Dokununca Ekran 4 açılır.
+ * Duruma göre (Ekran 6): yayın yasağında şerit yerine kilitli panel, henüz oy yokken mumsuz logolar.
+ */
 @Composable
 fun KilitEkraniKarti(
     anket: Anket,
     ogeler: List<SeritOgesi>,
-    sembolik: Boolean,
+    anketDurumu: AnketDurumu,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sekil = RoundedCornerShape(Kose.Kart)
     val kaynak = remember { MutableInteractionSource() }
+    val gorunum = anketDurumu.gorunum
+    val yasak = gorunum == SonucGorunumu.YAYIN_DURDURULDU
     Column(
         modifier
             .basmaOlcegi(kaynak)
             .fillMaxWidth()
-            .shadow(28.dp, sekil, ambientColor = Color.Transparent, spotColor = Renk.Vurgu.copy(alpha = 0.6f))
+            .shadow(28.dp, sekil, ambientColor = Color.Transparent, spotColor = (if (yasak) Renk.Asla else Renk.Vurgu).copy(alpha = 0.5f))
             .clip(sekil)
             .background(Renk.Zemin)
-            .aciliGradyan(160f, listOf(Color.White.copy(alpha = 0.09f), Color.White.copy(alpha = 0.025f)), sekil)
-            .border(1.dp, Color.White.copy(alpha = 0.12f), sekil)
+            .aciliGradyan(
+                160f,
+                if (yasak) listOf(Renk.Asla.copy(alpha = 0.10f), Color.White.copy(alpha = 0.025f)) else listOf(Color.White.copy(alpha = 0.09f), Color.White.copy(alpha = 0.025f)),
+                sekil,
+            )
+            .border(1.dp, if (yasak) Renk.Asla.copy(alpha = 0.28f) else Color.White.copy(alpha = 0.12f), sekil)
             .clickable(kaynak, null, role = Role.Button, onClickLabel = "İncele", onClick = onClick)
             .testTag("kilit-karti")
             .padding(18.dp),
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Simge(Simgeler.KILIT, Renk.Vurgu, 16.dp)
+                Simge(Simgeler.KILIT, if (yasak) Renk.Asla else Renk.Vurgu, 16.dp)
                 Text("Kilit ekranında", style = Yazi.Kucuk, color = Renk.MetinSoluk)
             }
-            if (sembolik) {
-                Text(
-                    "SEMBOLİK",
-                    style = Yazi.EnKucukMono.copy(letterSpacing = 0.06.em),
-                    color = Renk.Zemin,
-                    modifier = Modifier.clip(CircleShape).background(Renk.Metin).padding(horizontal = 8.dp, vertical = 4.dp),
-                )
-            }
+            DurumRozeti(anketDurumu)
         }
         Spacer(Modifier.height(10.dp))
         Text(anket.ad, style = Yazi.Baslik2, color = Renk.Metin)
         Spacer(Modifier.height(16.dp))
-        MiniSerit(ogeler, sembolik)
+        if (yasak) {
+            YasakPaneli(yukseklik = 86.dp)
+        } else {
+            MiniSerit(ogeler, anketDurumu.sembolikGosterim)
+        }
         Spacer(Modifier.height(14.dp))
         Row(Modifier.fillMaxWidth()) {
             Text(
-                if (sembolik) "Gerçek oy yok · tüm partiler eşit" else "Canlı sonuçlar",
+                when (gorunum) {
+                    SonucGorunumu.YAYIN_DURDURULDU -> yenidenYayinMetni(anketDurumu.yayinYasagiBitis)
+                    SonucGorunumu.SEMBOLIK -> "Gerçek oy yok · tüm partiler eşit"
+                    SonucGorunumu.HENUZ_OY_YOK -> "Henüz oy yok · ilk oyla canlanır"
+                    SonucGorunumu.CANLI -> "${anketDurumu.katilimciSayisi} katılımcı"
+                },
                 style = Yazi.Kucuk,
-                color = Renk.MetinEnSoluk,
+                color = if (yasak) Renk.Asla else Renk.MetinEnSoluk,
                 modifier = Modifier.weight(1f),
             )
             Text("İncele →", style = Yazi.Kucuk, color = Renk.Vurgu)
@@ -326,13 +369,18 @@ fun KilitEkraniKarti(
 @Composable
 fun MiniSerit(ogeler: List<SeritOgesi>, sembolik: Boolean, modifier: Modifier = Modifier) {
     val enYuksek = ogeler.maxOfOrNull { maxOf(it.sonuc.partiDestek ?: 0f, it.sonuc.liderDestek ?: 0f) }?.takeIf { it > 0f } ?: 1f
-    fun oran(deger: Float?): Float = if (sembolik || deger == null) 0.7f else (deger / enYuksek * 0.92f).coerceIn(0.08f, 1f)
+    // Henüz oy yokken (değer yok) mum çizilmez, yalnızca logolar.
+    fun oran(deger: Float?): Float? = when {
+        sembolik -> 0.7f
+        deger == null -> null
+        else -> (deger / enYuksek * 0.92f).coerceIn(0.08f, 1f)
+    }
     Row(modifier.fillMaxWidth().semantics(mergeDescendants = true) {}, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         ogeler.forEach { oge ->
             Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Row(Modifier.fillMaxWidth().height(46.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom) {
-                    MiniMum(oran(oge.sonuc.partiDestek), sol = true, gecikmeMs = 0)
-                    MiniMum(oran(oge.sonuc.liderDestek), sol = false, gecikmeMs = 50)
+                    oran(oge.sonuc.partiDestek)?.let { MiniMum(it, sol = true, gecikmeMs = 0) }
+                    oran(oge.sonuc.liderDestek)?.let { MiniMum(it, sol = false, gecikmeMs = 50) }
                 }
                 LogoKutusu(oge.parti, acik = false)
             }
@@ -383,6 +431,7 @@ fun AnketKarti(
     onKilit: () -> Unit,
     onEylem: () -> Unit,
     modifier: Modifier = Modifier,
+    eylemMetni: String = if (katildi) "Sonuçlar" else "Katıl",
 ) {
     val sekil = RoundedCornerShape(Kose.ListeOgesi)
     Column(
@@ -406,7 +455,7 @@ fun AnketKarti(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             KilitDugmesi(kilitte, onKilit, Modifier.weight(1f))
             EylemDugmesi(
-                metin = if (katildi) "Sonuçlar" else "Katıl",
+                metin = eylemMetni,
                 zemin = if (katildi) Renk.Metin else Renk.Vurgu,
                 yazi = if (katildi) Renk.Zemin else Renk.VurguUstuMetin,
                 onClick = onEylem,

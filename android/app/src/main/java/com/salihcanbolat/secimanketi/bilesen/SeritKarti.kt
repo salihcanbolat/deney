@@ -45,7 +45,10 @@ import com.salihcanbolat.secimanketi.tema.LocalHareketAzalt
 import com.salihcanbolat.secimanketi.tema.Renk
 import com.salihcanbolat.secimanketi.tema.Yazi
 import com.salihcanbolat.secimanketi.tema.gecis
+import com.salihcanbolat.secimanketi.tema.Olcu
 import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
+import com.salihcanbolat.secimanketi.veri.SonucGorunumu
 import com.salihcanbolat.secimanketi.veri.SeritOgesi
 import kotlinx.coroutines.delay
 
@@ -60,7 +63,7 @@ import kotlinx.coroutines.delay
 fun SeritKarti(
     anket: Anket,
     ogeler: List<SeritOgesi>,
-    sembolik: Boolean,
+    anketDurumu: AnketDurumu,
     durum: SeritDurumu,
     ipucu: String,
     modifier: Modifier = Modifier,
@@ -71,8 +74,15 @@ fun SeritKarti(
 ) {
     val sekil = RoundedCornerShape(Kose.Kart)
     val azalt = LocalHareketAzalt.current
+    val gorunum = anketDurumu.gorunum
+    val yasak = gorunum == SonucGorunumu.YAYIN_DURDURULDU
+    val sembolik = anketDurumu.sembolikGosterim
     val kenar by animateColorAsState(
-        if (durum.acik != null) Renk.Vurgu.copy(alpha = 0.35f) else Renk.Cizgi,
+        when {
+            yasak -> Renk.Asla.copy(alpha = 0.28f)
+            durum.acik != null -> Renk.Vurgu.copy(alpha = 0.35f)
+            else -> Renk.Cizgi
+        },
         gecis(400, Hareket.Yumusak), label = "kartKenari",
     )
     // Uyanış: 0 → %40'ta 3 dp mavi halka → 0, 1,2 sn, 0,15 sn gecikmeyle.
@@ -120,22 +130,40 @@ fun SeritKarti(
                 Glif(GRAFIK_GLIFI, Renk.VurguUstuMetin, Modifier.size(12.dp), kalinlik = 3f)
             }
             Text("Canlı Anket · ${anket.ad}", style = Yazi.Etiket12, color = Renk.BaslikMetni, modifier = Modifier.weight(1f), maxLines = 1)
-            CanliEtiketi()
+            when {
+                yasak -> Text("YASAK", style = Yazi.EnKucukMono, color = Renk.Asla)
+                anketDurumu.cevrimdisi -> Text(cevrimdisiEtiketi(anketDurumu), style = Yazi.EnKucukMono, color = Renk.MetinEnSoluk)
+                else -> CanliEtiketi()
+            }
         }
         Spacer(Modifier.size(10.dp))
-        MumSeridi(ogeler, sembolik, durum, etkilesimli = etkilesimli, pariltiSurumu = pariltiSurumu)
+        if (yasak) {
+            // Yayın yasağı: şerit hiç çizilmez (logoların sırası bile sonucu ele verir).
+            YasakPaneli(yukseklik = Olcu.SutunKompaktYukseklik)
+        } else {
+            MumSeridi(ogeler, sembolik, durum, etkilesimli = etkilesimli, pariltiSurumu = pariltiSurumu)
+        }
         Spacer(Modifier.size(8.dp))
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                Lejant("Parti", Renk.MumParti)
-                Lejant("Lider", Renk.MumLider)
-                if (sembolik) Text("Sembolik · eşit", style = AciklamaYazisi, color = Renk.MetinEnSoluk)
+            if (yasak) {
+                Text("Yayın durduruldu", style = AciklamaYazisi.copy(fontWeight = FontWeight.SemiBold), color = Renk.Metin)
+                Text(yenidenYayinMetni(anketDurumu.yayinYasagiBitis), style = AciklamaYazisi, color = Renk.Asla)
+            } else {
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Lejant("Parti", Renk.MumParti)
+                    Lejant("Lider", Renk.MumLider)
+                    when (gorunum) {
+                        SonucGorunumu.SEMBOLIK -> Text("Sembolik · eşit", style = AciklamaYazisi, color = Renk.MetinEnSoluk)
+                        SonucGorunumu.HENUZ_OY_YOK -> Text("Henüz oy yok", style = AciklamaYazisi, color = Renk.MetinEnSoluk)
+                        else -> Unit
+                    }
+                }
+                Text(ipucu, style = AciklamaYazisi, color = if (ipucuVurgulu) Renk.VurguAcik else Renk.MetinEnSoluk)
             }
-            Text(ipucu, style = AciklamaYazisi, color = if (ipucuVurgulu) Renk.VurguAcik else Renk.MetinEnSoluk)
         }
     }
 }

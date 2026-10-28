@@ -16,10 +16,17 @@ import androidx.core.content.ContextCompat
 import com.salihcanbolat.secimanketi.R
 import com.salihcanbolat.secimanketi.kilit.KilitIncelemeActivity
 import com.salihcanbolat.secimanketi.tema.Renk
+import com.salihcanbolat.secimanketi.bilesen.cevrimdisiEtiketi
+import com.salihcanbolat.secimanketi.bilesen.yenidenYayinMetni
 import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
+import com.salihcanbolat.secimanketi.veri.SonucGorunumu
 import com.salihcanbolat.secimanketi.veri.Anketler
 import com.salihcanbolat.secimanketi.veri.SembolikVeri
 import com.salihcanbolat.secimanketi.veri.SeritOgesi
+import java.util.Locale
+
+private val Turkce = Locale.forLanguageTag("tr")
 
 /**
  * Ekran 5 · Kilit ekranındaki kalıcı "Canlı Anket" bildirimi.
@@ -57,39 +64,39 @@ object CanliAnketBildirimi {
         Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
             ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 
-    /** Bildirimi gösterir ya da günceller (veri değiştikçe yeniden çağrılır). */
+    /** Bildirimi gösterir ya da günceller (anket ya da durumu değiştikçe yeniden çağrılır). */
     fun goster(
         context: Context,
         anket: Anket = Anketler.genelSecim,
-        ogeler: List<SeritOgesi> = SembolikVeri.serit(anket),
-        sembolik: Boolean = true,
+        durum: AnketDurumu = SembolikVeri.durum(),
+        ogeler: List<SeritOgesi> = SembolikVeri.serit(anket, durum),
     ) {
         if (!izinVarMi(context)) return
         kanalOlustur(context)
         @Suppress("MissingPermission")
-        NotificationManagerCompat.from(context).notify(KIMLIK, olustur(context, anket, ogeler, sembolik))
+        NotificationManagerCompat.from(context).notify(KIMLIK, olustur(context, anket, ogeler, durum))
     }
 
     fun kaldir(context: Context) {
         NotificationManagerCompat.from(context).cancel(KIMLIK)
     }
 
-    fun olustur(context: Context, anket: Anket, ogeler: List<SeritOgesi>, sembolik: Boolean): android.app.Notification {
-        val aciklama = erisilebilirlikMetni(anket, ogeler, sembolik)
+    fun olustur(context: Context, anket: Anket, ogeler: List<SeritOgesi>, durum: AnketDurumu): android.app.Notification {
+        val aciklama = erisilebilirlikMetni(anket, ogeler, durum)
         val buyuk = RemoteViews(context.packageName, R.layout.bildirim_serit).apply {
-            setImageViewBitmap(R.id.serit, SeritCizici.buyuk(context, ogeler, sembolik))
+            setImageViewBitmap(R.id.serit, SeritCizici.buyuk(context, ogeler, durum))
             setContentDescription(R.id.serit, aciklama)
         }
         val kucuk = RemoteViews(context.packageName, R.layout.bildirim_serit_kucuk).apply {
-            setImageViewBitmap(R.id.serit, SeritCizici.kucuk(context, ogeler))
+            setImageViewBitmap(R.id.serit, SeritCizici.kucuk(context, ogeler, durum))
             setContentDescription(R.id.serit, aciklama)
         }
         return NotificationCompat.Builder(context, KANAL)
             .setSmallIcon(R.drawable.ic_bildirim)
             .setColor(Renk.Vurgu.toArgb())
             .setContentTitle("Canlı Anket · ${anket.ad}")
-            .setContentText(if (sembolik) "Parti / Lider · Sembolik · eşit" else "Parti / Lider")
-            .setSubText(anket.ad)
+            .setContentText(durumSatiri(durum))
+            .setSubText(durumEtiketi(anket, durum))
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomContentView(kucuk)
             .setCustomBigContentView(buyuk)
@@ -111,10 +118,44 @@ object CanliAnketBildirimi {
         return PendingIntent.getActivity(context, 0, niyet, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    /** Tasarımdaki aria metni: anket, partiler ve verinin sembolik olduğu. */
-    fun erisilebilirlikMetni(anket: Anket, ogeler: List<SeritOgesi>, sembolik: Boolean): String =
-        "Canlı Anket bildirimi, ${anket.ad}. " +
-            ogeler.joinToString(", ") { it.parti.kisaAd } + ". " +
-            (if (sembolik) "Parti ve lider desteği sembolik, eşit. " else "") +
-            "Kilidi açmadan incelemek için dokun."
+    /**
+     * Ekran 6'daki kilit ekranı karşılığının üst satırı: "GENEL · SEMBOLİK", "GENEL · YASAK",
+     * "ÇEVRİMDIŞI · 21:40". Kişisel bilgi içermez.
+     */
+    fun durumEtiketi(anket: Anket, durum: AnketDurumu): String {
+        val ad = anket.kisaAd.uppercase(Turkce)
+        return when {
+            durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU -> "$ad · YASAK"
+            durum.cevrimdisi -> cevrimdisiEtiketi(durum)
+            durum.gorunum == SonucGorunumu.SEMBOLIK -> "$ad · SEMBOLİK"
+            else -> ad
+        }
+    }
+
+    /** Alt satır: "Parti / Lider · Sembolik · eşit", "Henüz oy yok", "Yayın durduruldu", "Son bilinen veri". */
+    fun durumSatiri(durum: AnketDurumu): String = when {
+        durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU -> "Yayın durduruldu · " + yenidenYayinMetni(durum.yayinYasagiBitis)
+        durum.cevrimdisi -> "Son bilinen veri"
+        durum.gorunum == SonucGorunumu.HENUZ_OY_YOK -> "Henüz oy yok"
+        durum.gorunum == SonucGorunumu.SEMBOLIK -> "Parti / Lider · Sembolik · eşit"
+        else -> "Parti / Lider"
+    }
+
+    /** Tasarımdaki aria metni: anket, durum, partiler (yasakta partiler yok). */
+    fun erisilebilirlikMetni(anket: Anket, ogeler: List<SeritOgesi>, durum: AnketDurumu): String = buildString {
+        append("Canlı Anket bildirimi, ${anket.ad}. ")
+        if (durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU) {
+            append("Yayın yasağı nedeniyle sonuçlar gizlendi. ")
+            append(yenidenYayinMetni(durum.yayinYasagiBitis)).append(". ")
+        } else {
+            append(ogeler.joinToString(", ") { it.parti.kisaAd }).append(". ")
+            when (durum.gorunum) {
+                SonucGorunumu.SEMBOLIK -> append("Parti ve lider desteği sembolik, eşit. ")
+                SonucGorunumu.HENUZ_OY_YOK -> append("Henüz oy yok. ")
+                else -> Unit
+            }
+            if (durum.cevrimdisi) append("Bağlantı yok, son bilinen veri. ")
+        }
+        append("Kilidi açmadan incelemek için dokun.")
+    }
 }

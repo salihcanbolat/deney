@@ -52,7 +52,13 @@ enum class AnketTuru(
     val aslaVar: Boolean get() = this != YALNIZ_DESTEK
 }
 
-data class Anket(val id: String, val ad: String, val tur: AnketTuru)
+data class Anket(
+    val id: String,
+    val ad: String,
+    val tur: AnketTuru,
+    /** Kilit ekranı etiketlerindeki kısa ad ("GENEL · SEMBOLİK"). */
+    val kisaAd: String = ad,
+)
 
 /** Değerler 0–1 aralığında oran; anket o bölümü toplamıyorsa null. */
 data class Sonuc(
@@ -70,7 +76,37 @@ data class AnketDurumu(
     val sembolikMi: Boolean,
     val yayinYasagiMi: Boolean,
     val yayinYasagiBitis: Long?,
-)
+    /** Bağlantı yoksa son bilinen sonuçlar gösterilir (Ekran 6, "Bağlantı yok"). */
+    val baglantiVar: Boolean = true,
+) {
+    /** Ekran 6: sonuçların nasıl gösterileceği. Yayın yasağı her şeyin önündedir. */
+    val gorunum: SonucGorunumu
+        get() = when {
+            yayinYasagiMi -> SonucGorunumu.YAYIN_DURDURULDU
+            sembolikMi -> SonucGorunumu.SEMBOLIK
+            katilimciSayisi == 0 -> SonucGorunumu.HENUZ_OY_YOK
+            else -> SonucGorunumu.CANLI
+        }
+
+    /** Bağlantı yok: son bilinen veri gösteriliyor. Yayın yasağında sonuç zaten gösterilmez. */
+    val cevrimdisi: Boolean get() = !baglantiVar && !yayinYasagiMi
+
+    val sembolikGosterim: Boolean get() = gorunum == SonucGorunumu.SEMBOLIK
+}
+
+enum class SonucGorunumu {
+    /** Gerçek oylar, canlı. */
+    CANLI,
+    /** Gerçek oy gelene kadar tüm partiler eşit. */
+    SEMBOLIK,
+    /** Anket açık, ilk oy gelmedi: logolar Meclis sırasıyla, mum yok. */
+    HENUZ_OY_YOK,
+    /**
+     * Seçim öncesi yayın yasağı: hiçbir yerde sonuç gösterilmez. Logoların sırası da sonucu ele
+     * vereceği için şerit hiç çizilmez.
+     */
+    YAYIN_DURDURULDU,
+}
 
 /** Şeritteki bir sütun. */
 data class SeritOgesi(val parti: Parti, val sonuc: Sonuc)

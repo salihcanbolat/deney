@@ -1,8 +1,8 @@
 name: Android
 
-# Derler, birim ve ekran görüntüsü testlerini (Roborazzi, emülatörsüz) çalıştırır,
-# hata ayıklama APK'sını indirilebilir yapar. Commit mesajında "[ekran]" varsa
-# (ya da elle çalıştırılırsa) ekran görüntüleri docs/screenshots/android/ altına yazılır.
+# Her push'ta kodu derler, birim ve ekran görüntüsü testlerini (Roborazzi, emülatörsüz) çalıştırır.
+# APK ve emülatör denemesi yalnızca elle çalıştırılınca (kullanıcı telefonda denemek isteyince).
+# Commit mesajında "[ekran]" varsa ekran görüntüleri docs/screenshots/android/ altına yazılır.
 
 on:
   push:
@@ -36,16 +36,23 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      # Her push'ta yalnızca kod derlenir ve testler çalışır. APK yalnızca elle tetiklenince
+      # (Actions → Android → Run workflow) üretilir.
       - name: Derle
         working-directory: android
-        run: ./gradlew --no-daemon --stacktrace assembleDebug
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ./gradlew --no-daemon --stacktrace assembleDebug
+          else
+            ./gradlew --no-daemon --stacktrace compileDebugKotlin
+          fi
 
       - name: Testler ve ekran görüntüleri
         working-directory: android
         run: ./gradlew --no-daemon testDebugUnitTest
 
       - name: APK
-        if: always()
+        if: always() && github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: secim-anketi-debug-apk
@@ -88,7 +95,7 @@ jobs:
   # Commit mesajında "[kilit]" varsa ya da elle çalıştırılırsa çalışır (~10 dk).
   kilit-ekrani:
     name: Emülatörde kilit ekranı
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[kilit]')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:

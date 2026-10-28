@@ -121,10 +121,10 @@ val GLIFLER = listOf(
 )
 
 object Anketler {
-    val genelSecim = Anket("genel-secim", "Genel Seçim Anketi", AnketTuru.DESTEK_ASLA)
-    val gencSecmen = Anket("genc-secmen", "Genç Seçmen Anketi", AnketTuru.DESTEK_ASLA)
-    val liderTercihi = Anket("lider-tercihi", "Lider Tercihi Anketi", AnketTuru.YALNIZ_DESTEK)
-    val aslaOyVermem = Anket("asla-oy-vermem", "Asla Oy Vermem Anketi", AnketTuru.YALNIZ_ASLA)
+    val genelSecim = Anket("genel-secim", "Genel Seçim Anketi", AnketTuru.DESTEK_ASLA, "Genel")
+    val gencSecmen = Anket("genc-secmen", "Genç Seçmen Anketi", AnketTuru.DESTEK_ASLA, "Genç Seçmen")
+    val liderTercihi = Anket("lider-tercihi", "Lider Tercihi Anketi", AnketTuru.YALNIZ_DESTEK, "Lider Tercihi")
+    val aslaOyVermem = Anket("asla-oy-vermem", "Asla Oy Vermem Anketi", AnketTuru.YALNIZ_ASLA, "Asla Oy Vermem")
     val tumu = listOf(genelSecim, gencSecmen, liderTercihi, aslaOyVermem)
 
     fun bul(id: String): Anket = tumu.firstOrNull { it.id == id } ?: genelSecim
@@ -154,5 +154,34 @@ object SembolikVeri {
         yayinYasagiMi = false, yayinYasagiBitis = null,
     )
 
-    fun serit(anket: Anket = Anketler.genelSecim): List<SeritOgesi> = seritSirasi(Partiler.tumu, sonuclar(anket))
+    /**
+     * Şeritteki partiler, anketin durumuna göre:
+     * - Yayın yasağında boş: logoların sırası bile sonucu ele verir.
+     * - Henüz oy yokken değerler boş, sıra Meclis sandalye sırası.
+     */
+    fun serit(anket: Anket = Anketler.genelSecim, durum: AnketDurumu = durum()): List<SeritOgesi> = when (durum.gorunum) {
+        SonucGorunumu.YAYIN_DURDURULDU -> emptyList()
+        SonucGorunumu.HENUZ_OY_YOK -> seritSirasi(Partiler.tumu, Partiler.tumu.map { Sonuc(it.id, null, null, null, null) })
+        else -> seritSirasi(Partiler.tumu, sonuclar(anket))
+    }
+}
+
+/**
+ * Ekran 6 durumlarının örnekleri. Sunucu gelene kadar yalnızca önizleme, testler ve hata ayıklama
+ * sürümündeki durum önizlemesi için; gerçek durum sunucudan gelecek.
+ */
+object OrnekDurumlar {
+    fun sembolik() = SembolikVeri.durum()
+
+    fun henuzOyYok() = AnketDurumu(
+        katilimciSayisi = 0, sonGuncelleme = null, sembolikMi = false,
+        yayinYasagiMi = false, yayinYasagiBitis = null,
+    )
+
+    fun yayinDurduruldu(bitis: Long? = null) = AnketDurumu(
+        katilimciSayisi = 0, sonGuncelleme = null, sembolikMi = true,
+        yayinYasagiMi = true, yayinYasagiBitis = bitis,
+    )
+
+    fun cevrimdisi(sonGuncelleme: Long?) = SembolikVeri.durum().copy(sonGuncelleme = sonGuncelleme, baglantiVar = false)
 }

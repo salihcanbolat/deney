@@ -68,7 +68,7 @@ class BildirimTest {
 
     @Test
     fun bildirim_kisiselTercihIcermez() {
-        val metin = CanliAnketBildirimi.erisilebilirlikMetni(Anketler.genelSecim, SembolikVeri.serit(), sembolik = true)
+        val metin = CanliAnketBildirimi.erisilebilirlikMetni(Anketler.genelSecim, SembolikVeri.serit(), SembolikVeri.durum())
         assertTrue(metin.startsWith("Canlı Anket bildirimi, Genel Seçim Anketi."))
         assertTrue(metin.contains("sembolik"))
         // Oy, "senin" ya da kullanıcıya ait bir ifade yok.
@@ -77,15 +77,15 @@ class BildirimTest {
 
     @Test
     fun seritResimleri() {
-        kaydet(SeritCizici.buyuk(uygulama, SembolikVeri.serit(), sembolik = true), "20-bildirim-serit-genis")
-        kaydet(SeritCizici.kucuk(uygulama, SembolikVeri.serit()), "21-bildirim-serit-dar")
+        kaydet(SeritCizici.buyuk(uygulama, SembolikVeri.serit(), SembolikVeri.durum()), "20-bildirim-serit-genis")
+        kaydet(SeritCizici.kucuk(uygulama, SembolikVeri.serit(), SembolikVeri.durum()), "21-bildirim-serit-dar")
     }
 
     /** Bildirim gövdesi, Android'in koyu bildirim kartına yerleştirilmiş hâliyle (yaklaşık önizleme). */
     @Test
     fun bildirimGovdesi_onizleme() {
         val etkinlik = Robolectric.buildActivity(ComponentActivity::class.java).setup().get()
-        val bildirim = CanliAnketBildirimi.olustur(etkinlik, Anketler.genelSecim, SembolikVeri.serit(), sembolik = true)
+        val bildirim = CanliAnketBildirimi.olustur(etkinlik, Anketler.genelSecim, SembolikVeri.serit(), SembolikVeri.durum())
         val d = etkinlik.resources.displayMetrics.density
         val kok = FrameLayout(etkinlik).apply { setBackgroundColor(Renk.ZeminKilitGradyan[1].toArgb()) }
         val kart = LinearLayout(etkinlik).apply {

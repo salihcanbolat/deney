@@ -192,7 +192,7 @@ private fun sutunEtiketi(oge: SeritOgesi, sira: Int, sembolik: Boolean): String 
             s.liderDestek?.let { "lider desteği ${yuzde(it, false)}" },
             s.partiyeAsla?.let { "partiye asla ${yuzde(it, false)}" },
             s.lidereAsla?.let { "lidere asla ${yuzde(it, false)}" },
-        ).joinToString(", ") + "."
+        ).joinToString(", ").ifEmpty { "Henüz oy yok" } + "."
     }
     return "${sira + 1}. sıra, ${oge.parti.kisaAd}, lider $liderler. $degerler"
 }

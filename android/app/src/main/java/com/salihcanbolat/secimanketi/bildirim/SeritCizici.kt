@@ -2,6 +2,7 @@ package com.salihcanbolat.secimanketi.bildirim
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BlurMaskFilter
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
@@ -14,7 +15,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.PathParser
 import com.salihcanbolat.secimanketi.R
+import com.salihcanbolat.secimanketi.bilesen.Simgeler
+import com.salihcanbolat.secimanketi.bilesen.saatMetni
+import com.salihcanbolat.secimanketi.bilesen.yenidenYayinMetni
 import com.salihcanbolat.secimanketi.tema.Renk
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
+import com.salihcanbolat.secimanketi.veri.SonucGorunumu
 import com.salihcanbolat.secimanketi.veri.SeritOgesi
 import com.salihcanbolat.secimanketi.veri.yuzde
 import kotlin.math.sqrt
@@ -28,33 +34,87 @@ import kotlin.math.sqrt
  * zeminiyle çizilir; yazılar her iki durumda da okunur kalır.
  */
 object SeritCizici {
+    private const val KILIT_YOLU = Simgeler.KILIT
 
     /** Genişletilmiş bildirim: başlık sistemde, burada şerit ve açıklama satırı. */
-    fun buyuk(context: Context, ogeler: List<SeritOgesi>, sembolik: Boolean, genislikDp: Float = 360f): Bitmap {
+    fun buyuk(context: Context, ogeler: List<SeritOgesi>, durum: AnketDurumu, genislikDp: Float = 360f): Bitmap {
         val d = olcek(context)
         val kenar = 12f
         val yukseklikDp = kenar + 92f + 8f + 13f + 10f
         return cizim(context, genislikDp, yukseklikDp) { c, p ->
-            sutunlar(c, p, context, ogeler, sembolik, x0 = kenar * d, y0 = kenar * d, genislik = (genislikDp - 2 * kenar) * d, d = d)
-            aciklama(c, p, context, sembolik, x0 = (kenar + 4) * d, xSon = (genislikDp - kenar - 4) * d, taban = (kenar + 92f + 8f + 10f) * d, d = d)
+            val alan = RectF(kenar * d, kenar * d, (genislikDp - kenar) * d, (kenar + 92f) * d)
+            if (durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU) {
+                yasakPaneli(c, p, alan, d)
+            } else {
+                sutunlar(c, p, context, ogeler, durum.sembolikGosterim, x0 = alan.left, y0 = alan.top, genislik = alan.width(), d = d)
+            }
+            aciklama(c, p, context, durum, x0 = (kenar + 4) * d, xSon = (genislikDp - kenar - 4) * d, taban = (kenar + 92f + 8f + 10f) * d, d = d)
         }
     }
 
-    /** Daraltılmış bildirim (≈ 48 dp): yalnızca kısa mumlar ve logolar. */
-    fun kucuk(context: Context, ogeler: List<SeritOgesi>, genislikDp: Float = 360f): Bitmap {
+    /** Daraltılmış bildirim (≈ 48 dp): kısa mumlar ve logolar; yayın yasağında kilit ve kısa metin. */
+    fun kucuk(context: Context, ogeler: List<SeritOgesi>, durum: AnketDurumu, genislikDp: Float = 360f): Bitmap {
         val d = olcek(context)
         val yukseklikDp = 48f
         return cizim(context, genislikDp, yukseklikDp) { c, p ->
+            if (durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU) {
+                val alan = RectF(12f * d, 6f * d, 150f * d, (yukseklikDp - 6f) * d)
+                yasakPaneli(c, p, alan, d, kilitBoyu = 18f)
+                val baslik = yaziBoyasi(context, R.font.geist_semibold, 13f, Renk.Metin, d).apply { textAlign = Paint.Align.LEFT }
+                val alt = yaziBoyasi(context, R.font.geist_regular, 11f, Renk.Asla, d).apply { textAlign = Paint.Align.LEFT }
+                c.drawText("Yayın durduruldu", 162f * d, 21f * d, baslik)
+                c.drawText(yenidenYayinMetni(durum.yayinYasagiBitis), 162f * d, 37f * d, alt)
+                return@cizim
+            }
             val sutunGen = (genislikDp - 24f - 7 * 3f) / 8f
             ogeler.forEachIndexed { i, oge ->
                 val x = (12f + i * (sutunGen + 3f)) * d
                 val ortaX = x + sutunGen * d / 2
                 val logo = 24f * d
                 val logoUst = (yukseklikDp - 6f) * d - logo
-                mumCifti(c, p, ortaX, taban = logoUst - 3 * d, yukseklik = 14f * d, genislik = 6f * d, fitil = 2f * d, d = d)
+                if (degerVar(oge)) {
+                    mumCifti(c, p, ortaX, taban = logoUst - 3 * d, yukseklik = 14f * d, genislik = 6f * d, fitil = 2f * d, d = d)
+                }
                 logoKutusu(c, p, context, oge, RectF(ortaX - logo / 2, logoUst, ortaX + logo / 2, logoUst + logo), d)
             }
         }
+    }
+
+    /** Henüz oy yokken değer yok: mum çizilmez, yalnızca logo. */
+    private fun degerVar(oge: SeritOgesi) = oge.sonuc.partiDestek != null || oge.sonuc.liderDestek != null
+
+    /**
+     * Yayın durduruldu: aynı boyda, bulanık çubuklar ve ortada turuncu kilit. Logo yok; sıraları
+     * sonucu ele verir.
+     */
+    private fun yasakPaneli(c: Canvas, p: Paint, alan: RectF, d: Float, kilitBoyu: Float = 28f) {
+        p.style = Paint.Style.FILL
+        p.color = Color(0x80040714).toArgb()
+        c.drawRoundRect(alan, 20 * d, 20 * d, p)
+        val ic = RectF(alan.left + 14 * d, alan.top + 10 * d, alan.right - 14 * d, alan.bottom - 10 * d)
+        val aralik = 5 * d
+        val cubuk = (ic.width() - 7 * aralik) / 8
+        val bulanik = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color(0xFF2A3560).copy(alpha = 0.6f).toArgb()
+            maskFilter = BlurMaskFilter(6 * d, BlurMaskFilter.Blur.NORMAL)
+        }
+        repeat(8) { i ->
+            val x = ic.left + i * (cubuk + aralik)
+            c.drawRoundRect(RectF(x, ic.bottom - ic.height() * 0.7f, x + cubuk, ic.bottom), 5 * d, 5 * d, bulanik)
+        }
+        val kilit = PathParser.createPathFromPathData(KILIT_YOLU)
+        val boyut = kilitBoyu * d
+        kilit.transform(Matrix().apply {
+            setScale(boyut / 24f, boyut / 24f)
+            postTranslate(alan.centerX() - boyut / 2, alan.centerY() - boyut / 2)
+        })
+        p.style = Paint.Style.STROKE
+        p.strokeWidth = 1.8f * boyut / 24f
+        p.strokeCap = Paint.Cap.ROUND
+        p.strokeJoin = Paint.Join.ROUND
+        p.color = Renk.Asla.toArgb()
+        c.drawPath(kilit, p)
+        p.style = Paint.Style.FILL
     }
 
     /**
@@ -106,7 +166,7 @@ object SeritCizici {
             val alan = alanAlt - alanUst
             val oran = ((oge.sonuc.partiDestek ?: 0f) + 0.3f).coerceIn(0f, 1f)
             val liderOran = ((oge.sonuc.liderDestek ?: 0f) + 0.3f).coerceIn(0f, 1f)
-            mumCifti(c, p, ortaX, alanAlt, alan * oran, 7 * d, 3 * d, d, liderYukseklik = alan * liderOran)
+            if (degerVar(oge)) mumCifti(c, p, ortaX, alanAlt, alan * oran, 7 * d, 3 * d, d, liderYukseklik = alan * liderOran)
         }
     }
 
@@ -190,10 +250,22 @@ object SeritCizici {
         p.style = Paint.Style.FILL
     }
 
-    /** "▮ Parti  ▮ Lider  Sembolik · eşit" ve sağda "Dokun, incele →". */
-    private fun aciklama(c: Canvas, p: Paint, context: Context, sembolik: Boolean, x0: Float, xSon: Float, taban: Float, d: Float) {
+    /**
+     * "▮ Parti  ▮ Lider  Sembolik · eşit" ve sağda "Dokun, incele →". Duruma göre orta not:
+     * "Henüz oy yok", "Çevrimdışı · 21:40"; yayın yasağında "Yayın durduruldu" ve yeniden yayın tarihi.
+     */
+    private fun aciklama(c: Canvas, p: Paint, context: Context, durum: AnketDurumu, x0: Float, xSon: Float, taban: Float, d: Float) {
         val yazi = yaziBoyasi(context, R.font.geist_regular, 11f, Renk.MetinEnSoluk, d).apply { textAlign = Paint.Align.LEFT }
+        if (durum.gorunum == SonucGorunumu.YAYIN_DURDURULDU) {
+            val baslik = yaziBoyasi(context, R.font.geist_semibold, 11f, Renk.Metin, d).apply { textAlign = Paint.Align.LEFT }
+            c.drawText("Yayın durduruldu", x0, taban, baslik)
+            yazi.color = Renk.Asla.toArgb()
+            yazi.textAlign = Paint.Align.RIGHT
+            c.drawText(yenidenYayinMetni(durum.yayinYasagiBitis), xSon, taban, yazi)
+            return
+        }
         var x = x0
+        p.style = Paint.Style.FILL
         for ((ad, renk) in listOf("Parti" to Renk.MumParti, "Lider" to Renk.MumLider)) {
             p.color = renk.toArgb()
             c.drawRoundRect(RectF(x, taban - 8.5f * d, x + 6 * d, taban + 0.5f * d), 2 * d, 2 * d, p)
@@ -201,7 +273,13 @@ object SeritCizici {
             c.drawText(ad, x, taban, yazi)
             x += yazi.measureText(ad) + 10 * d
         }
-        if (sembolik) c.drawText("Sembolik · eşit", x, taban, yazi)
+        val not = when {
+            durum.cevrimdisi -> "Çevrimdışı" + (durum.sonGuncelleme?.let { " · ${saatMetni(it)}" } ?: "")
+            durum.gorunum == SonucGorunumu.SEMBOLIK -> "Sembolik · eşit"
+            durum.gorunum == SonucGorunumu.HENUZ_OY_YOK -> "Henüz oy yok"
+            else -> null
+        }
+        if (not != null) c.drawText(not, x, taban, yazi)
         yazi.textAlign = Paint.Align.RIGHT
         c.drawText("Dokun, incele →", xSon, taban, yazi)
     }

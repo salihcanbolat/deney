@@ -28,6 +28,7 @@ import com.salihcanbolat.secimanketi.tema.Olcu
 import com.salihcanbolat.secimanketi.tema.Renk
 import com.salihcanbolat.secimanketi.tema.Yazi
 import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.AnketDurumu
 import com.salihcanbolat.secimanketi.veri.SembolikVeri
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -40,6 +41,7 @@ import java.util.Locale
 @Composable
 fun CanliEkrani(
     anket: Anket,
+    anketDurumu: AnketDurumu = SembolikVeri.durum(),
     modifier: Modifier = Modifier,
     bugun: LocalDate = LocalDate.now(),
     altBoslukEk: Dp = 0.dp,
@@ -67,8 +69,8 @@ fun CanliEkrani(
             }
             SeritKarti(
                 anket = anket,
-                ogeler = SembolikVeri.serit(anket),
-                sembolik = true,
+                ogeler = SembolikVeri.serit(anket, anketDurumu),
+                anketDurumu = anketDurumu,
                 durum = rememberSeritDurumu(),
                 ipucu = "Basılı tut, kaydır",
                 ipucuVurgulu = true,

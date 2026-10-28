@@ -55,7 +55,7 @@ class EkranGoruntuleriTest {
                     SeritKarti(
                         anket = Anketler.genelSecim,
                         ogeler = SembolikVeri.serit(),
-                        sembolik = true,
+                        anketDurumu = SembolikVeri.durum(),
                         durum = SeritDurumu(),
                         ipucu = "Dokun, incele →",
                         etkilesimli = false,
