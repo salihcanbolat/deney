@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,7 @@ import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.math.roundToInt
 
 /**
  * Kilit ekranı zemini: radial-gradient(120% 80% at 20% 10%, #16224D, #0A1030 %55, #040714).
@@ -109,13 +111,26 @@ fun KilitSaati(modifier: Modifier = Modifier, sabitZaman: LocalDateTime? = null)
         }
     }
     Column(modifier) {
-        Text(SaatBicimi.format(simdi), style = Yazi.Saat, color = Renk.Metin)
+        Text(SaatBicimi.format(simdi), style = Yazi.Saat, color = Renk.Metin, modifier = Modifier.cssSatirYuksekligi(0.95f))
         Text(
             TarihBicimi.format(simdi),
             style = Yazi.Tarih,
             color = Renk.MetinIkincil,
             modifier = Modifier.padding(top = 10.dp),
         )
+    }
+}
+
+/**
+ * CSS'deki gibi satır yüksekliği: kutu `oran × yazı boyutu` yüksekliğindedir ve yazı dikeyde ortalanır
+ * (Compose, yazı tipinin kendi yüksekliğinden küçük satır yüksekliğinde kutuyu küçültmez).
+ * Saat: 96 sp × 0,95; rakamlar tasarımdaki konuma oturur.
+ */
+private fun Modifier.cssSatirYuksekligi(oran: Float): Modifier = layout { olculebilir, kisitlar ->
+    val yerlesik = olculebilir.measure(kisitlar)
+    val hedef = (Yazi.Saat.fontSize.toPx() * oran).roundToInt()
+    layout(yerlesik.width, hedef) {
+        yerlesik.place(0, (hedef - yerlesik.height) / 2)
     }
 }
 
