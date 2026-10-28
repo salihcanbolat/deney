@@ -51,8 +51,8 @@ fun AltGezinme(secili: Sekme, onSec: (Sekme) -> Unit, modifier: Modifier = Modif
             .shadow(20.dp, sekil, ambientColor = Color.Black.copy(alpha = 0.6f), spotColor = Color.Black.copy(alpha = 0.6f))
             .clip(sekil)
             // Tasarım: rgba(20,28,58,0.72) + arka plan bulanıklığı. Compose arkadaki içeriği
-            // bulanıklaştıramadığı için zemin daha opak (0,94); altından geçen yazı okunmaz.
-            .background(Color(0xF0141C3A))
+            // bulanıklaştıramadığı için zemin neredeyse opak (0,98); altından geçen yazı görünmez.
+            .background(Color(0xFA141C3A))
             .border(1.dp, Color.White.copy(alpha = 0.1f), sekil)
             .padding(6.dp)
             .selectableGroup()

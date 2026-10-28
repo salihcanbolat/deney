@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -265,15 +266,20 @@ private fun SeritSutunu(
                 color = Renk.MetinIkincil,
             )
         }
-        // Kompakt hâlde mumlar alanın %30 fazlasına uzanır; açıkken doğrudan oran.
-        MumCifti(
-            parti = if (acik) partiOrani else partiOrani + 0.3f,
-            lider = if (acik) liderOrani else liderOrani + 0.3f,
-            genislik = if (acik) Olcu.MumGenisligiAcik else Olcu.MumGenisligiKompakt,
-            fitil = if (acik) 8.dp else 3.dp,
-            parilti = parilti.value,
-            modifier = Modifier.weight(1f),
-        )
+        if (oge.sonuc.partiDestek == null && oge.sonuc.liderDestek == null) {
+            // Henüz oy yok: mum yok, yalnızca logo (Ekran 6).
+            Spacer(Modifier.weight(1f))
+        } else {
+            // Kompakt hâlde mumlar alanın %30 fazlasına uzanır; açıkken doğrudan oran.
+            MumCifti(
+                parti = if (acik) partiOrani else partiOrani + 0.3f,
+                lider = if (acik) liderOrani else liderOrani + 0.3f,
+                genislik = if (acik) Olcu.MumGenisligiAcik else Olcu.MumGenisligiKompakt,
+                fitil = if (acik) 8.dp else 3.dp,
+                parilti = parilti.value,
+                modifier = Modifier.weight(1f),
+            )
+        }
         LogoKutusu(oge.parti, acik)
     }
 }

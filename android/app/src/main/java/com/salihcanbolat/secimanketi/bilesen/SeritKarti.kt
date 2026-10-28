@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.salihcanbolat.secimanketi.tema.Hareket
 import com.salihcanbolat.secimanketi.tema.Kose
@@ -129,7 +130,14 @@ fun SeritKarti(
             ) {
                 Glif(GRAFIK_GLIFI, Renk.VurguUstuMetin, Modifier.size(12.dp), kalinlik = 3f)
             }
-            Text("Canlı Anket · ${anket.ad}", style = Yazi.Etiket12, color = Renk.BaslikMetni, modifier = Modifier.weight(1f), maxLines = 1)
+            Text(
+                "Canlı Anket · ${anket.ad}",
+                style = Yazi.Etiket12,
+                color = Renk.BaslikMetni,
+                modifier = Modifier.weight(1f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
             when {
                 yasak -> Text("YASAK", style = Yazi.EnKucukMono, color = Renk.Asla)
                 anketDurumu.cevrimdisi -> Text(cevrimdisiEtiketi(anketDurumu), style = Yazi.EnKucukMono, color = Renk.MetinEnSoluk)
