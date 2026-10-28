@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.salihcanbolat.secimanketi.tema.SecimTemasi
+import com.salihcanbolat.secimanketi.veri.UygulamaDurumu
 
 /**
  * Ekran 4'ün kabı. Bildirime dokununca açılır.
@@ -20,9 +21,11 @@ class KilitIncelemeActivity : ComponentActivity() {
         setShowWhenLocked(true)
         animasyonsuz()
         enableEdgeToEdge()
+        // Bildirimdeki anketle aynı: kullanıcının kilit ekranına aldığı anket.
+        val kilitAnketi = UygulamaDurumu.yukle(this).kilitAnketi
         setContent {
             SecimTemasi {
-                KilitIncelemeEkrani()
+                KilitIncelemeEkrani(anket = kilitAnketi)
             }
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Genişletilmiş bildirim gövdesi: mum şeridi resmi (SeritCizici.buyuk). -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,5 +11,8 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:importantForAccessibility="yes" />
+        android:background="@drawable/bildirim_serit_zemin"
+        android:clipToOutline="true"
+        android:importantForAccessibility="yes"
+        tools:targetApi="31" />
 </FrameLayout>

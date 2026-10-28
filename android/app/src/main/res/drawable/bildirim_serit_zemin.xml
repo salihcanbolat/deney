@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bildirimdeki şerit resminin yuvarlak koyu kartı (clipToOutline ile köşeler kırpılır). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/serit_karti" />
+    <corners android:radius="14dp" />
+</shape>

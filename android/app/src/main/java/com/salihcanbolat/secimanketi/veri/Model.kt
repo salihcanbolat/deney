@@ -38,7 +38,19 @@ data class Parti(
     val liderAdlari: String get() = liderler.joinToString(" & ") { it.ad }
 }
 
-enum class AnketTuru { DESTEK_ASLA, YALNIZ_DESTEK, YALNIZ_ASLA }
+enum class AnketTuru(
+    /** Kartlardaki tür etiketi. */
+    val etiket: String,
+    /** Katılınmamış anketin açıklaması. */
+    val aciklama: String,
+) {
+    DESTEK_ASLA("DESTEK + ASLA", "Parti, lider ve “asla” · 3 seçim"),
+    YALNIZ_DESTEK("YALNIZ DESTEK", "Parti ve lider · 2 seçim"),
+    YALNIZ_ASLA("YALNIZ ASLA", "Yalnızca “asla” bölümü · 1 seçim");
+
+    val destekVar: Boolean get() = this != YALNIZ_ASLA
+    val aslaVar: Boolean get() = this != YALNIZ_DESTEK
+}
 
 data class Anket(val id: String, val ad: String, val tur: AnketTuru)
 

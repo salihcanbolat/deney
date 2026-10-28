@@ -2,4 +2,6 @@
 <resources>
     <color name="zemin">#070B1C</color>
     <color name="zemin_kilit">#040714</color>
+    <!-- Renk.CamKart, opak (bildirim şeridi resminin zemini) -->
+    <color name="serit_karti">#FF141C3A</color>
 </resources>

@@ -126,6 +126,8 @@ object Anketler {
     val liderTercihi = Anket("lider-tercihi", "Lider Tercihi Anketi", AnketTuru.YALNIZ_DESTEK)
     val aslaOyVermem = Anket("asla-oy-vermem", "Asla Oy Vermem Anketi", AnketTuru.YALNIZ_ASLA)
     val tumu = listOf(genelSecim, gencSecmen, liderTercihi, aslaOyVermem)
+
+    fun bul(id: String): Anket = tumu.firstOrNull { it.id == id } ?: genelSecim
 }
 
 /**

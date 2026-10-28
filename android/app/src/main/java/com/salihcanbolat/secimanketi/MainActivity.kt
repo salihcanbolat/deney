@@ -8,30 +8,37 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import com.salihcanbolat.secimanketi.bildirim.CanliAnketBildirimi
-import com.salihcanbolat.secimanketi.kilit.KilitIncelemeEkrani
+import com.salihcanbolat.secimanketi.ekran.Uygulama
 import com.salihcanbolat.secimanketi.tema.SecimTemasi
+import com.salihcanbolat.secimanketi.veri.Anket
+import com.salihcanbolat.secimanketi.veri.UygulamaDurumu
 
 /**
- * Şimdilik Ekran 4 ile açılır ve kilit ekranı bildirimini (Ekran 5) gösterir.
- * Anketler ekranı (1) ve "Kilit ekranında takip et" anahtarı (3) sonraki adımda gelir.
+ * Uygulamanın giriş noktası: Anketler (1) → Oy verme (2) → Oy gönderildi (3), Kilit ekranı (4) ve Canlı.
+ * Kilit ekranındaki anket değişince kilit ekranı bildirimi (5) güncellenir.
  */
 class MainActivity : ComponentActivity() {
+    private lateinit var durum: UygulamaDurumu
+
     private val bildirimIzni = registerForActivityResult(ActivityResultContracts.RequestPermission()) { verildi ->
-        if (verildi) CanliAnketBildirimi.goster(this)
+        if (verildi) bildirimiGuncelle(durum.kilitAnketi)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        durum = UygulamaDurumu.yukle(this)
         setContent {
             SecimTemasi {
-                KilitIncelemeEkrani()
+                Uygulama(durum = durum, onKilitAnketiDegisti = ::bildirimiGuncelle)
             }
         }
-        if (CanliAnketBildirimi.izinVarMi(this)) {
-            CanliAnketBildirimi.goster(this)
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (!CanliAnketBildirimi.izinVarMi(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             bildirimIzni.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    private fun bildirimiGuncelle(anket: Anket) {
+        CanliAnketBildirimi.goster(this, anket)
     }
 }

@@ -60,10 +60,26 @@ PY
 )
 echo "bildirim konumu: ${KONUM:-bulunamadı}"
 if [ -n "${KONUM:-}" ]; then
-  # Kilit ekranında bildirimi genişletmek için aşağı kaydır, sonra dokun
+  # Kilit ekranında bildirim daraltılmış görünür; genişletme okuna dokunup genişletilmiş hâli de al
   set -- $KONUM
-  adb shell input swipe "$1" "$2" "$1" "$(( $2 + 400 ))" 300 || true
-  sleep 2
+  OK=$(python3 - "$OUT/kilit-ekrani-ogeleri.xml" <<'PY2'
+import re, sys
+xml = open(sys.argv[1], encoding="utf-8").read()
+for m in re.finditer(r'<node [^>]*>', xml):
+    n = m.group(0)
+    if 'android:id/expand_button' in n:
+        b = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n)
+        if b:
+            x1, y1, x2, y2 = map(int, b.groups())
+            print((x1 + x2) // 2, (y1 + y2) // 2)
+            break
+PY2
+)
+  echo "genişletme oku: ${OK:-bulunamadı}"
+  if [ -n "${OK:-}" ]; then
+    adb shell input tap $OK
+    sleep 2
+  fi
   goruntu 32-kilit-ekrani-bildirim-genis
   adb shell input tap "$1" "$2"
   sleep 3
@@ -91,6 +107,14 @@ if [ -n "${KONUM:-}" ]; then
   sleep 2
   goruntu 35-geri-kilit-ekrani
   echo "== geri tuşundan sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
+
+  # Koyu temada aynı kilit ekranı (bildirim kartını sistem koyu çizer)
+  adb shell cmd uimode night yes || true
+  adb shell input keyevent KEYCODE_SLEEP
+  sleep 2
+  adb shell input keyevent KEYCODE_WAKEUP
+  sleep 4
+  goruntu 36-kilit-ekrani-koyu-tema
 else
   echo "Bildirim kilit ekranında bulunamadı; öğe dökümü kilit-ekrani-ogeleri.xml içinde."
 fi
