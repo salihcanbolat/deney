@@ -351,3 +351,7 @@ Kullanıcı yeni bir tasarım paketi verdi (`tasarim/`) ve "Önce Android, sonra
 - **Sıra:** 1) tema ve mum şeridi, 2) Ekran 4 (basılı tut, kaydır), 3) Ekran 5 (kilit ekranı bildirimi), 4) Ekran 1–3, 5) Ekran 6 durumları. Her adımdan sonra kullanıcıya ne yapıldığı ve tasarımdan nerede sapıldığı söylenir.
 - **Derleme:** Bulut oturumunda Android SDK indirilemiyor; derleme ve testler `.github/workflows/android.yml` ile Linux makinesinde. Ekran görüntüleri Roborazzi ile (emülatörsüz) `docs/screenshots/android/` altına (commit mesajında `[ekran]`). Hata ayıklama APK'sı iş akışı çıktısı olarak indirilebilir.
 - **iPhone:** Mevcut iOS kodu (`App/`, `Packages/`) saklanır; Android bittikten sonra yeni tasarıma uyarlanacak. iOS iş akışı yalnızca iOS dosyaları değişince çalışır.
+- **Emülatör:** Commit mesajında `[kilit]` varsa gerçek emülatörde (API 34, PIN'li kilit) bildirim → inceleme → geri akışı denenir; görüntüler ve kilit durumu `docs/screenshots/android-cihaz/` altına yazılır.
+- **Bildirim kanalı:** `canli_anket_kilit`, önemi DEFAULT ama sessiz (ses/titreşim kapalı). LOW önemli "sessiz" bildirimleri Android 12+ kilit ekranında varsayılan olarak gizliyor; emülatörde doğrulandı.
+- **Cihazdaki durum:** Kilit ekranındaki anket, ziller ve verilen oy (`UygulamaDurumu`, SharedPreferences) yalnızca cihazda. Bir ankette tek oy. Google ile giriş ve sunucu henüz yok.
+- **"Canlı" sekmesi:** Tasarım paketinde ekranı yok; şimdilik seçili anketin etkileşimli şeridi. Tasarımcıdan beklenecek.

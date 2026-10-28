@@ -52,6 +52,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -106,7 +107,8 @@ fun OyGonderildiEkrani(
                     .padding(start = 20.dp, end = 20.dp, top = ustBosluk(72.dp), bottom = altBosluk(34.dp)),
                 verticalArrangement = Arrangement.spacedBy(22.dp),
             ) {
-                OnayAnimasyonu(halkaZamani)
+                // Kısa ekranlarda (tasarım 844 dp) alt düğmeler görünür kalsın diye halka alanı küçülür.
+                OnayAnimasyonu(halkaZamani, (ekranYuksekligi - 690.dp).coerceIn(150.dp, 200.dp))
                 Column(
                     Modifier.fillMaxWidth().belirme(500, kayma = 18.dp, sureMs = 900),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -162,7 +164,7 @@ fun OyGonderildiEkrani(
 
 /** 104 dp mavi çekirdek, içinde çizilen onay; çevresinde 3 sn'de bir yayılan üç halka. */
 @Composable
-private fun OnayAnimasyonu(halkaZamani: Long?) {
+private fun OnayAnimasyonu(halkaZamani: Long?, yukseklik: Dp) {
     val azalt = LocalHareketAzalt.current
     var zaman by remember { mutableLongStateOf(halkaZamani ?: 0L) }
     if (halkaZamani == null && !azalt) {
@@ -186,7 +188,7 @@ private fun OnayAnimasyonu(halkaZamani: Long?) {
         if (!azalt) cizim.animateTo(1f, tween(600, 350, CizimEgrisi))
     }
 
-    Box(Modifier.fillMaxWidth().height(200.dp).semantics { contentDescription = "Oy gönderildi" }, contentAlignment = Alignment.Center) {
+    Box(Modifier.fillMaxWidth().height(yukseklik).semantics { contentDescription = "Oy gönderildi" }, contentAlignment = Alignment.Center) {
         if (!azalt) {
             repeat(3) { k ->
                 Box(

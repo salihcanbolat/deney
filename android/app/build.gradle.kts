@@ -35,6 +35,11 @@ android {
                 // Ekran görüntüsü testleri her çalıştırmada PNG yazar (build/screenshots/android/).
                 it.systemProperty("roborazzi.test.record", "true")
                 it.systemProperty("robolectric.pixelCopyRenderMode", "hardware")
+                // Başarısız testin mesajı CI günlüğünde tam görünsün.
+                it.testLogging {
+                    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+                    events("failed")
+                }
             }
         }
     }

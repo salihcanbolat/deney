@@ -159,7 +159,7 @@ fun OyVermeEkrani(
         else -> null
     }
 
-    val altCubukYuksekligi = 190.dp + (altBosluk(34.dp) - 34.dp)
+    val altCubukYuksekligi = 202.dp + (altBosluk(34.dp) - 34.dp)
     Box(modifier.fillMaxSize().background(Renk.Zemin)) {
         LazyColumn(
             state = liste,
@@ -572,13 +572,15 @@ private fun AltCubuk(
         modifier
             .fillMaxWidth()
             .background(
+                // Tasarımda solma özet çiplerinin arkasında başlıyor; altından geçen satırlar
+                // çiplerle karışmasın diye solma çiplerin üstünde biter.
                 Brush.verticalGradient(
                     0f to Color(0x000A0B0F),
-                    0.28f to Color(0xEB0A0B0F),
-                    1f to Renk.Zemin,
+                    0.16f to Color(0xEB0A0B0F),
+                    0.3f to Renk.Zemin,
                 ),
             )
-            .padding(start = 20.dp, end = 20.dp, top = 18.dp, bottom = altBosluk(34.dp)),
+            .padding(start = 20.dp, end = 20.dp, top = 30.dp, bottom = altBosluk(34.dp)),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
