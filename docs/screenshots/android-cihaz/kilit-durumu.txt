@@ -1,0 +1,4 @@
+== kilitlendikten sonra:
+    isKeyguardShowing=true
+    mKeyguardShowing=true
+   KeyguardShowing=true AodShowing=false KeyguardGoingAway=false DismissalRequested=false  Occluded=false DismissingKeyguardActivity=null TurnScreenOnActivity=null at display=0
