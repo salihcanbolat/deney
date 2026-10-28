@@ -6,6 +6,13 @@ name: iOS
 
 on:
   push:
+    paths:
+      - App/**
+      - Packages/**
+      - Tests/**
+      - project.yml
+      - .github/workflows/ios.yml
+      - .github/scripts/**
   workflow_dispatch:
 
 concurrency:

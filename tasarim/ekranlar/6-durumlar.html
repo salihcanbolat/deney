@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Durumlar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&amp;family=Geist+Mono:wght@400..600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#070B1C}
+a{color:#5B87FF}a:hover{color:#A9C1FF}
+button{font:inherit;color:inherit;cursor:pointer}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{opacity:.35}50%{opacity:.8}100%{opacity:.35}}
+.rise{animation:rise .9s cubic-bezier(.16,.84,.24,1) both}
+.c2{animation-delay:.08s}.c3{animation-delay:.16s}.c4{animation-delay:.24s}.c5{animation-delay:.32s}
+.spin{animation:spin 2.8s linear infinite}
+.shim{animation:shimmer 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div style="width: 1330px; height: 844px; box-sizing: border-box; background: #070B1C; color: #F5F1E8; font-family: 'Geist', -apple-system, system-ui, sans-serif; padding: 40px; display: flex; flex-direction: column; gap: 28px">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #98A2C3">UYGULAMA + KİLİT EKRANI</span>
+      <h1 style="margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.03em">Durumlar</h1>
+    </div>
+    <span style="font-size: 13px; color: #98A2C3">Her durumun altında kilit ekranı widget'ındaki karşılığı</span>
+  </div>
+
+  <div style="flex: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px">
+
+    <article class="rise" style="border-radius: 28px; background: #10162E; border: 1px solid rgba(255,255,255,0.07); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 16px; background: rgba(245,241,232,0.14); display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="1.8" stroke-linecap="round"><path d="M5 20V12M12 20V12M19 20V12"></path><path d="M3 8h18"></path></svg>
+      </span>
+      <h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">Sembolik veri</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #B8C1DD">Gerçek oy gelene kadar tüm partiler eşit gösterilir. Hiçbir parti önde ya da geride değildir.</p>
+      <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; height: 70px; align-items: end">
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+        <span style="height: 100%; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(245,241,232,0.3) 0 3px, rgba(245,241,232,0.1) 3px 7px)"></span>
+      </div>
+      <span style="align-self: flex-start; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #070B1C; background: #F5F1E8; padding: 4px 9px; border-radius: 999px">SEMBOLİK VERİ</span>
+      <div style="flex: 1"></div>
+      <div style="border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #C7CEE3">GENEL · SEMBOLİK</span>
+        <span style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600"><span>AK Parti</span><span style="font-weight: 300">%—</span></span>
+      </div>
+    </article>
+
+    <article class="rise c2" style="border-radius: 28px; background: #10162E; border: 1px solid rgba(255,255,255,0.07); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 16px; background: rgba(91,135,255,0.12); display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B87FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="3"></rect><path d="M9 9V6h6v3"></path><path d="M12 13v3"></path></svg>
+      </span>
+      <h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">Henüz oy yok</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #B8C1DD">Anket açıldı ama ilk oy henüz gelmedi. Sonuçlar ilk oyla birlikte canlanır.</p>
+      <div style="border-radius: 20px; border: 1px dashed rgba(255,255,255,0.16); height: 110px; display: grid; place-items: center; text-align: center">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 36px; font-weight: 250; letter-spacing: -0.03em">0</span>
+          <span style="font-size: 12px; color: #98A2C3">katılımcı</span>
+        </div>
+      </div>
+      <a href="#" style="min-height: 48px; border-radius: 14px; background: #5B87FF; color: #050A1F; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">İlk oyu ver</a>
+      <div style="flex: 1"></div>
+      <div style="border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #C7CEE3">GENÇ SEÇMEN</span>
+        <span style="font-size: 14px; font-weight: 600">Henüz oy yok</span>
+      </div>
+    </article>
+
+    <article class="rise c3" style="border-radius: 28px; background: linear-gradient(180deg, rgba(255,166,92,0.10), #10162E 45%); border: 1px solid rgba(255,166,92,0.28); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 16px; background: rgba(255,166,92,0.16); display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFA65C" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"></circle><path d="M9 9v6M15 9v6"></path></svg>
+      </span>
+      <h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">Yayın durduruldu</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #B8C1DD">Seçim öncesi yayın yasağı nedeniyle sonuçlar gizlendi. Oy vermeye devam edebilirsin.</p>
+      <div aria-hidden="true" style="position: relative; height: 110px; border-radius: 20px; overflow: hidden; background: rgba(4,7,20,0.5)">
+        <div class="shim" style="position: absolute; inset: 14px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; align-items: end; filter: blur(6px)">
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+          <span style="height: 70%; border-radius: 5px; background: #2A3560"></span>
+        </div>
+        <div style="position: absolute; inset: 0; display: grid; place-items: center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA65C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+        </div>
+      </div>
+      <span style="font-size: 13px; color: #FFA65C">Yeniden yayın: [TARİH, SAAT]</span>
+      <div style="flex: 1"></div>
+      <div style="border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #C7CEE3">GENEL · YASAK</span>
+        <span style="font-size: 14px; font-weight: 600">Yayın durduruldu</span>
+      </div>
+    </article>
+
+    <article class="rise c4" style="border-radius: 28px; background: #10162E; border: 1px solid rgba(255,255,255,0.07); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 16px; background: rgba(255,255,255,0.08); display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9DEEC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9a14 14 0 0 1 19 0"></path><path d="M6 12.5a9 9 0 0 1 12 0"></path><path d="M9.5 16a4 4 0 0 1 5 0"></path><path d="M3 3l18 18"></path></svg>
+      </span>
+      <h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">Bağlantı yok</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #B8C1DD">Son bilinen sonuçlar gösteriliyor. Bağlantı gelince kendiliğinden güncellenir.</p>
+      <div style="border-radius: 20px; padding: 14px; background: rgba(4,7,20,0.5); display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 12px; color: #98A2C3">Son güncelleme</span>
+        <span style="font-size: 30px; font-weight: 250; letter-spacing: -0.03em; font-feature-settings: 'tnum'">21:40</span>
+        <span style="font-size: 12px; color: #98A2C3">Oyun gönderilmeye hazır bekletilir</span>
+      </div>
+      <button style="min-height: 48px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.14); background: transparent; font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px">
+        <svg class="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v4h-4"></path></svg>
+        Yeniden dene
+      </button>
+      <div style="flex: 1"></div>
+      <div style="border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #C7CEE3">ÇEVRİMDIŞI · 21:40</span>
+        <span style="font-size: 14px; font-weight: 600">Son bilinen veri</span>
+      </div>
+    </article>
+
+    <article class="rise c5" style="border-radius: 28px; background: #10162E; border: 1px solid rgba(255,255,255,0.07); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+      <span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 16px; background: rgba(255,255,255,0.08); display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9DEEC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+      </span>
+      <h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">Giriş gerekli</h2>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #B8C1DD">Her kişi bir kez oy verebilsin diye giriş istenir. Kime oy verdiğin cihazından çıkmaz.</p>
+      <div style="flex: 1"></div>
+      <a href="#" style="min-height: 52px; border-radius: 16px; background: #F5F1E8; color: #070B1C; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="3.5"></circle><path d="M5.5 19c1.3-3 3.8-4.5 6.5-4.5s5.2 1.5 6.5 4.5"></path><circle cx="12" cy="12" r="10"></circle></svg>
+        Google ile giriş yap
+      </a>
+      <a href="#" style="min-height: 48px; border-radius: 14px; color: #D9DEEC; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 14px">Göz atmaya devam et</a>
+      <div style="border-radius: 18px; padding: 10px 12px; background: rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; color: #C7CEE3">MİSAFİR</span>
+        <span style="font-size: 14px; font-weight: 600">Sonuçları izle</span>
+      </div>
+    </article>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1330,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

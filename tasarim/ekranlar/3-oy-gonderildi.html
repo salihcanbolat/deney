@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Oy gönderildi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&amp;family=Geist+Mono:wght@400..600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#070B1C}
+a{color:#5B87FF}a:hover{color:#A9C1FF}
+button{font:inherit;color:inherit;cursor:pointer}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes ring{0%{transform:scale(.6);opacity:.0}25%{opacity:.6}100%{transform:scale(1.9);opacity:0}}
+@keyframes core{0%{transform:scale(.3);opacity:0}55%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+.rise{animation:rise .9s cubic-bezier(.16,.84,.24,1) both}
+.d1{animation-delay:.5s}.d2{animation-delay:.62s}.d3{animation-delay:.74s}.d4{animation-delay:.86s}
+.ring{animation:ring 3s cubic-bezier(.2,.7,.3,1) infinite}
+.ring2{animation-delay:1s}.ring3{animation-delay:2s}
+.core{animation:core .8s cubic-bezier(.2,.9,.25,1.2) both}
+.check{stroke-dasharray:40;animation:draw .6s .35s cubic-bezier(.6,0,.2,1) both}
+.press{transition:transform .35s cubic-bezier(.2,.9,.25,1.2),background-color .35s ease}
+.press:active{transform:scale(.97)}
+.knob{transition:transform .45s cubic-bezier(.2,.9,.25,1.2)}
+.track{transition:background-color .35s ease}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #070B1C; color: #F5F1E8; font-family: 'Geist', -apple-system, 'SF Pro Text', system-ui, sans-serif; position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 72px 20px 34px; gap: 22px">
+
+  <div aria-hidden="true" style="position: relative; height: 200px; display: grid; place-items: center">
+    <div class="ring" style="position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(91,135,255,0.6)"></div>
+    <div class="ring ring2" style="position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(91,135,255,0.6)"></div>
+    <div class="ring ring3" style="position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(91,135,255,0.6)"></div>
+    <div class="core" style="width: 104px; height: 104px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #A9C1FF, #5B87FF 55%, #2E5BFF); display: grid; place-items: center; box-shadow: 0 30px 70px -20px rgba(91,135,255,0.8)">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#050A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path class="check" d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+    </div>
+  </div>
+
+  <div class="rise d1" style="text-align: center; display: flex; flex-direction: column; gap: 8px">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.03em">Oyun sayıldı</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #B8C1DD">Genç Seçmen Anketi · anonim olarak kaydedildi.<br>Bu ankette tekrar oy veremezsin.</p>
+  </div>
+
+  <section class="rise d2" aria-label="Seçimlerinin özeti" style="background: #10162E; border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 6px 16px">
+    <div style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 12px">
+      <span style="font-size: 14px; color: #98A2C3">Parti</span>
+      <span style="font-size: 15px; font-weight: 600">[Seçtiğin parti]</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 12px">
+      <span style="font-size: 14px; color: #98A2C3">Lider</span>
+      <span style="font-size: 15px; font-weight: 600">[Seçtiğin lider]</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; min-height: 52px; gap: 12px">
+      <span style="font-size: 14px; color: #98A2C3">Asla</span>
+      <span style="font-size: 15px; color: #98A2C3">Seçilmedi</span>
+    </div>
+  </section>
+
+  <p class="rise d2" style="margin: -8px 4px 0; display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.45; color: #98A2C3">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"></path></svg>
+    Bu özet yalnızca bu cihazda saklanır. Kilit ekranında senin tercihin hiçbir zaman gösterilmez.
+  </p>
+
+  <button class="rise d3 press" role="switch" aria-checked="{{followA}}" onClick="{{toggle}}" style="min-height: 64px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); background: #10162E; display: flex; align-items: center; gap: 14px; padding: 10px 14px 10px 16px; text-align: left">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B87FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3"></rect><path d="M9.5 15h5M9.5 12h5"></path></svg>
+    <span style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 15px; font-weight: 600">Kilit ekranında takip et</span>
+      <span style="font-size: 12px; color: #98A2C3">Önceki anket kilit ekranından kalkar</span>
+    </span>
+    <span aria-hidden="true" class="track" style="flex: none; width: 52px; height: 32px; border-radius: 16px; background: {{trackBg}}; position: relative">
+      <span class="knob" style="position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 13px; background: #F5F1E8; box-shadow: 0 2px 6px rgba(0,0,0,0.4); transform: {{knobX}}"></span>
+    </span>
+  </button>
+
+  <div style="flex: 1"></div>
+
+  <div class="rise d4" style="display: flex; flex-direction: column; gap: 10px">
+    <a href="LockView.dc.html" class="press" style="min-height: 56px; border-radius: 20px; background: #F5F1E8; color: #070B1C; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 650">Kilit ekranı görünümüne geç</a>
+    <a href="Main.dc.html" class="press" style="min-height: 48px; border-radius: 16px; color: #D9DEEC; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px">Anketlere dön</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { follow: true }; }
+  renderVals() {
+    const on = this.state.follow;
+    return {
+      followA: on ? 'true' : 'false',
+      trackBg: on ? '#5B87FF' : 'rgba(255,255,255,0.16)',
+      knobX: on ? 'translateX(20px)' : 'translateX(0px)',
+      toggle: () => this.setState({ follow: !on })
+    };
+  }
+}
+</script>
+</body>
+</html>

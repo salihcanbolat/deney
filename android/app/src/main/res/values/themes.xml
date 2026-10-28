@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Yalnızca koyu tema. Renkler Compose tarafında tokens.json'dan gelir (tema/Renk.kt). -->
+    <style name="Tema.SecimAnketi" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/zemin</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Kilit ekranı incelemesi: açılış animasyonu yok, ekran değişmiyormuş gibi görünür. -->
+    <style name="Tema.SecimAnketi.Kilit">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@color/zemin_kilit</item>
+    </style>
+</resources>

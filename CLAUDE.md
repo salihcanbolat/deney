@@ -341,3 +341,13 @@ Bölüm 13'teki sorular ve keşifte çıkan ek konular şöyle karara bağlandı
 - `Packages/DesignSystem`: token'lar, `PartyLogo`, `VoteCandlePair`.
 - Örnek veri `tools/generate_mock_data.py` ile üretilir; JSON'u elle düzenleme.
 - CI (`.github/workflows/ios.yml`) her push'ta derler ve test eder. Commit mesajında `[ekran]` varsa ekran görüntülerini (ve mesajda `[video]` da varsa ekran kaydını) aynı dalda `docs/screenshots/latest/` altına yazar; sonraki push'tan önce `git pull --rebase` gerekir.
+
+## 17. Android'e geçiş (28 Ekim 2026)
+
+Kullanıcı yeni bir tasarım paketi verdi (`tasarim/`) ve "Önce Android, sonra iPhone" kararını verdi.
+
+- **Android için tek kaynak `tasarim/`:** `TASARIM.md`, `tokens.json`, `ekranlar/*.html` ve `varliklar/`. Önceki bölümlerdeki görsel kararlar (renkler, mum rengi, yazı tipi, ölçüler) Android'de geçerli değil; tasarım paketi geçerli. Kesin kurallar (mahremiyet, anonimlik, tek oy, yayın yasağı, sembolik veri, tarafsızlık) aynen geçerli.
+- **Teknoloji:** Kotlin + Jetpack Compose, `android/` klasöründe. minSdk 28, yalnızca koyu tema, dikey. Tema `android/app/src/main/java/.../tema/` altında tokens.json'dan; ekranlarda sabit değer kullanılmaz.
+- **Sıra:** 1) tema ve mum şeridi, 2) Ekran 4 (basılı tut, kaydır), 3) Ekran 5 (kilit ekranı bildirimi), 4) Ekran 1–3, 5) Ekran 6 durumları. Her adımdan sonra kullanıcıya ne yapıldığı ve tasarımdan nerede sapıldığı söylenir.
+- **Derleme:** Bulut oturumunda Android SDK indirilemiyor; derleme ve testler `.github/workflows/android.yml` ile Linux makinesinde. Ekran görüntüleri Roborazzi ile (emülatörsüz) `docs/screenshots/android/` altına (commit mesajında `[ekran]`). Hata ayıklama APK'sı iş akışı çıktısı olarak indirilebilir.
+- **iPhone:** Mevcut iOS kodu (`App/`, `Packages/`) saklanır; Android bittikten sonra yeni tasarıma uyarlanacak. iOS iş akışı yalnızca iOS dosyaları değişince çalışır.

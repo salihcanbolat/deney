@@ -13,3 +13,8 @@ Package.resolved
 
 # Test çıktıları (CI bunları docs/screenshots/ altına kopyalar)
 build/
+
+# Android
+.gradle/
+local.properties
+*.apk

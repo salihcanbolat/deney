@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="false"
+        android:label="@string/uygulama_adi"
+        android:supportsRtl="false"
+        android:theme="@style/Tema.SecimAnketi">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Ekran 4: kilit açılmadan, kilit ekranının üstünde gösterilir.
+             requestDismissKeyguard çağrılmaz; kilit hiç açılmaz. -->
+        <activity
+            android:name=".kilit.KilitIncelemeActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:showWhenLocked="true"
+            android:taskAffinity=".kilit"
+            android:theme="@style/Tema.SecimAnketi.Kilit" />
+    </application>
+</manifest>

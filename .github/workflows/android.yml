@@ -1,0 +1,85 @@
+name: Android
+
+# Derler, birim ve ekran görüntüsü testlerini (Roborazzi, emülatörsüz) çalıştırır,
+# hata ayıklama APK'sını indirilebilir yapar. Commit mesajında "[ekran]" varsa
+# (ya da elle çalıştırılırsa) ekran görüntüleri docs/screenshots/android/ altına yazılır.
+
+on:
+  push:
+    paths:
+      - android/**
+      - .github/workflows/android.yml
+  workflow_dispatch:
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Derle, test et, ekran görüntüsü al
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Derle
+        working-directory: android
+        run: ./gradlew --no-daemon --stacktrace assembleDebug
+
+      - name: Testler ve ekran görüntüleri
+        working-directory: android
+        run: ./gradlew --no-daemon testDebugUnitTest
+
+      - name: APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: secim-anketi-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: ignore
+
+      - name: Test raporu
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-raporu
+          path: android/app/build/reports/tests/
+          if-no-files-found: ignore
+
+      - name: Ekran görüntülerini dala yaz
+        if: always() && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ekran]'))
+        run: |
+          set -e
+          OUT=docs/screenshots/android
+          rm -rf "$OUT"
+          mkdir -p "$OUT"
+          cp -R build/screenshots/android/. "$OUT"/ 2>/dev/null || true
+          {
+            echo "Kaynak commit: $GITHUB_SHA"
+            echo "Tarih (UTC): $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "Çizim: Robolectric + Roborazzi, 390 × 844 dp, xxhdpi"
+            echo "CI çalıştırması: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          } > "$OUT/INFO.txt"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A docs/screenshots/android
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok"
+            exit 0
+          fi
+          git commit -m "CI: Android ekran görüntüleri (${GITHUB_SHA::7}) [skip ci]"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
