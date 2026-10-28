@@ -30,16 +30,27 @@ import com.salihcanbolat.secimanketi.veri.SeritOgesi
  * - Dokununca Ekran 4 kilit açılmadan açılır (KilitIncelemeActivity, showWhenLocked).
  */
 object CanliAnketBildirimi {
-    const val KANAL = "canli_anket"
+    /**
+     * Kanal önemi DEFAULT, ama sessiz: Android 12+ (Pixel varsayılanı) kilit ekranında LOW önemli
+     * "sessiz bildirimleri" gizliyor. Ses ve titreşim kanalda kapalı. Kanalın önemi sonradan
+     * değiştirilemediği için kimlik yenilendi; eski kanal silinir.
+     */
+    const val KANAL = "canli_anket_kilit"
+    private const val ESKI_KANAL = "canli_anket"
     const val KIMLIK = 1
 
     fun kanalOlustur(context: Context) {
-        val kanal = NotificationChannel(KANAL, "Canlı anket", NotificationManager.IMPORTANCE_LOW).apply {
+        val kanal = NotificationChannel(KANAL, "Canlı anket", NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = "Kilit ekranında seçili anketin canlı şeridi. Sessizdir, kişisel tercih içermez."
             lockscreenVisibility = android.app.Notification.VISIBILITY_PUBLIC
+            setSound(null, null)
+            enableVibration(false)
+            enableLights(false)
             setShowBadge(false)
         }
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(kanal)
+        val yonetici = context.getSystemService(NotificationManager::class.java)
+        yonetici.deleteNotificationChannel(ESKI_KANAL)
+        yonetici.createNotificationChannel(kanal)
     }
 
     fun izinVarMi(context: Context): Boolean =
@@ -84,7 +95,7 @@ object CanliAnketBildirimi {
             .setCustomBigContentView(buyuk)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setCategory(NotificationCompat.CATEGORY_STATUS)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setSilent(true)

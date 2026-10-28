@@ -22,6 +22,8 @@ import com.salihcanbolat.secimanketi.tema.Renk
 import com.salihcanbolat.secimanketi.veri.Anketler
 import com.salihcanbolat.secimanketi.veri.SembolikVeri
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,7 +57,10 @@ class BildirimTest {
 
         val kanal = yonetici.getNotificationChannel(CanliAnketBildirimi.KANAL)
         assertEquals(Notification.VISIBILITY_PUBLIC, kanal.lockscreenVisibility)
-        assertEquals(NotificationManager.IMPORTANCE_LOW, kanal.importance)
+        // LOW olursa Android 12+ kilit ekranında "sessiz bildirim" diye gizlenir.
+        assertEquals(NotificationManager.IMPORTANCE_DEFAULT, kanal.importance)
+        assertNull("sessiz olmalı", kanal.sound)
+        assertFalse("titreşmemeli", kanal.shouldVibrate())
 
         val niyet = shadowOf(bildirim.contentIntent).savedIntent
         assertEquals(KilitIncelemeActivity::class.java.name, niyet.component?.className)

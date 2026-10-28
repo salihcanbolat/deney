@@ -33,6 +33,11 @@ adb shell input keyevent KEYCODE_WAKEUP
 sleep 4
 goruntu 31-kilit-ekrani-bildirim
 echo "== kilitlendikten sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
+{
+  echo "== bildirim kaydı:"
+  adb shell dumpsys notification | grep -E "pkg=com.salihcanbolat|channel=canli|importance=" | grep -i -B1 -A1 "salihcanbolat" | head -8 || true
+  echo "kilitte sessiz bildirimler: $(adb shell settings get secure lock_screen_show_silent_notifications)"
+} | tee -a "$OUT/kilit-durumu.txt"
 
 # Bildirimi bul ve dokun
 adb shell uiautomator dump /sdcard/ekran.xml >/dev/null
