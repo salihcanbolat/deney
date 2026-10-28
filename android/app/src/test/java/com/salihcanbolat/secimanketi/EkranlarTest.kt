@@ -1,5 +1,7 @@
 package com.salihcanbolat.secimanketi
 
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsOff
@@ -13,6 +15,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performScrollToKey
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeUp
@@ -139,18 +142,16 @@ class EkranlarTest {
         compose.setContent { SecimTemasi(hareketAzalt = true) { Uygulama(durum, bugun = gun) } }
 
         katil(Anketler.gencSecmen.id)
-        kaydet("90-akis-oy-verme-acildi")
         // Parti seçilmeden gönderilemez
-        compose.onNodeWithTag("gonder-pasif").assertExists()
+        compose.onNodeWithTag("gonder-pasif").assertIsDisplayed()
         compose.onNodeWithTag("parti-dem").performClick()
         // Desteklenen parti "asla" bölümünde seçilemez
         compose.onNodeWithTag("oy-listesi").performScrollToKey("asla-0")
         compose.onNodeWithTag("asla-dem").assertIsNotEnabled()
         compose.onNodeWithTag("gonder").performClick()
         compose.waitForIdle()
-        kaydet("91-akis-gonderildi")
 
-        compose.onNodeWithText("Oyun sayıldı").assertExists()
+        compose.onNodeWithText("Oyun sayıldı").assertIsDisplayed()
         assertTrue(durum.katildiMi(Anketler.gencSecmen.id))
         assertEquals("dem", durum.oy(Anketler.gencSecmen.id)?.partiId)
         // "Kilit ekranında takip et" varsayılan açık: kilit ekranındaki anket değişir
@@ -159,7 +160,7 @@ class EkranlarTest {
         compose.onNodeWithTag("takip-anahtari").assertIsOff()
         assertEquals(Anketler.genelSecim.id, durum.kilitAnketiId)
 
-        compose.onNodeWithText("Anketlere dön").performClick()
+        compose.onNodeWithText("Anketlere dön").performScrollTo().tikla()
         compose.waitForIdle()
         // Artık "Katıldıklarım" altında, "Sonuçlar" düğmesiyle
         compose.onNode(hasText("Sonuçlar") and hasAnyAncestor(hasTestTag("anket-${Anketler.gencSecmen.id}"))).assertExists()
@@ -170,7 +171,7 @@ class EkranlarTest {
         val durum = UygulamaDurumu()
         compose.setContent { SecimTemasi(hareketAzalt = true) { Uygulama(durum, bugun = gun) } }
         val dugme = compose.onNode(hasText("Kilit ekranına al") and hasAnyAncestor(hasTestTag("anket-${Anketler.liderTercihi.id}")))
-        dugme.performScrollTo().performClick()
+        dugme.performScrollTo().tikla()
         assertEquals(Anketler.liderTercihi.id, durum.kilitAnketiId)
         // Önceki anketin düğmesi yeniden "Kilit ekranına al" olur; aynı anda yalnızca bir anket
         compose.onNode(hasText("Kilit ekranında") and hasAnyAncestor(hasTestTag("anket-${Anketler.genelSecim.id}")), useUnmergedTree = true)
@@ -185,7 +186,7 @@ class EkranlarTest {
         }
         compose.onNodeWithTag("parti-ak").assertDoesNotExist()
         compose.onNodeWithTag("gonder-pasif").assertIsDisplayed()
-        compose.onNodeWithTag("asla-zafer").performScrollTo().performClick()
+        compose.onNodeWithTag("asla-zafer").performScrollTo().tikla()
         compose.onNodeWithTag("gonder").performClick()
         assertEquals("zafer", gonderilen?.aslaPartiId)
         assertEquals(null, gonderilen?.partiId)
@@ -207,7 +208,11 @@ class EkranlarTest {
     }
 
     private fun katil(anketId: String) {
-        compose.onNode(hasText("Katıl") and hasAnyAncestor(hasTestTag("anket-$anketId"))).performScrollTo().performClick()
+        // Dokunuş yerine anlamsal tıklama: performScrollTo öğeyi ekranın alt kenarına getirir,
+        // orada yüzen alt gezinme hapının altında kalır ve dokunuş hapa gider.
+        compose.onNode(hasText("Katıl") and hasAnyAncestor(hasTestTag("anket-$anketId"))).performScrollTo().tikla()
         compose.waitForIdle()
     }
+
+    private fun SemanticsNodeInteraction.tikla() = performSemanticsAction(SemanticsActions.OnClick)
 }
