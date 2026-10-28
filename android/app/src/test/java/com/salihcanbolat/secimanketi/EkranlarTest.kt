@@ -139,16 +139,18 @@ class EkranlarTest {
         compose.setContent { SecimTemasi(hareketAzalt = true) { Uygulama(durum, bugun = gun) } }
 
         katil(Anketler.gencSecmen.id)
+        kaydet("90-akis-oy-verme-acildi")
         // Parti seçilmeden gönderilemez
-        compose.onNodeWithTag("gonder-pasif").assertIsDisplayed()
+        compose.onNodeWithTag("gonder-pasif").assertExists()
         compose.onNodeWithTag("parti-dem").performClick()
         // Desteklenen parti "asla" bölümünde seçilemez
         compose.onNodeWithTag("oy-listesi").performScrollToKey("asla-0")
         compose.onNodeWithTag("asla-dem").assertIsNotEnabled()
         compose.onNodeWithTag("gonder").performClick()
         compose.waitForIdle()
+        kaydet("91-akis-gonderildi")
 
-        compose.onNodeWithText("Oyun sayıldı").assertIsDisplayed()
+        compose.onNodeWithText("Oyun sayıldı").assertExists()
         assertTrue(durum.katildiMi(Anketler.gencSecmen.id))
         assertEquals("dem", durum.oy(Anketler.gencSecmen.id)?.partiId)
         // "Kilit ekranında takip et" varsayılan açık: kilit ekranındaki anket değişir

@@ -88,6 +88,8 @@ PY2
     adb shell input tap "$1" "$2"
     sleep 3
   fi
+  # Emülatör yazılımla çiziyor; bildirim panelinden açılınca ilk kare geç gelebiliyor.
+  sleep 3
   goruntu 33-inceleme-kilit-ustunde
   echo "== bildirime dokunduktan sonra:" | tee -a "$OUT/kilit-durumu.txt"; kilit_durumu
 
