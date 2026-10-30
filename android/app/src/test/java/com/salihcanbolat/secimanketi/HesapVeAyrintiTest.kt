@@ -70,8 +70,14 @@ class HesapVeAyrintiTest {
         ayrinti(OrnekDurumlar.sembolik(), hareketAzalt = false)
         compose.mainClock.advanceTimeBy(2500)
         kaydet("61-ayrinti-sembolik")
+    }
+
+    @Test
+    fun ayrinti_aslaSekmesi() {
+        ayrinti(OrnekDurumlar.sembolik())
         compose.onNodeWithTag("tur-asla").tikla()
-        compose.mainClock.advanceTimeBy(1500)
+        compose.waitForIdle()
+        compose.onNodeWithText("Partiye asla").assertIsDisplayed()
         kaydet("62-ayrinti-asla")
     }
 
