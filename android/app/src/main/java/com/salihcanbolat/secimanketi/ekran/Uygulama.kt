@@ -55,6 +55,8 @@ sealed interface Hedef {
     data object AnketListesi : Hedef
     data object Canli : Hedef
     data class Kilit(val anketId: String) : Hedef
+    data class Ayrinti(val anketId: String) : Hedef
+    data object Hesap : Hedef
     data class OyVerme(val anketId: String) : Hedef
     /** [oncekiKilitAnketi]: "Kilit ekranında takip et" kapatılınca geri dönülecek anket. */
     data class OyGonderildi(val anketId: String, val oncekiKilitAnketi: String) : Hedef
@@ -70,6 +72,8 @@ private val YiginKaydedici = Saver<List<Hedef>, ArrayList<String>>(
                     Hedef.AnketListesi -> "anketler"
                     Hedef.Canli -> "canli"
                     is Hedef.Kilit -> "kilit:${it.anketId}"
+                    is Hedef.Ayrinti -> "ayrinti:${it.anketId}"
+                    Hedef.Hesap -> "hesap"
                     is Hedef.OyVerme -> "oy:${it.anketId}"
                     is Hedef.OyGonderildi -> "gonderildi:${it.anketId}:${it.oncekiKilitAnketi}"
                 }
@@ -83,6 +87,8 @@ private val YiginKaydedici = Saver<List<Hedef>, ArrayList<String>>(
                 "anketler" -> Hedef.AnketListesi
                 "canli" -> Hedef.Canli
                 "kilit" -> Hedef.Kilit(p[1])
+                "ayrinti" -> Hedef.Ayrinti(p[1])
+                "hesap" -> Hedef.Hesap
                 "oy" -> Hedef.OyVerme(p[1])
                 "gonderildi" -> Hedef.OyGonderildi(p[1], p[2])
                 else -> null
@@ -102,6 +108,8 @@ fun Uygulama(
     durum: UygulamaDurumu,
     modifier: Modifier = Modifier,
     onKilitAnketiDegisti: (Anket, AnketDurumu) -> Unit = { _, _ -> },
+    /** "Kilit ekranında canlı şerit" kapatılınca bildirimi kaldırmak için. */
+    onBildirimKapat: () -> Unit = {},
     baslangic: List<Hedef> = listOf(Hedef.AnketListesi),
     bugun: LocalDate = LocalDate.now(),
 ) {
@@ -136,7 +144,9 @@ fun Uygulama(
     BackHandler(enabled = yigin.size > 1 || yigin.last() == Hedef.Canli) { geri() }
     BackHandler(enabled = girisPaneli) { girisiKapat() }
     val kilitDurumu = durum.anketDurumu(durum.kilitAnketiId)
-    LaunchedEffect(durum.kilitAnketiId, kilitDurumu) { onKilitAnketiDegisti(durum.kilitAnketi, kilitDurumu) }
+    LaunchedEffect(durum.kilitAnketiId, kilitDurumu, durum.bildirimAcik) {
+        if (durum.bildirimAcik) onKilitAnketiDegisti(durum.kilitAnketi, kilitDurumu) else onBildirimKapat()
+    }
 
     // Hata ayıklama sürümünde, sunucu yokken Ekran 6 durumlarını telefonda görebilmek için.
     val hataAyiklama = (LocalContext.current.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
@@ -156,7 +166,8 @@ fun Uygulama(
                     durum = durum,
                     onIncele = { git(Hedef.Kilit(it.id)) },
                     onKatil = { git(Hedef.OyVerme(it.id)) },
-                    onHesap = { girisPaneli = true },
+                    onHesap = { git(Hedef.Hesap) },
+                    onAyrinti = { git(Hedef.Ayrinti(it.id)) },
                     bugun = bugun,
                     altBoslukEk = gezinmeEk,
                     onYenidenDene = {
@@ -175,6 +186,19 @@ fun Uygulama(
                 )
                 Hedef.Canli -> CanliEkrani(durum.kilitAnketi, kilitDurumu, bugun = bugun, altBoslukEk = gezinmeEk)
                 is Hedef.Kilit -> KilitIncelemeEkrani(anket = Anketler.bul(hedef.anketId), anketDurumu = durum.anketDurumu(hedef.anketId))
+                is Hedef.Ayrinti -> AnketAyrintiEkrani(
+                    anket = Anketler.bul(hedef.anketId),
+                    anketDurumu = durum.anketDurumu(hedef.anketId),
+                    oy = durum.oy(hedef.anketId),
+                    zilAcik = durum.zilAcikMi(hedef.anketId),
+                    kilitte = durum.kilitAnketiId == hedef.anketId,
+                    onGeri = ::geri,
+                    onZil = { durum.zilDegistir(hedef.anketId) },
+                    onKilit = { durum.kilideAl(hedef.anketId) },
+                    onKatil = { git(Hedef.OyVerme(hedef.anketId)) },
+                    onKilitGorunumu = { git(Hedef.Kilit(hedef.anketId)) },
+                )
+                Hedef.Hesap -> HesapEkrani(durum = durum, onGeri = ::geri)
                 is Hedef.OyVerme -> OyVermeEkrani(
                     anket = Anketler.bul(hedef.anketId),
                     onGeri = ::geri,

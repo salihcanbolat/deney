@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var durum: UygulamaDurumu
 
     private val bildirimIzni = registerForActivityResult(ActivityResultContracts.RequestPermission()) { verildi ->
-        if (verildi) bildirimiGuncelle(durum.kilitAnketi, durum.anketDurumu(durum.kilitAnketiId))
+        if (verildi && durum.bildirimAcik) bildirimiGuncelle(durum.kilitAnketi, durum.anketDurumu(durum.kilitAnketiId))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,11 @@ class MainActivity : ComponentActivity() {
         durum = UygulamaDurumu.yukle(this)
         setContent {
             SecimTemasi {
-                Uygulama(durum = durum, onKilitAnketiDegisti = ::bildirimiGuncelle)
+                Uygulama(
+                    durum = durum,
+                    onKilitAnketiDegisti = ::bildirimiGuncelle,
+                    onBildirimKapat = { CanliAnketBildirimi.kaldir(this) },
+                )
             }
         }
         if (!CanliAnketBildirimi.izinVarMi(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

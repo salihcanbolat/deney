@@ -2,10 +2,21 @@ package com.salihcanbolat.secimanketi
 
 import android.app.Application
 import android.graphics.Bitmap
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.unit.dp
+import com.salihcanbolat.secimanketi.bilesen.GirisGerekliIcerigi
+import com.salihcanbolat.secimanketi.tema.Renk
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -163,15 +174,23 @@ class DurumlarTest {
     }
 
     @Test
-    fun girisGerekli_hesapDugmesindenAcilirKapanir() {
-        compose.setContent { SecimTemasi(hareketAzalt = true) { Uygulama(UygulamaDurumu(), bugun = gun) } }
-        compose.onNodeWithContentDescription("Hesap ve Google ile giriş").performSemanticsAction(SemanticsActions.OnClick)
-        compose.onNodeWithTag("giris-gerekli").assertIsDisplayed()
+    fun girisGerekli_paneli() {
+        var bilgi by mutableStateOf<String?>(null)
+        compose.setContent {
+            SecimTemasi(hareketAzalt = true) {
+                Box(Modifier.fillMaxSize().background(Renk.Zemin)) {
+                    GirisGerekliIcerigi(
+                        onGiris = { bilgi = "Google ile giriş bu sürümde henüz yok; sunucu bağlanınca açılacak." },
+                        onGozAt = {},
+                        bilgi = bilgi,
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(12.dp),
+                    )
+                }
+            }
+        }
         compose.onNodeWithText("Google ile giriş yap").performSemanticsAction(SemanticsActions.OnClick)
         compose.onNodeWithText("Google ile giriş bu sürümde henüz yok; sunucu bağlanınca açılacak.").assertIsDisplayed()
         kaydet("56-durum-giris-gerekli")
-        compose.onNodeWithText("Göz atmaya devam et").performSemanticsAction(SemanticsActions.OnClick)
-        compose.onNodeWithTag("giris-gerekli").assertDoesNotExist()
     }
 
     @Test

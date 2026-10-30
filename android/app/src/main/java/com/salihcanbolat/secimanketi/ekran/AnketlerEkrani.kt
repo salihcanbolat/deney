@@ -109,6 +109,7 @@ fun AnketlerEkrani(
     onKatil: (Anket) -> Unit,
     onHesap: () -> Unit,
     modifier: Modifier = Modifier,
+    onAyrinti: (Anket) -> Unit = onIncele,
     bugun: LocalDate = LocalDate.now(),
     altBoslukEk: Dp = 0.dp,
     onYenidenDene: () -> Unit = {},
@@ -152,7 +153,8 @@ fun AnketlerEkrani(
                             kilitte = kilitAnketi.id == anket.id,
                             onZil = { durum.zilDegistir(anket.id) },
                             onKilit = { durum.kilideAl(anket.id) },
-                            onEylem = { onIncele(anket) },
+                            onEylem = { onAyrinti(anket) },
+                            onAc = { onAyrinti(anket) },
                             modifier = Modifier.belirme(190, olcek = 0.985f),
                         )
                     }
@@ -171,6 +173,7 @@ fun AnketlerEkrani(
                             onZil = { durum.zilDegistir(anket.id) },
                             onKilit = { durum.kilideAl(anket.id) },
                             onEylem = { onKatil(anket) },
+                            onAc = { onAyrinti(anket) },
                             eylemMetni = if (durum.anketDurumu(anket.id).gorunum == SonucGorunumu.HENUZ_OY_YOK) "İlk oyu ver" else "Katıl",
                             modifier = Modifier.belirme(330, olcek = 0.985f),
                         )
@@ -432,14 +435,19 @@ fun AnketKarti(
     onEylem: () -> Unit,
     modifier: Modifier = Modifier,
     eylemMetni: String = if (katildi) "Sonuçlar" else "Katıl",
+    /** Kartın kendisine dokununca: anket ayrıntısı. */
+    onAc: (() -> Unit)? = null,
 ) {
     val sekil = RoundedCornerShape(Kose.ListeOgesi)
+    val kaynak = remember { MutableInteractionSource() }
     Column(
         modifier
             .fillMaxWidth()
+            .basmaOlcegi(kaynak, 0.985f)
             .clip(sekil)
             .background(Renk.Yuzey)
             .border(1.dp, Color.White.copy(alpha = 0.07f), sekil)
+            .then(if (onAc != null) Modifier.clickable(kaynak, null, onClickLabel = "Ayrıntılar", onClick = onAc) else Modifier)
             .testTag("anket-${anket.id}")
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -478,7 +486,7 @@ fun TurEtiketi(metin: String) {
 }
 
 @Composable
-private fun ZilDugmesi(anketAdi: String, acik: Boolean, onClick: () -> Unit) {
+internal fun ZilDugmesi(anketAdi: String, acik: Boolean, onClick: () -> Unit) {
     val sekil = RoundedCornerShape(15.dp)
     val kaynak = remember { MutableInteractionSource() }
     val zemin by animateColorAsState(
@@ -502,7 +510,7 @@ private fun ZilDugmesi(anketAdi: String, acik: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun KilitDugmesi(kilitte: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+internal fun KilitDugmesi(kilitte: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val sekil = RoundedCornerShape(Kose.Dugme)
     val kaynak = remember { MutableInteractionSource() }
     val spec = gecis<Color>(Hareket.BasmaMs, Hareket.Yumusak)

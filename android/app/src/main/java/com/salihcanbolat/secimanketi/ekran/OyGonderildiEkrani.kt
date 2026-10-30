@@ -127,7 +127,7 @@ fun OyGonderildiEkrani(
                     )
                 }
                 Column(Modifier.belirme(620, kayma = 18.dp, sureMs = 900)) {
-                    Ozet(anket, oy)
+                    OyOzeti(anket, oy)
                     Row(
                         Modifier.padding(start = 4.dp, end = 4.dp, top = 14.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -244,7 +244,7 @@ private fun OnayAnimasyonu(halkaZamani: Long?, yukseklik: Dp) {
 }
 
 @Composable
-private fun Ozet(anket: Anket, oy: Oy) {
+internal fun OyOzeti(anket: Anket, oy: Oy) {
     val sekil = RoundedCornerShape(Kose.ListeOgesi)
     data class OzetSatiri(val etiket: String, val deger: String?)
     val satirlar = buildList {

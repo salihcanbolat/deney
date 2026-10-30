@@ -159,10 +159,17 @@ object SembolikVeri {
      * - Yayın yasağında boş: logoların sırası bile sonucu ele verir.
      * - Henüz oy yokken değerler boş, sıra Meclis sandalye sırası.
      */
-    fun serit(anket: Anket = Anketler.genelSecim, durum: AnketDurumu = durum()): List<SeritOgesi> = when (durum.gorunum) {
-        SonucGorunumu.YAYIN_DURDURULDU -> emptyList()
-        SonucGorunumu.HENUZ_OY_YOK -> seritSirasi(Partiler.tumu, Partiler.tumu.map { Sonuc(it.id, null, null, null, null) })
-        else -> seritSirasi(Partiler.tumu, sonuclar(anket))
+    fun serit(anket: Anket = Anketler.genelSecim, durum: AnketDurumu = durum()): List<SeritOgesi> =
+        siralama(anket, durum).take(8)
+
+    /** Tüm partiler, şeritle aynı kurallarla (anket ayrıntısındaki sonuç listesi). */
+    fun siralama(anket: Anket = Anketler.genelSecim, durum: AnketDurumu = durum()): List<SeritOgesi> {
+        val hepsi = Partiler.tumu.size
+        return when (durum.gorunum) {
+            SonucGorunumu.YAYIN_DURDURULDU -> emptyList()
+            SonucGorunumu.HENUZ_OY_YOK -> seritSirasi(Partiler.tumu, Partiler.tumu.map { Sonuc(it.id, null, null, null, null) }, hepsi)
+            else -> seritSirasi(Partiler.tumu, sonuclar(anket), hepsi)
+        }
     }
 }
 

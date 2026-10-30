@@ -281,7 +281,7 @@ private fun satirlariKur(anket: Anket, parti: String?): List<Satir> = buildList 
 }
 
 @Composable
-private fun UstSatir(anket: Anket, onGeri: () -> Unit, modifier: Modifier) {
+internal fun UstSatir(anket: Anket, onGeri: () -> Unit, modifier: Modifier) {
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         val kaynak = remember { MutableInteractionSource() }
         Box(

@@ -17,7 +17,10 @@ data class Oy(
     val liderPartiId: String?,
     val aslaPartiId: String?,
     val zaman: Long,
-)
+) {
+    /** Geçerli bir oyda en az parti ya da "asla" vardır; hepsi boşsa özet bu cihazdan silinmiştir. */
+    val ozetSilindi: Boolean get() = partiId == null && liderPartiId == null && aslaPartiId == null
+}
 
 /**
  * Uygulamanın cihazdaki durumu: kilit ekranındaki anket, zil (bildirim) tercihleri ve verilen oylar.
@@ -44,6 +47,15 @@ class UygulamaDurumu(
     var girisYapildi by mutableStateOf(false)
         private set
 
+    /** Kilit ekranı bildirimi açık mı (Hesap ve ayarlar). */
+    var bildirimAcik by mutableStateOf(tercihler?.getBoolean(BILDIRIM, true) ?: true)
+        private set
+
+    fun bildirimiAc(acik: Boolean) {
+        bildirimAcik = acik
+        tercihler?.edit()?.putBoolean(BILDIRIM, acik)?.apply()
+    }
+
     init {
         Anketler.tumu.forEach { anket ->
             ziller[anket.id] = tercihler?.getBoolean(ZIL + anket.id, false) ?: false
@@ -69,6 +81,9 @@ class UygulamaDurumu(
     fun oy(anketId: String): Oy? = oylar[anketId]
     fun katildiMi(anketId: String): Boolean = oylar.containsKey(anketId)
 
+    /** Bu cihazda silinmemiş en az bir oy özeti var mı. */
+    val ozetVarMi: Boolean get() = oylar.values.any { !it.ozetSilindi }
+
     fun kilideAl(anketId: String) {
         kilitAnketiId = anketId
         tercihler?.edit()?.putString(KILIT, anketId)?.apply()
@@ -78,6 +93,18 @@ class UygulamaDurumu(
         val yeni = !zilAcikMi(anketId)
         ziller[anketId] = yeni
         tercihler?.edit()?.putBoolean(ZIL + anketId, yeni)?.apply()
+    }
+
+    /**
+     * Cihazdaki oy özetlerini (kime oy verildiği) siler. Katılım bilgisi kalır: bir ankette tek oy
+     * kuralı sürer; sunucu da yalnızca "oy kullandı" bilgisini tutar.
+     */
+    fun oyOzetleriniSil() {
+        oylar.values.toList().forEach { oy ->
+            val bos = oy.copy(partiId = null, liderPartiId = null, aslaPartiId = null)
+            oylar[oy.anketId] = bos
+            tercihler?.edit()?.putString(OY + oy.anketId, oyuYaz(bos))?.apply()
+        }
     }
 
     /** Bir ankette yalnızca bir kez oy verilir; ikinci kayıt yok sayılır. */
@@ -124,6 +151,7 @@ class UygulamaDurumu(
         private const val ZIL = "zil:"
         private const val OY = "oy:"
         private const val DURUM = "durum:"
+        private const val BILDIRIM = "bildirim_acik"
 
         fun yukle(context: Context) = UygulamaDurumu(context.getSharedPreferences(DOSYA, Context.MODE_PRIVATE))
     }
