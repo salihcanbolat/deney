@@ -170,12 +170,13 @@ class EkranlarTest {
     fun kilitEkraninaAl_tekAnket() {
         val durum = UygulamaDurumu()
         compose.setContent { SecimTemasi(hareketAzalt = true) { Uygulama(durum, bugun = gun) } }
-        val dugme = compose.onNode(hasText("Kilit ekranına al") and hasAnyAncestor(hasTestTag("anket-${Anketler.liderTercihi.id}")))
-        dugme.performScrollTo().tikla()
+        compose.onNodeWithTag("takip-${Anketler.genelSecim.id}").assertIsOn()
+        compose.onNodeWithTag("takip-${Anketler.liderTercihi.id}").assertIsOff().performScrollTo().tikla()
         assertEquals(Anketler.liderTercihi.id, durum.kilitAnketiId)
-        // Önceki anketin düğmesi yeniden "Kilit ekranına al" olur; aynı anda yalnızca bir anket
-        compose.onNode(hasText("Kilit ekranında") and hasAnyAncestor(hasTestTag("anket-${Anketler.genelSecim.id}")), useUnmergedTree = true)
-            .assertDoesNotExist()
+        // Aynı anda yalnızca bir anket: önceki "Takip et"e döner, yenisi "Takipte" ve kısa doğrulama
+        compose.onNodeWithTag("takip-${Anketler.genelSecim.id}").assertIsOff()
+        compose.onNodeWithTag("takip-${Anketler.liderTercihi.id}").assertIsOn()
+        kaydet("67-takip")
     }
 
     @Test

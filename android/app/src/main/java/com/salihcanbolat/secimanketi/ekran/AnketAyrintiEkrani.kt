@@ -54,6 +54,7 @@ import com.salihcanbolat.secimanketi.bilesen.DurumKarti
 import com.salihcanbolat.secimanketi.bilesen.DurumRozeti
 import com.salihcanbolat.secimanketi.bilesen.DurumSimgeleri
 import com.salihcanbolat.secimanketi.bilesen.HenuzOyYokPaneli
+import com.salihcanbolat.secimanketi.bilesen.KilitTakipDugmesi
 import com.salihcanbolat.secimanketi.bilesen.LogoKutusu
 import com.salihcanbolat.secimanketi.bilesen.Simge
 import com.salihcanbolat.secimanketi.bilesen.Simgeler
@@ -283,7 +284,7 @@ private fun BilgiKarti(
             }
             ZilDugmesi(anket.ad, zilAcik, onZil)
         }
-        KilitDugmesi(kilitte, onKilit, Modifier.fillMaxWidth())
+        KilitTakipDugmesi(kilitte, onKilit, Modifier.fillMaxWidth(), uzun = true, etiket = "takip-ayrinti")
     }
 }
 

@@ -1,5 +1,17 @@
 package com.salihcanbolat.secimanketi.ekran
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.salihcanbolat.secimanketi.bilesen.KilitEkraniSimgesi
+import com.salihcanbolat.secimanketi.bilesen.KilitTakipDugmesi
+import kotlinx.coroutines.delay
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -440,6 +452,8 @@ fun AnketKarti(
 ) {
     val sekil = RoundedCornerShape(Kose.ListeOgesi)
     val kaynak = remember { MutableInteractionSource() }
+    val azalt = LocalHareketAzalt.current
+    var yeniTakip by remember { mutableStateOf(false) }
     Column(
         modifier
             .fillMaxWidth()
@@ -461,7 +475,15 @@ fun AnketKarti(
             ZilDugmesi(anket.ad, zilAcik, onZil)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            KilitDugmesi(kilitte, onKilit, Modifier.weight(1f))
+            KilitTakipDugmesi(
+                takipte = kilitte,
+                onTakipEt = {
+                    onKilit()
+                    yeniTakip = true
+                },
+                modifier = Modifier.weight(1f),
+                etiket = "takip-${anket.id}",
+            )
             EylemDugmesi(
                 metin = eylemMetni,
                 zemin = if (katildi) Renk.Metin else Renk.Vurgu,
@@ -469,6 +491,23 @@ fun AnketKarti(
                 onClick = onEylem,
                 modifier = Modifier.weight(1f),
             )
+        }
+        // Takibe alınınca kısa bir doğrulama; 2,5 sn sonra kendiliğinden kapanır.
+        AnimatedVisibility(
+            visible = yeniTakip && kilitte,
+            enter = if (azalt) EnterTransition.None else expandVertically(tween(Hareket.BasmaMs, easing = Hareket.Giris)) + fadeIn(tween(250)),
+            exit = if (azalt) ExitTransition.None else shrinkVertically(tween(300, easing = Hareket.Giris)) + fadeOut(tween(200)),
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                KilitEkraniSimgesi(true, Renk.VurguAcik, 16.dp)
+                Text("Kilit ekranında artık bu anket görünecek", style = Yazi.Kucuk, color = Renk.VurguAcik)
+            }
+        }
+        LaunchedEffect(yeniTakip) {
+            if (yeniTakip) {
+                delay(2500)
+                yeniTakip = false
+            }
         }
     }
 }
@@ -509,33 +548,6 @@ internal fun ZilDugmesi(anketAdi: String, acik: Boolean, onClick: () -> Unit) {
     }
 }
 
-@Composable
-internal fun KilitDugmesi(kilitte: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val sekil = RoundedCornerShape(Kose.Dugme)
-    val kaynak = remember { MutableInteractionSource() }
-    val spec = gecis<Color>(Hareket.BasmaMs, Hareket.Yumusak)
-    val zemin by animateColorAsState(if (kilitte) Renk.Vurgu.copy(alpha = 0.12f) else Color.Transparent, spec, label = "kilitZemin")
-    val kenar by animateColorAsState(if (kilitte) Renk.Vurgu.copy(alpha = 0.55f) else Color.White.copy(alpha = 0.12f), spec, label = "kilitKenar")
-    val renk by animateColorAsState(if (kilitte) Renk.Vurgu else Renk.MetinIkincil, spec, label = "kilitRenk")
-    Row(
-        modifier
-            .basmaOlcegi(kaynak)
-            .heightIn(min = Olcu.MinDokunmaAlani)
-            .clip(sekil)
-            .background(zemin)
-            .border(1.dp, kenar, sekil)
-            .toggleable(kilitte, kaynak, null, role = Role.Switch, onValueChange = { if (!kilitte) onClick() }),
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Simge(Simgeler.KILIT, renk, 16.dp)
-        Text(
-            if (kilitte) "Kilit ekranında" else "Kilit ekranına al",
-            style = Yazi.Govde.copy(fontSize = 14.sp, fontWeight = FontWeight.Medium),
-            color = renk,
-        )
-    }
-}
 
 @Composable
 fun EylemDugmesi(metin: String, zemin: Color, yazi: Color, onClick: () -> Unit, modifier: Modifier = Modifier) {
