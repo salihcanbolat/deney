@@ -349,7 +349,7 @@ fun KilitEkraniKarti(
     ) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Simge(Simgeler.KILIT, if (yasak) Renk.Asla else Renk.Vurgu, 16.dp)
+                KilitEkraniSimgesi(dolu = !yasak, renk = if (yasak) Renk.Asla else Renk.Vurgu, boyut = 18.dp)
                 Text("Kilit ekranında", style = Yazi.Kucuk, color = Renk.MetinSoluk)
             }
             DurumRozeti(anketDurumu)
