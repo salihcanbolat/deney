@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 13+ temalı simgeler için tek renkli katman (android/tools/simge_uret.py ile üretilir): aynı biçim, düz dolgu. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M46,34h8v28h-11a2,2 0,0 1,-2 -2v-21a5,5 0,0 1,5 -5z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M54.8,28h7.2a5,5 0,0 1,5 5v27a2,2 0,0 1,-2 2h-10.2z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M46.7,30h1.6v4h-1.6zM59.7,24h1.6v4h-1.6z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M48,66h12a5,5 0,0 1,5 5v8a5,5 0,0 1,-5 5h-12a5,5 0,0 1,-5 -5v-8a5,5 0,0 1,5 -5z" />
+</vector>

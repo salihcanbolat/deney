@@ -149,6 +149,10 @@ class EkranlarTest {
         compose.onNodeWithTag("oy-listesi").performScrollToKey("asla-0")
         compose.onNodeWithTag("asla-dem").assertIsNotEnabled()
         compose.onNodeWithTag("gonder").performClick()
+        // Önce gözden geçirme paneli; oy basılı tutunca (ekran okuyucuda "Gönder" eylemiyle) gider
+        compose.onNodeWithTag("oy-onay").assertIsDisplayed()
+        assertFalse("onaydan önce oy kaydedilmemeli", durum.katildiMi(Anketler.gencSecmen.id))
+        compose.onNodeWithTag("basili-tut-gonder").tikla()
         compose.waitForIdle()
 
         compose.onNodeWithText("Oyun sayıldı").assertIsDisplayed()
@@ -189,6 +193,8 @@ class EkranlarTest {
         compose.onNodeWithTag("gonder-pasif").assertIsDisplayed()
         compose.onNodeWithTag("asla-zafer").performScrollTo().tikla()
         compose.onNodeWithTag("gonder").performClick()
+        assertEquals(null, gonderilen)
+        compose.onNodeWithTag("basili-tut-gonder").tikla()
         assertEquals("zafer", gonderilen?.aslaPartiId)
         assertEquals(null, gonderilen?.partiId)
     }

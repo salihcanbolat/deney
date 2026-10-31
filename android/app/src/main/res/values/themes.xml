@@ -8,6 +8,17 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!--
+      Açılış ekranı (androidx core-splashscreen; Android 12 öncesinde de aynı görünür): uygulama
+      zemini ve hareketli mum simgesi, sonra uygulamanın kendi temasına geçer.
+    -->
+    <style name="Tema.SecimAnketi.Acilis" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/zemin</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/acilis_simgesi</item>
+        <item name="windowSplashScreenAnimationDuration">760</item>
+        <item name="postSplashScreenTheme">@style/Tema.SecimAnketi</item>
+    </style>
+
     <!-- Kilit ekranı incelemesi: açılış animasyonu yok, ekran değişmiyormuş gibi görünür. -->
     <style name="Tema.SecimAnketi.Kilit">
         <item name="android:windowAnimationStyle">@null</item>

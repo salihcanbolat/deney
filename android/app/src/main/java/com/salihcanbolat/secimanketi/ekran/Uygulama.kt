@@ -11,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
@@ -110,6 +111,8 @@ fun Uygulama(
     onKilitAnketiDegisti: (Anket, AnketDurumu) -> Unit = { _, _ -> },
     /** "Kilit ekranında canlı şerit" kapatılınca bildirimi kaldırmak için. */
     onBildirimKapat: () -> Unit = {},
+    /** Tanıtımda "Bildirimlere izin ver" (Android 13+). */
+    onBildirimIzniIste: () -> Unit = {},
     baslangic: List<Hedef> = listOf(Hedef.AnketListesi),
     bugun: LocalDate = LocalDate.now(),
 ) {
@@ -258,6 +261,15 @@ fun Uygulama(
                 },
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = altBosluk(26.dp)),
             )
+        }
+
+        // İlk açılış tanıtımı her şeyin üstünde; bitince yumuşakça kaybolur.
+        AnimatedVisibility(
+            visible = !durum.tanitimGoruldu,
+            enter = EnterTransition.None,
+            exit = if (azalt) ExitTransition.None else fadeOut(tween(420)) + scaleOut(tween(420, easing = Hareket.Giris), targetScale = 1.04f),
+        ) {
+            TanitimEkrani(onBitti = durum::tanitimiTamamla, onBildirimIzniIste = onBildirimIzniIste)
         }
 
         GirisPaneli(

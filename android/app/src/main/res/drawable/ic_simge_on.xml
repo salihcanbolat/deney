@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Uygulama simgesi ön yüzü (android/tools/simge_uret.py ile üretilir, elle düzenlenmez): kilit ekranı şeridinin bir sütunu.
+  Yapışık iki mum (solda parti, fildişi; sağda lider, mavi), fitilleri ve altlarında onaylı logo
+  kutusu. Güvenli alan: ortadaki 66'lık daire.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M20,54a34,34 0,1 1,68 0a34,34 0,1 1,-68 0z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="radial" android:centerX="54" android:centerY="50" android:gradientRadius="34">
+                <item android:offset="0" android:color="#405B87FF" />
+                <item android:offset="1" android:color="#005B87FF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <group android:name="parti">
+        <clip-path android:pathData="M46,34h8v28h-11a2,2 0,0 1,-2 -2v-21a5,5 0,0 1,5 -5z" />
+        <path android:fillColor="#99F5F1E8" android:pathData="M39,32h17v32h-17z" />
+        <path android:strokeColor="#F2F5F1E8" android:strokeWidth="3" android:pathData="M11,64L84,-9M11,72L84,-1M11,80L84,7M11,88L84,15M11,96L84,23M11,104L84,31M11,112L84,39" />
+    </group>
+    <path android:fillColor="#B3F5F1E8" android:pathData="M46.7,30h1.6v4h-1.6z" />
+    <group android:name="lider">
+        <clip-path android:pathData="M54,28h8a5,5 0,0 1,5 5v27a2,2 0,0 1,-2 2h-11z" />
+        <path android:fillColor="#805B87FF" android:pathData="M52,26h17v38h-17z" />
+        <path android:strokeColor="#F25B87FF" android:strokeWidth="3" android:pathData="M24,58L97,-15M24,66L97,-7M24,74L97,1M24,82L97,9M24,90L97,17M24,98L97,25M24,106L97,33" />
+    </group>
+    <path android:fillColor="#E65B87FF" android:pathData="M59.7,24h1.6v4h-1.6z" />
+    <path android:fillColor="#FFF7F5EF" android:pathData="M48,66h12a5,5 0,0 1,5 5v8a5,5 0,0 1,-5 5h-12a5,5 0,0 1,-5 -5v-8a5,5 0,0 1,5 -5z" />
+    <path android:strokeColor="#FF0A1030" android:strokeWidth="2.6" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M49,75.5l3.6,3.6l7.4,-7.6" />
+</vector>

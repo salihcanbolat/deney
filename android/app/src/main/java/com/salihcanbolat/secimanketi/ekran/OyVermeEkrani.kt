@@ -1,5 +1,26 @@
 package com.salihcanbolat.secimanketi.ekran
 
+import android.os.Build
+import android.view.HapticFeedbackConstants
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.role
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -50,7 +71,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
@@ -137,6 +157,7 @@ fun OyVermeEkrani(
     val destek = anket.tur.destekVar
     val aslaVar = anket.tur.aslaVar
     val gonderilebilir = if (destek) parti != null else asla != null
+    var onayAcik by rememberSaveable { mutableStateOf(false) }
 
     val satirlar = remember(anket, parti) { satirlariKur(anket, parti) }
     val liste = rememberLazyListState()
@@ -237,12 +258,184 @@ fun OyVermeEkrani(
             lider = lider,
             asla = asla,
             gonderilebilir = gonderilebilir,
-            onGonder = {
-                dokunus.performHapticFeedback(HapticFeedbackType.LongPress)
-                onGonder(Oy(anket.id, parti.takeIf { destek }, lider.takeIf { destek }, asla.takeIf { aslaVar }, System.currentTimeMillis()))
-            },
+            // Önce gözden geçirme paneli; oy, panelde basılı tutunca gider.
+            onGonder = { onayAcik = true },
             modifier = Modifier.align(Alignment.BottomCenter),
         )
+
+        OyOnayPaneli(
+            gorunur = onayAcik,
+            anket = anket,
+            taslak = Oy(anket.id, parti.takeIf { destek }, lider.takeIf { destek }, asla.takeIf { aslaVar }, 0L),
+            onGonder = { oy -> onGonder(oy.copy(zaman = System.currentTimeMillis())) },
+            onVazgec = { onayAcik = false },
+        )
+    }
+}
+
+/**
+ * Gönderimden önce gözden geçirme: seçimlerin özeti ve "basılı tut ve gönder". Gerçek bir oy
+ * verme ciddiyeti için tek dokunuşla değil, kısa bir basılı tutuşla gönderilir; yanlışlıkla
+ * gönderim olmaz. Ekran okuyucuda düğme doğrudan "Gönder" eylemiyle çalışır.
+ */
+@Composable
+private fun BoxScope.OyOnayPaneli(
+    gorunur: Boolean,
+    anket: Anket,
+    taslak: Oy,
+    onGonder: (Oy) -> Unit,
+    onVazgec: () -> Unit,
+) {
+    val azalt = LocalHareketAzalt.current
+    BackHandler(enabled = gorunur, onBack = onVazgec)
+    AnimatedVisibility(
+        visible = gorunur,
+        enter = if (azalt) EnterTransition.None else fadeIn(tween(250)),
+        exit = if (azalt) ExitTransition.None else fadeOut(tween(200)),
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.6f))
+                .clickable(remember { MutableInteractionSource() }, null, onClickLabel = "Vazgeç", onClick = onVazgec),
+        )
+    }
+    AnimatedVisibility(
+        visible = gorunur,
+        modifier = Modifier.align(Alignment.BottomCenter),
+        enter = if (azalt) EnterTransition.None else slideInVertically(tween(450, easing = Hareket.Giris)) { it } + fadeIn(tween(200)),
+        exit = if (azalt) ExitTransition.None else slideOutVertically(tween(300, easing = Hareket.Giris)) { it } + fadeOut(tween(200)),
+    ) {
+        val sekil = RoundedCornerShape(Kose.Kart)
+        Column(
+            Modifier
+                .padding(start = 10.dp, end = 10.dp, bottom = altBosluk(10.dp))
+                .fillMaxWidth()
+                .clip(sekil)
+                .background(Renk.Yuzey)
+                .border(1.dp, Color.White.copy(alpha = 0.08f), sekil)
+                // Panelin içine dokunmak arkadaki örtüyü kapatmasın
+                .pointerInput(Unit) { detectTapGestures { } }
+                .testTag("oy-onay")
+                .padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Box(Modifier.align(Alignment.CenterHorizontally).size(width = 36.dp, height = 4.dp).clip(CircleShape).background(Color.White.copy(alpha = 0.18f)))
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("${anket.tur.etiket} · ANONİM", style = Yazi.EnKucukMono.copy(letterSpacing = 0.08.em), color = Renk.MetinEnSoluk)
+                Text("Oyunu gözden geçir", style = Yazi.Baslik2, color = Renk.Metin, modifier = Modifier.semantics { heading() })
+            }
+            OyOzeti(anket, taslak)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Simge(Simgeler.KALKAN, Renk.MetinEnSoluk, 14.dp, Modifier.padding(top = 1.dp))
+                Text(
+                    "Gönderdikten sonra bu ankette tekrar oy veremezsin. Oyun anonim sayılır; özeti yalnızca bu cihazda kalır.",
+                    style = Yazi.Etiket12.copy(lineHeight = 1.45.em),
+                    color = Renk.MetinEnSoluk,
+                )
+            }
+            BasiliTutGonderDugmesi(onTamam = { onGonder(taslak) })
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = Olcu.MinDokunmaAlani)
+                    .clip(RoundedCornerShape(Kose.Dugme))
+                    .clickable(role = Role.Button, onClick = onVazgec),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("Seçimlere dön", style = Yazi.Govde.copy(fontSize = 14.sp), color = Renk.MetinIkincil)
+            }
+        }
+    }
+}
+
+private const val BASILI_TUTMA_MS = 1100
+
+/**
+ * "Basılı tut ve gönder": basılı tutuldukça soldan sağa dolar (1,1 sn); dolunca titreşir ve
+ * gönderir. Erken bırakılırsa dolgu yayla geri çekilir.
+ */
+@Composable
+private fun BasiliTutGonderDugmesi(onTamam: () -> Unit) {
+    val ilerleme = remember { Animatable(0f) }
+    val kapsam = rememberCoroutineScope()
+    val dokunus = LocalHapticFeedback.current
+    val gorunum = LocalView.current
+    var gonderildi by remember { mutableStateOf(false) }
+    var basili by remember { mutableStateOf(false) }
+    fun tamamla() {
+        if (gonderildi) return
+        gonderildi = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            gorunum.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
+        } else {
+            dokunus.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
+        onTamam()
+    }
+    val sekil = RoundedCornerShape(Kose.BuyukDugme)
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 60.dp)
+            .clip(sekil)
+            .background(Renk.Vurgu.copy(alpha = 0.18f))
+            .border(1.dp, Renk.Vurgu.copy(alpha = 0.5f), sekil)
+            .drawBehind {
+                // Dolgu: soldan sağa, hafif parlak uç
+                val w = size.width * ilerleme.value
+                if (w > 0f) {
+                    drawRect(Renk.Vurgu, size = size.copy(width = w))
+                    drawRect(
+                        Brush.horizontalGradient(listOf(Color.Transparent, Color.White.copy(alpha = 0.35f)), startX = w - 24.dp.toPx(), endX = w),
+                        topLeft = Offset(maxOf(0f, w - 24.dp.toPx()), 0f),
+                        size = size.copy(width = minOf(w, 24.dp.toPx())),
+                    )
+                }
+            }
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    awaitFirstDown()
+                    if (gonderildi) return@awaitEachGesture
+                    basili = true
+                    dokunus.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    val dolum = kapsam.launch {
+                        val kalan = ((1f - ilerleme.value) * BASILI_TUTMA_MS).toInt().coerceAtLeast(1)
+                        ilerleme.animateTo(1f, tween(kalan, easing = LinearEasing))
+                        tamamla()
+                    }
+                    waitForUpOrCancellation()
+                    basili = false
+                    if (ilerleme.value < 1f) {
+                        dolum.cancel()
+                        kapsam.launch { ilerleme.animateTo(0f, spring(dampingRatio = 0.8f, stiffness = 400f)) }
+                    }
+                }
+            }
+            .semantics {
+                role = Role.Button
+                contentDescription = "Oyu gönder. Göndermek için basılı tut."
+                onClick(label = "Gönder") {
+                    tamamla()
+                    true
+                }
+            }
+            .testTag("basili-tut-gonder"),
+        contentAlignment = Alignment.Center,
+    ) {
+        val doluMu = ilerleme.value > 0.5f
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Simge(Simgeler.GONDER, if (doluMu) Renk.VurguUstuMetin else Renk.VurguAcik, 18.dp, kalinlik = 2f)
+            Text(
+                when {
+                    gonderildi -> "Gönderiliyor…"
+                    basili -> "Bırakma…"
+                    else -> "Basılı tut ve gönder"
+                },
+                style = Yazi.Govde.copy(fontSize = 16.sp, fontWeight = FontWeight.SemiBold),
+                color = if (doluMu) Renk.VurguUstuMetin else Renk.VurguAcik,
+            )
+        }
     }
 }
 

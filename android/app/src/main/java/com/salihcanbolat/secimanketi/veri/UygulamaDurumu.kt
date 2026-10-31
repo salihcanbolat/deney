@@ -47,6 +47,18 @@ class UygulamaDurumu(
     var girisYapildi by mutableStateOf(false)
         private set
 
+    /**
+     * İlk açılış tanıtımı görüldü mü. Bellekteki durumda (önizleme ve testler) görülmüş sayılır;
+     * cihazda ilk açılışta bir kez gösterilir.
+     */
+    var tanitimGoruldu by mutableStateOf(tercihler?.getBoolean(TANITIM, false) ?: true)
+        private set
+
+    fun tanitimiTamamla() {
+        tanitimGoruldu = true
+        tercihler?.edit()?.putBoolean(TANITIM, true)?.apply()
+    }
+
     /** Kilit ekranı bildirimi açık mı (Hesap ve ayarlar). */
     var bildirimAcik by mutableStateOf(tercihler?.getBoolean(BILDIRIM, true) ?: true)
         private set
@@ -152,6 +164,7 @@ class UygulamaDurumu(
         private const val OY = "oy:"
         private const val DURUM = "durum:"
         private const val BILDIRIM = "bildirim_acik"
+        private const val TANITIM = "tanitim_goruldu"
 
         fun yukle(context: Context) = UygulamaDurumu(context.getSharedPreferences(DOSYA, Context.MODE_PRIVATE))
     }
